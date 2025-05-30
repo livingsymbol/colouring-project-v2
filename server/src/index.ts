@@ -1,9 +1,20 @@
 import { Hono } from 'hono'
+import authRoutes from "./routes/auth"
 
-const app = new Hono()
+export type Bindings = {
+  DB: D1Database;
+  JWT_SECRET: string;
+  ENABLE_CREDENTIAL_AUTH: 'true' | 'false';
+  ADMIN_EMAIL: string;
+  ADMIN_PASSWORD_HASH: string;
+};
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
+const app = new Hono<{ Bindings: Bindings }>()
+
+app.get('/test', (c) => {
+  return c.text("HELP!!!")
 })
+
+app.route('/auth', authRoutes);
 
 export default app

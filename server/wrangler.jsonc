@@ -3,12 +3,18 @@
   "name": "server",
   "main": "src/index.ts",
   "compatibility_date": "2025-05-18",
+  // "dev": {
+  //   "port": 3000,
+  // },
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
+  "vars": {
+    "ENABLE_CREDENTIAL_AUTH": "false", // !toggle user credential login later
+    "ADMIN_EMAIL": "admin@example.com",
+    "ADMIN_PASSWORD_HASH": "admin123", //admin123
+    "JWT_SECRET":"0c64538852de30bba2c8b58cebf84a9e0028eda8fbf3d5b5d481a6b92c0509e8"
+  },
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",
