@@ -1,0 +1,52 @@
+import Post from '../models/Post.js';
+import Comment from '../models/Comment.js';
+
+export const createPost = async (req, res) => {
+    try {
+        const { content, imageUrl } = req.body;
+
+        const newPost = new Post({
+            author: req.user.id,
+            content,
+            imageUrl,
+            isApproved: false,
+        });
+
+        await newPost.save();
+        res.status(201).json({ message: 'Post submitted for review', post: newPost });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to create post', error: err.message });
+    }
+};
+
+export const getAllApprovedPosts = async (req, res) => {
+    try {
+        const posts = await Post.find({ isApproved: true }).populate('author', 'username').sort({ createdAt: -1 });
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch posts', error: err.message });
+    }
+};
+
+export const getPostWithComments = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const post = await Post.findOne({ _id: id, isApproved: true }).populate('author', 'username');
+        if (!post) return res.status(404).json({ message: 'Post not found or not approved' });
+
+        const comments = await Comment.find({ post: id, parentComment: null })
+            .populate('author', 'username')
+            .lean();
+
+        for (const comment of comments) {
+            comment.replies = await Comment.find({ parentComment: comment._id })
+                .populate('author', 'username')
+                .lean();
+        }
+
+        res.json({ post, comments });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch post/comments', error: err.message });
+    }
+};

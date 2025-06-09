@@ -1,18 +1,30 @@
 {
   "name": "server",
+  "version": "1.0.0",
+  "description": "Server application",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "dependencies": {
-    "@hono/zod-validator": "^0.7.0",
-    "argon2": "^0.43.0",
-    "hono": "^4.7.10",
-    "uuid": "^11.1.0"
+    "@coffeeandfun/google-profanity-words": "^2.1.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1",
+    "morgan": "^1.10.0",
+    "nodemailer": "^7.0.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250529.0",
-    "wrangler": "^4.4.0"
+    "eslint": "^7.29.0",
+    "nodemon": "^3.1.10",
+    "standard": "^16.0.3"
   }
 }
