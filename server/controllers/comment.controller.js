@@ -4,23 +4,26 @@ import { isClean } from '../utils/comment.utils.js';
 
 export const addComment = async (req, res) => {
     try {
-        const { content } = req.body;
-        const { postId } = req.params;
+        const { postId, content } = req.body;
 
         const postExists = await Post.findById(postId);
         if (!postExists || !postExists.isApproved) return res.status(404).json({ message: 'Post not found or unapproved' });
 
         const isFlagged = await isClean(content);
-
         const comment = new Comment({
             post: postId,
             author: req.user.id,
             content,
             isFlagged
         });
-
         await comment.save();
-        res.status(201).json({ message: 'Comment added', comment });
+
+        if (!isFlagged) {
+            res.status(201).json({ message: 'Comment added', comment });
+        }
+        else {
+            res.status(400).json({ message: 'Foul language detected, comment sent for review', comment });
+        }
     } catch (err) {
         res.status(500).json({ message: 'Failed to add comment', error: err.message });
     }
@@ -43,9 +46,14 @@ export const replyToComment = async (req, res) => {
             parentComment: parent._id,
             isFlagged
         });
-
         await reply.save();
-        res.status(201).json({ message: 'Reply added', reply });
+
+        if (!isFlagged) {
+            res.status(201).json({ message: 'Reply added', reply });
+        }
+        else {
+            res.status(400).json({ message: 'Foul language detected, reply sent for review', reply });
+        }
     } catch (err) {
         res.status(500).json({ message: 'Failed to add reply', error: err.message });
     }

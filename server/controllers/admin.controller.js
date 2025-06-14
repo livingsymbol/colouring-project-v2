@@ -9,7 +9,12 @@ export async function getDashboardData(req, res) {
             .populate('author', 'username')
             .sort({ createdAt: -1 });
 
-        // 2. Flagged comments (including flagged replies)
+        //2. All approved posts
+        const approvedPosts = await Post.find({ isApproved: true })
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        // 3. Flagged comments (including flagged replies)
         const flaggedComments = await Comment.find({ isFlagged: true })
             .populate('author', 'username')
             .populate('post', 'content')
@@ -26,6 +31,7 @@ export async function getDashboardData(req, res) {
                 unapprovedPosts: pendingPosts.length,
                 flaggedComments: flaggedComments.length,
             },
+            approvedPosts,
             pendingPosts,
             flaggedComments,
         });
@@ -34,13 +40,33 @@ export async function getDashboardData(req, res) {
     }
 }
 
+// Approve a comment
+export const approveComment = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const comment = await Comment.findById(id).populate('author');
+
+        if (!comment) return res.status(404).json({ message: 'Comment not found' });
+
+        comment.isApproved = true;
+        await comment.save();
+
+        res.json({ message: 'Comment approved', comment });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to approve comment', error: err.message });
+    }
+};
+
 // Delete a flagged comment
 export const deleteComment = async (req, res) => {
     try {
         const { id } = req.params;
         const deleted = await Comment.findByIdAndDelete(id);
         if (!deleted) return res.status(404).json({ message: 'Comment not found' });
-        res.json({ message: 'Comment deleted successfully' });
+
+        // Also delete related replies
+        await Comment.deleteMany({ parentComment: id });
+        res.json({ message: 'Comment and replies deleted successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Failed to delete comment', error: err.message });
     }
@@ -67,7 +93,7 @@ export const approvePost = async (req, res) => {
         await post.save();
 
         //! Optional email to real users
-        if (process.env.USE_CREDENTIAL_AUTH) {
+        if (process.env.USE_CREDENTIAL_AUTH === 'true') {
             if (post.author?.email) {
                 await sendEmail({
                     to: post.author.email,
@@ -84,7 +110,7 @@ export const approvePost = async (req, res) => {
 };
 
 // Reject (delete) a post
-export const rejectPost = async (req, res) => {
+export const deletePost = async (req, res) => {
     try {
         const { id } = req.params;
         const deleted = await Post.findByIdAndDelete(id);

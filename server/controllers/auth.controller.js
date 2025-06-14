@@ -42,8 +42,8 @@ export const credentialLogin = async (req, res) => {
         return res.status(403).json({ message: 'Credential login disabled.' });
     }
 
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
     if (!user || !user.password) return res.status(401).json({ message: 'Invalid credentials.' });
 
@@ -54,24 +54,35 @@ export const credentialLogin = async (req, res) => {
     res.json({ token, user });
 };
 
-// Register (admin or user)
+// Register user
 export const register = async (req, res) => {
     const { username, email, password, role } = req.body;
 
     try {
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
-            return res.status(400).json({ message: 'Username already exists.' });
+            return res.status(400).json({ message: 'Username or email already exists.' });
         }
 
         const hashed = await hashPassword(password);
         const user = new User({ username, email, password: hashed, role });
         await user.save();
-
         const token = generateToken(user);
         res.status(201).json({ token, user });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error during registration.' });
+    }
+};
+
+export const getCurrentUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ user });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch user', error: err.message });
     }
 };

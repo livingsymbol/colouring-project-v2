@@ -35,12 +35,12 @@ export const getPostWithComments = async (req, res) => {
         const post = await Post.findOne({ _id: id, isApproved: true }).populate('author', 'username');
         if (!post) return res.status(404).json({ message: 'Post not found or not approved' });
 
-        const comments = await Comment.find({ post: id, parentComment: null })
+        const comments = await Comment.find({ post: id, parentComment: null, isFlagged: false })
             .populate('author', 'username')
             .lean();
 
         for (const comment of comments) {
-            comment.replies = await Comment.find({ parentComment: comment._id })
+            comment.replies = await Comment.find({ parentComment: comment._id, isFlagged: false })
                 .populate('author', 'username')
                 .lean();
         }
