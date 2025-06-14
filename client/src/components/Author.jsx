@@ -1,7 +1,7 @@
 export default function Author({ children }) {
     return (
-        <p className="text-right mt-2 font-semibold text-[#0000cc]">
+        <span className="absolute right-8 mt-2 font-semibold text-[#0000cc]">
             – {children}
-        </p>
+        </span>
     )
 }
