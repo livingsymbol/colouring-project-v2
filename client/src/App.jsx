@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Layout from './components/Layout';
 import AdminLogin from './pages/AdminLogin';
+import HtmlToJSONConverter from './pages/HtmlToJsonConverter';
 
 export default function App() {
   return (
@@ -53,6 +54,12 @@ export default function App() {
             <ProtectedRoutes requiredRole="admin">
               <AdminDashboard />
             </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="convert"
+          element={
+            <HtmlToJSONConverter />
           }
         />
       </Route>

@@ -11,7 +11,7 @@ export default function Tabs({ items }) {
                     <button
                         key={index}
                         onClick={() => setActiveIndex(index)}
-                        className={`px-4 py-2 font-semibold underline rounded-t-lg transition-all duration-300 hover:bg-white
+                        className={`px-4 py-2 font-semibold rounded-t-lg transition-all duration-300 hover:bg-white
               ${index === activeIndex
                                 ? "bg-white text-[#3300cc] border border-white"
                                 : "text-[#3300cc] border border-white"

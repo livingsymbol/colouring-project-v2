@@ -18,18 +18,18 @@ export default function Home() {
     const token = localStorage.getItem("token");
     if (!token) {
       axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/guest`)
-      .then((res) => {
-        const { token, user } = res.data;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-      })
-      .catch((err) => {
-        console.error("Guest login failed:", err.response?.data || err.message);
-      });
+        .post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/guest`)
+        .then((res) => {
+          const { token, user } = res.data;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((err) => {
+          console.error("Guest login failed:", err.response?.data || err.message);
+        });
     }
   }, []);
-  
+
   return (
     <div>
       <Heading>Home</Heading>
