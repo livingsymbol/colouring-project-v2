@@ -46,6 +46,7 @@ export default function Home() {
           <Author>
             The Mother
           </Author>
+          <br />
         </i>
       </Paragraph>
       <Tabs items={tabsData} />

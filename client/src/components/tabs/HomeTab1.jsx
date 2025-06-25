@@ -11,7 +11,6 @@ const homeTab1Content = {
                     "text": "“Earthly life is the place for progress. It is here on earth, that progress is possible, during the period of earthly existence. And it is the psychic which carries the progress over from one life to another, by organizing its own evolution and development itself.”",
                     "marks": [{ "type": "italic" }]
                 },
-                { "type": "hardBreak" },
                 {
                     "type": "paragraph",
                     "attrs": { "textAlign": "right" },
@@ -23,7 +22,6 @@ const homeTab1Content = {
                         }
                     ]
                 },
-                { "type": "hardBreak" },
                 {
                     "type": "text",
                     "text": "The Mother on the Symbol:"
@@ -101,7 +99,23 @@ const homeTab1Content = {
 }
 
 export default function HomeTab1() {
-    return <div>
-        <RichTextRenderer content={homeTab1Content} />
-    </div>;
+    return (
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+            <div className="flex flex-col items-center gap-y-4 sm:w-1/3 w-full">
+                <img
+                    className="h-16 w-16 lg:h-20 lg:w-20"
+                    src="/images/icon1.png"
+                    alt="icon"
+                />
+                <img
+                    src="/images/mother.png"
+                    alt="The Mother"
+                    className="w-3/4 sm:w-full max-w-xs sm:max-w-none object-contain"
+                />
+            </div>
+            <div className="sm:w-2/3 w-full">
+                <RichTextRenderer content={homeTab1Content} />
+            </div>
+        </div>
+    );
 }

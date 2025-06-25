@@ -1,4 +1,5 @@
 import Heading from '../components/Heading'
+import Paragraph from '../components/Paragraph';
 import Tabs from '../components/Tabs';
 import ForumTab1 from '../components/tabs/ForumTab1';
 import ForumTab2 from '../components/tabs/ForumTab2';
@@ -7,17 +8,30 @@ import ForumTab4 from '../components/tabs/ForumTab4';
 import ForumTab5 from '../components/tabs/ForumTab5';
 
 const tabsData = [
-  { label: "Tab 1", content: <ForumTab1 /> },
-  { label: "Tab 2", content: <ForumTab2 /> },
-  { label: "Tab 3", content: <ForumTab3 /> },
-  { label: "Tab 4", content: <ForumTab4 /> },
-  { label: "Tab 5", content: <ForumTab5 /> },
+  {
+    label: <>Your own<br /> colourings</>, content: <ForumTab1 />
+  },
+  {
+    label: <>Gallery images<br /> revisited</>, content: <ForumTab2 />
+  },
+  {
+    label: <>Forum</>, content: <ForumTab3 />
+  },
+  {
+    label: <>Useful links</>, content: <ForumTab4 />
+  },
+  {
+    label: <>Contact</>, content: <ForumTab5 />
+  },
 ];
 
 export default function ForumAndColouring() {
   return (
     <>
-      <Heading>ForumAndColouring</Heading>
+      <Heading>Forum & Your Colourings</Heading>
+      <Paragraph>
+        Colourings you created in the “Colours” section or colourings from the “Gallery” section you harmonized are displayed below.
+      </Paragraph>
       <Tabs items={tabsData} />
     </>
   )

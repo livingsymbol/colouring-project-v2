@@ -9,19 +9,19 @@ import ColoursTab5 from '../components/tabs/ColoursTab5';
 
 const tabsData = [
   {
-    label: "Physics of light and colour", content: <ColoursTab1 />
+    label: <>Physics of light<br/> and colour</>, content: <ColoursTab1 />
   },
   {
-    label: "Physiology of colour vision", content: <ColoursTab2 />
+    label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 />
   },
   {
-    label: "Colour psychology", content: <ColoursTab3 />
+    label: <>Colour<br />psychology</>, content: <ColoursTab3 />
   },
   {
-    label: "Colour theory in art and design", content: <ColoursTab4 />
+    label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 />
   },
   {
-    label: "Colour in traditional yoga", content: <ColoursTab5 />
+    label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 />
   },
 ];
 

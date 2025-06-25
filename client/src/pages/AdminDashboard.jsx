@@ -57,27 +57,58 @@ export default function AdminDashboard() {
     };
 
     const PostCard = ({ post, showApprove, showDelete }) => (
-        <div className="border p-4 rounded-lg shadow mb-4">
-            <div className="text-sm text-gray-600 mb-1">by {post.author?.username}</div>
-            {post.image && <img src={post.image} alt="post" className="w-full max-h-64 object-cover mb-2 rounded" />}
-            <p className="text-base mb-2 whitespace-pre-wrap">{post.content}</p>
-            <div className="flex gap-3">
-                {showApprove && (
-                    <button
-                        className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-                        onClick={() => handleApprove('posts', post._id)}
-                    >
-                        Approve
-                    </button>
-                )}
-                {showDelete && (
-                    <button
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                        onClick={() => handleDelete('posts', post._id)}
-                    >
-                        Delete
-                    </button>
-                )}
+        <div
+            key={post._id}
+            className="p-5 sm:p-6 border border-gray-200 rounded-2xl shadow-md bg-white space-y-4"
+        >
+            {/* Top row: Username + Timestamp */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600">
+                <span className="font-semibold text-blue-700">@{post.author.username}</span>
+                <span className="text-xs text-gray-500">
+                    {new Date(post.createdAt).toLocaleString(undefined, {
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                    })}
+                </span>
+            </div>
+
+            {/* Title */}
+            {post.title && (
+                <h3 className="text-lg font-semibold text-[#3300cc]">
+                    {post.title}
+                </h3>
+            )}
+
+            {/* Content */}
+            <p className="text-gray-800 text-base leading-relaxed whitespace-pre-wrap">
+                {post.content}
+            </p>
+
+            {/* Image if present */}
+            {post.imageUrl && (
+                <div className="w-full overflow-hidden rounded-lg border border-gray-300">
+                    <img
+                        src={post.imageUrl}
+                        alt="Post"
+                        className="max-h-[500px] w-full object-contain"
+                    />
+                </div>
+            )}
+
+            {/* Admin Actions (if needed) */}
+            <div className="flex gap-4 pt-2">
+                {showApprove && <button
+                    onClick={() => handleApprove("posts", post._id)}
+                    className="bg-green-600 text-white px-4 py-1.5 rounded hover:bg-green-700 transition text-sm"
+                >
+                    Approve
+                </button>}
+                {showDelete && <button
+                    onClick={() => handleDelete("posts", post._id)}
+                    className="bg-red-600 text-white px-4 py-1.5 rounded hover:bg-red-700 transition text-sm"
+                >
+                    Delete
+                </button>}
             </div>
         </div>
     );
@@ -108,20 +139,36 @@ export default function AdminDashboard() {
         {
             label: `Approved Posts (${approvedPosts.length})`,
             content: (
-                <div className='p-6'>
-                    {approvedPosts.length ? approvedPosts.map(post => (
-                        <PostCard key={post._id} post={post} showApprove={false} showDelete={true} />
-                    )) : <p>No approved posts found.</p>}
+                <div className="max-w-5xl mx-auto px-4 py-6">
+                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Approved Posts</h2>
+
+                    <div className="space-y-6">
+                        {approvedPosts.length === 0 ? (
+                            <p className="text-gray-600 text-center">No posts available.</p>
+                        ) : (
+                            approvedPosts.map((post) => (
+                                <PostCard key={post._id} post={post} showApprove={false} showDelete={true} />
+                            ))
+                        )}
+                    </div>
                 </div>
             )
         },
         {
             label: `Pending Posts (${pendingPosts.length})`,
             content: (
-                <div className='p-6'>
-                    {pendingPosts.length ? pendingPosts.map(post => (
-                        <PostCard key={post._id} post={post} showApprove={true} showDelete={true} />
-                    )) : <p>No pending posts.</p>}
+                <div className="max-w-5xl mx-auto px-4 py-6">
+                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Pending Posts</h2>
+
+                    <div className="space-y-6">
+                        {pendingPosts.length === 0 ? (
+                            <p className="text-gray-600 text-center">No posts pending approval.</p>
+                        ) : (
+                            pendingPosts.map((post) => (
+                                <PostCard key={post._id} post={post} showApprove={true} showDelete={true} />
+                            ))
+                        )}
+                    </div>
                 </div>
             )
         },

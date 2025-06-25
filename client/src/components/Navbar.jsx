@@ -7,7 +7,7 @@ const navItems = [
     { name: "Finding Harmony", path: "/finding-harmony" },
     { name: "Aspiration at Work", path: "/aspiration-at-work" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Forum and Colouring", path: "/forum-and-colouring" },
+    { name: "Forum & your Colourings", path: "/forum-and-colouring" },
 ];
 
 export default function Navbar() {
@@ -17,7 +17,7 @@ export default function Navbar() {
     return (
         <>
             <nav className="bg-[#3300cc]">
-                <div className="mx-auto px-4">
+                <div className="mx-auto px-2 md:px-4">
                     <div className="flex justify-between h-20 items-center">
                         {/* Left icons */}
                         <div className="flex items-center space-x-4">
@@ -34,13 +34,13 @@ export default function Navbar() {
                         </div>
 
                         {/* Desktop menu */}
-                        <div className="hidden md:flex gap-x-6 xl:space-x-12">
+                        <div className="hidden md:flex md:space-x-4 lg:space-x-8 xl:space-x-12">
                             {navItems.map(({ name, path }) => (
                                 <NavLink
                                     key={name}
                                     to={path}
                                     className={({ isActive }) =>
-                                        `text-lg xl:text-2xl hover:text-[#c7b73a] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#c7b73a]" : "text-white"
+                                        `text-md lg:text-lg xl:text-2xl text-center hover:text-[#c7b73a] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#c7b73a]" : "text-white"
                                         }`
                                     }
                                 >
@@ -89,24 +89,26 @@ export default function Navbar() {
 
                 {/* Mobile menu */}
                 {isOpen && (
-                    <div className="md:hidden" id="mobile-menu">
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-[#3300cc]">
-                            {navItems.map(({ name, path }) => (
-                                <NavLink
-                                    key={name}
-                                    to={path}
-                                    onClick={() => setIsOpen(false)}
-                                    className={({ isActive }) =>
-                                        `block px-3 py-2 rounded-md font-semibold hover:text-[#c7b73a] ${isActive ? "text-[#c7b73a]" : "text-white"
-                                        }`
-                                    }
-                                >
-                                    {name}
-                                </NavLink>
-                            ))}
-                        </div>
+                    <div
+                        id="mobile-menu"
+                        className="md:hidden absolute top-20 left-0 w-full bg-[#3300cc] z-20 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-md"
+                    >
+                        {navItems.map(({ name, path }) => (
+                            <NavLink
+                                key={name}
+                                to={path}
+                                onClick={() => setIsOpen(false)}
+                                className={({ isActive }) =>
+                                    `block px-3 py-2 rounded-md font-semibold hover:text-[#c7b73a] ${isActive ? "text-[#c7b73a]" : "text-white"
+                                    }`
+                                }
+                            >
+                                {name}
+                            </NavLink>
+                        ))}
                     </div>
                 )}
+
             </nav>
 
             {/* Full width bottom border with gradient */}
