@@ -18,18 +18,18 @@ export default function Home() {
     const token = localStorage.getItem("token");
     if (!token) {
       axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/guest`)
-        .then((res) => {
-          const { token, user } = res.data;
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
-        })
-        .catch((err) => {
-          console.error("Guest login failed:", err.response?.data || err.message);
-        });
+      .post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/guest`)
+      .then((res) => {
+        const { token, user } = res.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+      })
+      .catch((err) => {
+        console.error("Guest login failed:", err.response?.data || err.message);
+      });
     }
   }, []);
-
+  
   return (
     <div>
       <Heading>Home</Heading>
@@ -38,6 +38,8 @@ export default function Home() {
         <br /><br />
         <i>
           “Above all, it is the will for progress and self-purification which lights the fire. The will for progress. Those who have a strong will, when they turn it towards spiritual progress and purification, automatically light the fire within themselves.”
+          <br />
+          <br />
           “Let us offer our work to the Divine; this is the sure means of progressing.”
           <br />
 

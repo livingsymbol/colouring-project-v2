@@ -27,9 +27,6 @@ export default function HomeTab2() {
             <br />
             <br />
             ~ Om namo Bhagavate ~
-
-
-
         </Paragraph>
     </>
 }
