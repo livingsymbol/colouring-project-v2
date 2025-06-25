@@ -3,10 +3,11 @@ import Comment from '../models/Comment.js';
 
 export const createPost = async (req, res) => {
     try {
-        const { content, imageUrl } = req.body;
+        const { title, content, imageUrl } = req.body;
 
         const newPost = new Post({
             author: req.user.id,
+            title,
             content,
             imageUrl,
             isApproved: false,
