@@ -4,23 +4,38 @@ import sendEmail from '../utils/sendEmail.js';
 
 export async function getDashboardData(req, res) {
     try {
-        // 1. Unapproved posts
-        const pendingPosts = await Post.find({ isApproved: false })
-            .populate('author', 'username')
-            .sort({ createdAt: -1 });
-
-        //2. All approved posts
+        // 1. Fully approved posts
         const approvedPosts = await Post.find({ isApproved: true })
             .populate('author', 'username')
             .sort({ createdAt: -1 });
 
-        // 3. Flagged comments (including flagged replies)
+        // 2. Fully unapproved posts (neither content nor image approved)
+        const pendingPosts = await Post.find({
+            isApproved: false,
+            isContentApproved: false,
+            isImageApproved: false,
+        })
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        // 3. Partially approved posts (only one of content/image approved)
+        const partiallyApprovedPosts = await Post.find({
+            isApproved: false,
+            $or: [
+                { isContentApproved: true, isImageApproved: false },
+                { isContentApproved: false, isImageApproved: true },
+            ],
+        })
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        // 4. Flagged comments (including replies)
         const flaggedComments = await Comment.find({ isFlagged: true })
             .populate('author', 'username')
             .populate('post', 'content')
             .sort({ createdAt: -1 });
 
-        // Optional stats
+        // 5. Optional stats
         const totalPosts = await Post.countDocuments();
         const totalComments = await Comment.countDocuments();
 
@@ -29,10 +44,13 @@ export async function getDashboardData(req, res) {
                 totalPosts,
                 totalComments,
                 unapprovedPosts: pendingPosts.length,
+                partiallyApprovedPosts: partiallyApprovedPosts.length,
+                approvedPosts: approvedPosts.length,
                 flaggedComments: flaggedComments.length,
             },
             approvedPosts,
             pendingPosts,
+            partiallyApprovedPosts,
             flaggedComments,
         });
     } catch (err) {
@@ -84,28 +102,30 @@ export const getPendingPosts = async (req, res) => {
 // Approve a post
 export const approvePost = async (req, res) => {
     const { id } = req.params;
+    const { approveImage, approveContent } = req.body;
+
     try {
         const post = await Post.findById(id).populate('author');
-
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
-        post.isApproved = true;
+        if (approveImage !== undefined) post.isImageApproved = approveImage;
+        if (approveContent !== undefined) post.isContentApproved = approveContent;
+
+        post.isApproved = post.isImageApproved && post.isContentApproved;
+
         await post.save();
 
-        //! Optional email to real users
-        if (process.env.USE_CREDENTIAL_AUTH === 'true') {
-            if (post.author?.email) {
-                await sendEmail({
-                    to: post.author.email,
-                    subject: 'Your post has been approved',
-                    text: `Hi ${post.author.username}, your post "${post.content.slice(0, 30)}..." has been approved and is now live!`,
-                });
-            }
+        if (post.isApproved && process.env.USE_CREDENTIAL_AUTH === 'true' && post.author?.email) {
+            await sendEmail({
+                to: post.author.email,
+                subject: 'Your post has been approved',
+                text: `Hi ${post.author.username}, your post "${post.content.slice(0, 30)}..." has been approved and is now live!`,
+            });
         }
 
-        res.json({ message: 'Post approved', post });
+        res.json({ message: 'Post aproved', post });
     } catch (err) {
-        res.status(500).json({ message: 'Failed to approve post', error: err.message });
+        res.status(500).json({ message: 'Failed to approve post part', error: err.message });
     }
 };
 

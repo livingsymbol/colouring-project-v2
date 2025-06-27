@@ -43,8 +43,38 @@ export const createPost = async (req, res) => {
 
 export const getAllApprovedPosts = async (req, res) => {
     try {
-        const posts = await Post.find({ isApproved: true }).populate('author', 'username').sort({ createdAt: -1 });
-        res.json(posts);
+        const posts = await Post.find({
+            $or: [{ isApproved: true }, { isContentApproved: true }, { isImageApproved: true }]
+        })
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        const filteredPosts = posts
+            .map(post => {
+                const postData = {
+                    _id: post._id,
+                    title: post.title,
+                    createdAt: post.createdAt,
+                    author: post.author,
+                };
+
+                if (post.isContentApproved) {
+                    postData.content = post.content;
+                }
+
+                if (post.isImageApproved) {
+                    postData.imageUrl = post.imageUrl;
+                }
+
+                if (postData.content || postData.imageUrl) {
+                    return postData;
+                }
+
+                return null;
+            })
+            .filter(Boolean);
+
+        res.json(filteredPosts);
     } catch (err) {
         res.status(500).json({ message: 'Failed to fetch posts', error: err.message });
     }
@@ -54,15 +84,43 @@ export const getPostWithComments = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const post = await Post.findOne({ _id: id, isApproved: true }).populate('author', 'username');
-        if (!post) return res.status(404).json({ message: 'Post not found or not approved' });
+        const postDoc = await Post.findOne({
+            _id: id,
+            $or: [{ isApproved: true }, { isContentApproved: true }, { isImageApproved: true }]
+        }).populate('author', 'username');
+
+        if (!postDoc) {
+            return res.status(404).json({ message: 'Post not found or not approved' });
+        }
+
+        // Create a filtered version of the post object with only approved fields
+        const post = {
+            _id: postDoc._id,
+            createdAt: postDoc.createdAt,
+            author: postDoc.author
+        };
+
+        if (postDoc.isContentApproved) {
+            post.content = postDoc.content;
+        }
+
+        if (postDoc.isImageApproved) {
+            post.imageUrl = postDoc.imageUrl;
+        }
+
+        if (!post.content && !post.imageUrl) {
+            return res.status(403).json({ message: 'Post not visible (not approved)' });
+        }
 
         const comments = await Comment.find({ post: id, parentComment: null, isFlagged: false })
             .populate('author', 'username')
             .lean();
 
         for (const comment of comments) {
-            comment.replies = await Comment.find({ parentComment: comment._id, isFlagged: false })
+            comment.replies = await Comment.find({
+                parentComment: comment._id,
+                isFlagged: false
+            })
                 .populate('author', 'username')
                 .lean();
         }

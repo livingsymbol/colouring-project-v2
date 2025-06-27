@@ -6,8 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AdminDashboard() {
     const [approvedPosts, setApprovedPosts] = useState([]);
+    const [partiallyApprovedPosts, setPartiallyApprovedPosts] = useState([]);
     const [pendingPosts, setPendingPosts] = useState([]);
     const [flaggedComments, setFlaggedComments] = useState([]);
+    const [approvalChanges, setApprovalChanges] = useState({});
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,6 +23,7 @@ export default function AdminDashboard() {
                 });
 
                 setApprovedPosts(res.data.approvedPosts);
+                setPartiallyApprovedPosts(res.data.partiallyApprovedPosts);
                 setPendingPosts(res.data.pendingPosts);
                 setFlaggedComments(res.data.flaggedComments);
             } catch (err) {
@@ -31,8 +35,10 @@ export default function AdminDashboard() {
     }, []);
 
     const handleApprove = async (type, id) => {
+        const approvalData = approvalChanges[id];
+
         try {
-            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/admin/${type}/${id}`, {}, {
+            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/admin/${type}/${id}`, approvalData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -72,6 +78,28 @@ export default function AdminDashboard() {
                 </span>
             </div>
 
+            <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-1">
+                    <span className="font-medium">Content:</span>
+                    {post.isContentApproved ? (
+                        <span className="text-green-600">✅</span>
+                    ) : (
+                        <span className="text-red-500">❌</span>
+                    )}
+                </div>
+                {post.imageUrl && (
+                    <div className="flex items-center gap-1">
+                        <span className="font-medium">Image:</span>
+                        {post.isImageApproved ? (
+                            <span className="text-green-600">✅</span>
+                        ) : (
+                            <span className="text-red-500">❌</span>
+                        )}
+                    </div>
+                )}
+            </div>
+
+
             {/* Title */}
             {post.title && (
                 <h3 className="text-lg font-semibold text-[#3300cc]">
@@ -97,15 +125,78 @@ export default function AdminDashboard() {
 
             {/* Admin Actions (if needed) */}
             <div className="flex gap-4 pt-2">
-                {showApprove && <button
-                    onClick={() => handleApprove("posts", post._id)}
-                    className="bg-green-600 text-white px-4 py-1.5 rounded hover:bg-green-700 transition text-sm"
-                >
-                    Approve
-                </button>}
+                {showApprove && (
+                    <div className="bg-green-50 border border-green-200 p-4 rounded-xl space-y-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-gray-800">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                                <label className="flex items-center gap-2">
+                                    <input
+                                        type="checkbox"
+                                        className="accent-green-600"
+                                        checked={approvalChanges[post._id]?.approveContent ?? post.isContentApproved}
+                                        disabled={post.isContentApproved}
+                                        onChange={(e) => {
+                                            setApprovalChanges((prev) => ({
+                                                ...prev,
+                                                [post._id]: {
+                                                    ...prev[post._id],
+                                                    approveContent: e.target.checked,
+                                                },
+                                            }));
+                                        }}
+                                    />
+                                    <span className={post.isContentApproved ? "line-through text-gray-500" : ""}>
+                                        Approve Content
+                                    </span>
+                                </label>
+
+                                {post.imageUrl && (
+                                    <label className="flex items-center gap-2">
+                                        <input
+                                            type="checkbox"
+                                            className="accent-green-600"
+                                            checked={approvalChanges[post._id]?.approveImage ?? post.isImageApproved}
+                                            disabled={post.isImageApproved}
+                                            onChange={(e) => {
+                                                setApprovalChanges((prev) => ({
+                                                    ...prev,
+                                                    [post._id]: {
+                                                        ...prev[post._id],
+                                                        approveImage: e.target.checked,
+                                                    },
+                                                }));
+                                            }}
+                                        />
+                                        <span className={post.isImageApproved ? "line-through text-gray-500" : ""}>
+                                            Approve Image
+                                        </span>
+                                    </label>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="text-center">
+                            <button
+                                className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                onClick={() => handleApprove('posts', post._id)}
+                                disabled={
+                                    !approvalChanges[post._id] ||
+                                    (
+                                        approvalChanges[post._id]?.approveContent === post.isContentApproved &&
+                                        approvalChanges[post._id]?.approveImage === post.isImageApproved
+                                    )
+                                }
+                            >
+                                Confirm Approval
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+
                 {showDelete && <button
                     onClick={() => handleDelete("posts", post._id)}
-                    className="bg-red-600 text-white px-4 py-1.5 rounded hover:bg-red-700 transition text-sm"
+                    className="bg-red-600 py-1.5 text-white px-8 rounded hover:bg-red-700 transition text-md"
                 >
                     Delete
                 </button>}
@@ -148,6 +239,29 @@ export default function AdminDashboard() {
                         ) : (
                             approvedPosts.map((post) => (
                                 <PostCard key={post._id} post={post} showApprove={false} showDelete={true} />
+                            ))
+                        )}
+                    </div>
+                </div>
+            )
+        },
+        {
+            label: `Partially Approved Posts (${partiallyApprovedPosts.length})`,
+            content: (
+                <div className="max-w-5xl mx-auto px-4 py-6">
+                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Partially Approved Posts</h2>
+
+                    <div className="space-y-6">
+                        {partiallyApprovedPosts.length === 0 ? (
+                            <p className="text-gray-600 text-center">No partially approved posts.</p>
+                        ) : (
+                            partiallyApprovedPosts.map((post) => (
+                                <PostCard
+                                    key={post._id}
+                                    post={post}
+                                    showApprove={true}
+                                    showDelete={true}
+                                />
                             ))
                         )}
                     </div>

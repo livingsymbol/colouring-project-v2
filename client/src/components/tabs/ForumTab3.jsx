@@ -165,7 +165,7 @@ export default function ForumTab3() {
                 {posts.map((post) => (
                     <div
                         key={post._id}
-                        className="p-4 border border-gray-200 rounded-2xl shadow-md bg-white space-y-4"
+                        className="p-4 border border-gray-200 bg-gray-200 rounded-2xl shadow-md space-y-4"
                     >
                         {/* User Info Row */}
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-1 text-sm text-gray-600">
@@ -185,7 +185,7 @@ export default function ForumTab3() {
                         )}
 
                         {/* Content */}
-                        <p className="text-gray-800 bg-gray-200 p-2 rounded-lg text-base leading-relaxed whitespace-pre-wrap">
+                        <p className="text-gray-800 p-2 rounded-lg text-base leading-relaxed whitespace-pre-wrap">
                             {post.content}
                         </p>
 
