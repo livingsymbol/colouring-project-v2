@@ -24,24 +24,46 @@ export default function ForumTab3() {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setNewPost((prev) => ({ ...prev, imageUrl: file.path }));  //TODO change to uploaded link
-        setPreviewUrl(URL.createObjectURL(file));
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setPreviewUrl(URL.createObjectURL(file));
+        };
+        reader.readAsDataURL(file);
     };
+
 
     const handleDrop = (e) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
-        setNewPost((prev) => ({ ...prev, imageUrl: file.path }));
-        setPreviewUrl(URL.createObjectURL(file));
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setPreviewUrl(URL.createObjectURL(file));
+        };
+        reader.readAsDataURL(file);
     };
 
-    const handlePostSubmit = async () => {
-        setIsPosting(true);
 
+    const handlePostSubmit = async () => {
+        if (!newPost.content && !newPost.image) {
+            toast.error("You must provide content or an image.");
+            return;
+        }
+
+        setIsPosting(true);
         try {
             const res = await axios.post(
                 `${import.meta.env.VITE_BACKEND_URL}/posts`,
-                { ...newPost },
+                {
+                    title: newPost.title,
+                    content: newPost.content,
+                    image: newPost.image, // this is base64
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -49,9 +71,9 @@ export default function ForumTab3() {
                 }
             );
 
-            toast.success(res.data.message || "Post submitted successfully!");
+            toast.success(res.data.message || "Post submitted for review!");
             setShowCreate(false);
-            setNewPost({ title: '', content: '', imageUrl: null });
+            setNewPost({ title: '', content: '', image: null });
             setPreviewUrl(null);
 
             const updated = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`);

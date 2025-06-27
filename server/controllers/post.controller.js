@@ -1,9 +1,28 @@
 import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
+import cloudinary from "../utils/cloudinary.utils.js";
 
 export const createPost = async (req, res) => {
     try {
-        const { title, content, imageUrl } = req.body;
+        const { title, content, image } = req.body;
+
+        if (!title && !content && !image) {
+            return res.status(400).json({ message: "Content or image is required." });
+        }
+
+        let imageUrl = null;
+
+        if (image && image.startsWith("data:image/")) {
+            try {
+                const uploadResult = await cloudinary.uploader.upload(image, {
+                    folder: "colouring-project/posts/images",
+                });
+                imageUrl = uploadResult.secure_url;
+            } catch (uploadErr) {
+                console.error("Cloudinary Upload Error:", uploadErr);
+                return res.status(500).json({ message: "Image upload failed." });
+            }
+        }
 
         const newPost = new Post({
             author: req.user.id,
@@ -14,7 +33,9 @@ export const createPost = async (req, res) => {
         });
 
         await newPost.save();
-        res.status(201).json({ message: 'Post submitted for review', post: newPost });
+
+        res.status(201).json({ message: 'Post submitted for review', post: { _id: newPost._id, title: newPost.title, content: newPost.content, imageUrl: newPost.imageUrl } });
+
     } catch (err) {
         res.status(500).json({ message: 'Failed to create post', error: err.message });
     }
