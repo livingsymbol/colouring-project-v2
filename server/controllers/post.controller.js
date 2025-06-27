@@ -96,6 +96,7 @@ export const getPostWithComments = async (req, res) => {
         // Create a filtered version of the post object with only approved fields
         const post = {
             _id: postDoc._id,
+            title: postDoc.title,
             createdAt: postDoc.createdAt,
             author: postDoc.author
         };
