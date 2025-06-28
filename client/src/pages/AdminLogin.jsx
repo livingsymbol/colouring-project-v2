@@ -2,11 +2,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import Heading from '../components/Heading';
 import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 
 export default function AdminLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const toggleMode = () => {
@@ -18,21 +21,26 @@ export default function AdminLogin() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         try {
-            let res;
-            res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/admin`, { email, password });
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/admin`, {
+                email,
+                password,
+            });
 
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
-            navigate('/admin/dashboard')
+            navigate('/admin/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || 'An error occurred.');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen w-full gradient-background flex flex-col justify-center items-center">
+        <div className="min-h-screen w-full bg-gradient flex flex-col justify-center items-center">
             <Heading>Welcome</Heading>
             <div className="max-w-md h-fit p-6 bg-white shadow-lg rounded-xl">
                 <h2 className="text-2xl font-semibold mb-4 text-center">
@@ -62,9 +70,17 @@ export default function AdminLogin() {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                        disabled={loading}
+                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Login
+                        {loading ? (
+                            <>
+                                <Loader2 className="animate-spin" size={18} />
+                                Logging in...
+                            </>
+                        ) : (
+                            "Login"
+                        )}
                     </button>
                 </form>
 

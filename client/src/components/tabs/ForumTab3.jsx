@@ -5,22 +5,32 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
 
-
 export default function ForumTab3() {
     const [posts, setPosts] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
     const [newPost, setNewPost] = useState({ title: '', content: '', imageUrl: '' });
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isPosting, setIsPosting] = useState(false);
+    const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`);
-            setPosts(res.data);
+            try {
+                setLoading(true);
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`);
+                setPosts(res.data);
+            } catch (err) {
+                console.error(err);
+                toast.error("Failed to load posts");
+            } finally {
+                setLoading(false);
+            }
         };
         fetchPosts();
     }, []);
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -161,7 +171,11 @@ export default function ForumTab3() {
                 </div>
             )}
 
-            <div className="space-y-4">
+            {loading ? (
+                <div className="flex justify-center items-center py-16">
+                    <Loader2 className="animate-spin text-[#3300cc]" size={32} />
+                </div>
+            ) : (<div className="space-y-4">
                 {posts.map((post) => (
                     <div
                         key={post._id}
@@ -211,7 +225,7 @@ export default function ForumTab3() {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div>)}
 
         </div>
     );

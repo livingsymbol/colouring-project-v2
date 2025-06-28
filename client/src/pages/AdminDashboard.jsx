@@ -9,13 +9,17 @@ export default function AdminDashboard() {
     const [partiallyApprovedPosts, setPartiallyApprovedPosts] = useState([]);
     const [pendingPosts, setPendingPosts] = useState([]);
     const [flaggedComments, setFlaggedComments] = useState([]);
+    const [approvedComments, setApprovedComments] = useState([]);
     const [approvalChanges, setApprovalChanges] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState({});
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setIsLoading(true);
                 const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/admin/dashboard`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -26,15 +30,20 @@ export default function AdminDashboard() {
                 setPartiallyApprovedPosts(res.data.partiallyApprovedPosts);
                 setPendingPosts(res.data.pendingPosts);
                 setFlaggedComments(res.data.flaggedComments);
+                setApprovedComments(res.data.approvedComments);
             } catch (err) {
                 console.error('Failed to fetch dashboard data', err);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchData();
     }, []);
 
+
     const handleApprove = async (type, id) => {
+        setActionLoading((prev) => ({ ...prev, [id]: true }));
         const approvalData = approvalChanges[id];
 
         try {
@@ -46,10 +55,13 @@ export default function AdminDashboard() {
             window.location.reload();
         } catch (err) {
             console.error('Approve failed', err);
+        } finally {
+            setActionLoading((prev) => ({ ...prev, [id]: false }));
         }
     };
 
     const handleDelete = async (type, id) => {
+        setActionLoading((prev) => ({ ...prev, [id]: true }));
         try {
             await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/${type}/${id}`, {
                 headers: {
@@ -59,8 +71,11 @@ export default function AdminDashboard() {
             window.location.reload();
         } catch (err) {
             console.error('Delete failed', err);
+        } finally {
+            setActionLoading((prev) => ({ ...prev, [id]: false }));
         }
     };
+
 
     const PostCard = ({ post, showApprove, showDelete }) => (
         <div
@@ -180,14 +195,13 @@ export default function AdminDashboard() {
                                 className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
                                 onClick={() => handleApprove('posts', post._id)}
                                 disabled={
+                                    actionLoading[post._id] ||
                                     !approvalChanges[post._id] ||
-                                    (
-                                        approvalChanges[post._id]?.approveContent === post.isContentApproved &&
-                                        approvalChanges[post._id]?.approveImage === post.isImageApproved
-                                    )
+                                    (approvalChanges[post._id]?.approveContent === post.isContentApproved &&
+                                        approvalChanges[post._id]?.approveImage === post.isImageApproved)
                                 }
                             >
-                                Confirm Approval
+                                {actionLoading[post._id] ? 'Approving...' : 'Confirm Approval'}
                             </button>
                         </div>
                     </div>
@@ -195,35 +209,37 @@ export default function AdminDashboard() {
 
 
                 {showDelete && <button
-                    onClick={() => handleDelete("posts", post._id)}
-                    className="bg-red-600 py-1.5 text-white px-8 rounded hover:bg-red-700 transition text-md"
+                    className="bg-red-600 py-1.5 text-white px-8 rounded-xl hover:bg-red-700 transition text-md disabled:opacity-50"
+                    onClick={() => handleDelete('posts', post._id)}
+                    disabled={actionLoading[post._id]}
                 >
-                    Delete
-                </button>}
+                    {actionLoading[post._id] ? 'Deleting...' : 'Delete'}
+                </button>
+                }
             </div>
         </div>
     );
 
-    const CommentCard = ({ comment }) => (
+    const CommentCard = ({ comment, showApprove, showDelete }) => (
         <div className="border p-4 rounded-lg shadow mb-4">
             <div className="text-sm text-gray-600 mb-1">by {comment.author?.username}</div>
             <p className="text-base mb-2 whitespace-pre-wrap">{comment.content}</p>
             <p className="text-xs italic text-gray-500 mb-2">On post: {comment.post?.content?.slice(0, 100)}...</p>
             <div className="flex gap-3">
-                <button
+                {showApprove && <button
                     className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
                     onClick={() => handleApprove('comments', comment._id)}
                 >
                     Approve
-                </button>
-                <button
+                </button>}
+                {showDelete && < button
                     className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                     onClick={() => handleDelete('comments', comment._id)}
                 >
                     Delete
-                </button>
+                </button>}
             </div>
-        </div>
+        </div >
     );
 
     const tabsData = [
@@ -289,17 +305,53 @@ export default function AdminDashboard() {
         {
             label: `Flagged Comments (${flaggedComments.length})`,
             content: (
-                <div className='p-6'>
-                    {flaggedComments.length ? flaggedComments.map(comment => (
-                        <CommentCard key={comment._id} comment={comment} />
-                    )) : <p>No flagged comments.</p>}
+
+                <div className="max-w-5xl mx-auto px-4 py-6">
+                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Flagged Comments</h2>
+
+                    <div className="space-y-6">
+                        {flaggedComments.length === 0 ? (
+                            <p className="text-gray-600 text-center">No flagged comments.</p>
+                        ) : (
+                            flaggedComments.map(comment => (
+                                <CommentCard key={comment._id} comment={comment} showApprove={true} showDelete={true} />
+                            )
+                            ))}
+                    </div>
+                </div>
+            )
+        },
+        {
+            label: `Approved Comments (${approvedComments.length})`,
+            content: (
+
+                <div className="max-w-5xl mx-auto px-4 py-6">
+                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Approved Comments</h2>
+
+                    <div className="space-y-6">
+                        {approvedComments.length === 0 ? (
+                            <p className="text-gray-600 text-center">No approved comments.</p>
+                        ) : (
+                            approvedComments.map(comment => (
+                                <CommentCard key={comment._id} comment={comment} showApprove={false} showDelete={true} />
+                            )
+                            ))}
+                    </div>
                 </div>
             )
         }
     ];
 
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center text-xl text-blue-600 font-semibold">
+                Loading dashboard...
+            </div>
+        );
+    }
+
     return (
-        <div className="w-full mx-auto p-6 min-h-screen gradient-background">
+        <div className="w-full mx-auto p-6 min-h-screen bg-gradient">
             <button onClick={() => {
                 localStorage.clear();
                 navigate('/admin/login')
@@ -307,7 +359,7 @@ export default function AdminDashboard() {
             >
                 Logout
             </button>
-            < Heading > Admin Dashboard</Heading >
+            <Heading> Admin Dashboard</Heading >
             <Tabs items={tabsData} />
         </div >
     );

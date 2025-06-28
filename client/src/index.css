@@ -21,10 +21,12 @@
 body {
     margin: 0;
     padding: 0;
+    background: #00d5ff;
     font-family: 'Aharoni', sans-serif;
 }
 
-.gradient-background {
+.bg-gradient {
+    height: 5px;
     background: linear-gradient(to bottom, #3300cc, #00d5ff, #00d5ff, #00d5ff);
 }
 

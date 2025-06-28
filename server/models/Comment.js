@@ -6,6 +6,7 @@ const commentSchema = new Schema({
     content: { type: String, required: true },
     parentComment: { type: Schema.Types.ObjectId, ref: 'Comment' }, // for replies
     isFlagged: { type: Boolean, default: false },
+    isApproved: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
 });
 

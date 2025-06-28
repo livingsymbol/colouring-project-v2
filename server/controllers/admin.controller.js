@@ -35,7 +35,13 @@ export async function getDashboardData(req, res) {
             .populate('post', 'content')
             .sort({ createdAt: -1 });
 
-        // 5. Optional stats
+        // 5. Flagged comments (including replies)
+        const approvedComments = await Comment.find({ isApproved: true })
+            .populate('author', 'username')
+            .populate('post', 'content')
+            .sort({ createdAt: -1 });
+
+        // 6. Optional stats
         const totalPosts = await Post.countDocuments();
         const totalComments = await Comment.countDocuments();
 
@@ -47,11 +53,13 @@ export async function getDashboardData(req, res) {
                 partiallyApprovedPosts: partiallyApprovedPosts.length,
                 approvedPosts: approvedPosts.length,
                 flaggedComments: flaggedComments.length,
+                approvedComments: approvedComments.length,
             },
             approvedPosts,
             pendingPosts,
             partiallyApprovedPosts,
             flaggedComments,
+            approvedComments,
         });
     } catch (err) {
         res.status(500).json({ message: 'Failed to load dashboard data', error: err.message });
@@ -66,6 +74,7 @@ export const approveComment = async (req, res) => {
 
         if (!comment) return res.status(404).json({ message: 'Comment not found' });
 
+        comment.isFlagged = false;
         comment.isApproved = true;
         await comment.save();
 

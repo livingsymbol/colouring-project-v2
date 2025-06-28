@@ -47,7 +47,7 @@ export default function Auth() {
     };
 
     return (
-        <div className="min-h-screen w-full gradient-background flex flex-col justify-center items-center">
+        <div className="min-h-screen w-full bg-gradient flex flex-col justify-center items-center">
             <Heading>Welcome</Heading>
             <div className="max-w-md h-fit p-6 bg-white shadow-lg rounded-xl">
                 <h2 className="text-2xl font-semibold mb-4 text-center">
