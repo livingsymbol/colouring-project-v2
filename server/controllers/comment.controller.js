@@ -7,7 +7,7 @@ export const addComment = async (req, res) => {
         const { postId, content } = req.body;
 
         const postExists = await Post.findById(postId);
-        if (!postExists || !postExists.isApproved) return res.status(404).json({ message: 'Post not found or unapproved' });
+        if (!postExists) return res.status(404).json({ message: 'Post not found or unapproved' });
 
         const isFlagged = await isClean(content);
         const comment = new Comment({
