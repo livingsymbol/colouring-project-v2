@@ -1,3 +1,8 @@
+import AspirationTabTemplate from "../AspirationTabTemplate";
+
 export default function AspirationTab3() {
-    return <div>Aspiration Tab 3</div>;
+    return (
+        <AspirationTabTemplate palette={"palette"} symbol={"symbol"} />
+    );
 }
+

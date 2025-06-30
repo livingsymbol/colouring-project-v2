@@ -4,17 +4,22 @@ import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 import Link from '@tiptap/extension-link'
 import HardBreak from '@tiptap/extension-hard-break'
-import Paragraph from './Paragraph'
+import BulletList from '@tiptap/extension-bullet-list'
+import ListItem from '@tiptap/extension-list-item'
 
 export default function RichTextRenderer({ content }) {
     const html = generateHTML(content, [
         StarterKit.configure({
             hardBreak: false,
+            bulletList: false,
+            listItem: false
         }),
         HardBreak,
         Underline,
         Link,
         TextAlign.configure({ types: ['heading', 'paragraph'] }),
+        BulletList,
+        ListItem
     ])
 
     return (

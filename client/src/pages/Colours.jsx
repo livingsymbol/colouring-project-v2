@@ -32,7 +32,6 @@ export default function Colours() {
       <Paragraph>
         To discern and understand the deeper principles behind colour in the Mother’s symbol, we turned to several fields of knowledge. Each discipline brought unique insights that enriched our understanding of how colour works—not just in form and perception, but in experience and consciousness.<br />
         Science reveals how colour affects our brain and body, influencing our thoughts and actions. Colors have long been used in various fields, from psychology to art, to elicit specific emotional responses. The magic of colour, however, goes beyond its psychological impact. It also connects us to deeper spiritual realms, where colours transcend their physical properties and become symbols of inner states and transformative forces.
-
       </Paragraph>
       <Tabs items={tabsData} />
     </>
