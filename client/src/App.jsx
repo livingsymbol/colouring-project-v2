@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Home from './pages/Home';
 import Colours from './pages/Colours';
 import FindingHarmony from './pages/FindingHarmony';
@@ -12,7 +13,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Layout from './components/Layout';
 import AdminLogin from './pages/AdminLogin';
-import { Toaster } from 'react-hot-toast';
+import AddPage from './pages/AddPage';
 
 export default function App() {
   return (
@@ -65,6 +66,17 @@ export default function App() {
             }
           />
         </Route>
+
+        {import.meta.env.VITE_NODE_ENV === 'dev' &&
+          <Route path='/dev'>
+            <Route
+              path="add"
+              element={
+                <AddPage />
+              }
+            />
+          </Route>}
+
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>

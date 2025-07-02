@@ -6,26 +6,37 @@ import ColoursTab2 from '../components/tabs/ColoursTab2';
 import ColoursTab3 from '../components/tabs/ColoursTab3';
 import ColoursTab4 from '../components/tabs/ColoursTab4';
 import ColoursTab5 from '../components/tabs/ColoursTab5';
-
-const tabsData = [
-  {
-    label: <>Physics of light<br/> and colour</>, content: <ColoursTab1 />
-  },
-  {
-    label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 />
-  },
-  {
-    label: <>Colour<br />psychology</>, content: <ColoursTab3 />
-  },
-  {
-    label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 />
-  },
-  {
-    label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 />
-  },
-];
+import useGetContent from '../hooks/useGetContent';
 
 export default function Colours() {
+  const slug = window.location.pathname.split('/')[1];
+  const { page, loading, error } = useGetContent(slug, 'en');
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  if (!page || !page.sections) {
+    return <p>Page data is incomplete</p>;
+  }
+
+  const tabsData = [
+    {
+      label: <>Physics of light<br /> and colour</>, content: <ColoursTab1 content = {page.sections[0].content}/>
+    },
+    {
+      label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 content = {page.sections[1].content}/>
+    },
+    {
+      label: <>Colour<br />psychology</>, content: <ColoursTab3 content = {page.sections[2].content}/>
+    },
+    {
+      label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 content = {page.sections[3].content}/>
+    },
+    {
+      label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 content = {page.sections[4].content}/>
+    },
+  ];
+
   return (
     <>
       <Heading>Colours</Heading>

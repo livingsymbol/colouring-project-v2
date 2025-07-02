@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export default function Tabs({ items }) {
     const [activeIndex, setActiveIndex] = useState(0);
-
     return (
         <div className="w-full flex flex-col mt-4">
             {/* Tab Buttons */}

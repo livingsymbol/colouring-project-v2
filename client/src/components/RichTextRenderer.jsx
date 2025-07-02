@@ -8,7 +8,13 @@ import BulletList from '@tiptap/extension-bullet-list'
 import ListItem from '@tiptap/extension-list-item'
 
 export default function RichTextRenderer({ content }) {
-    const html = generateHTML(content, [
+    if (!content || typeof content !== 'object') {
+        return <p className="text-gray-400 italic">No content available</p>
+    }
+
+    const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
+
+    const html = generateHTML(parsedContent, [
         StarterKit.configure({
             hardBreak: false,
             bulletList: false,
@@ -23,8 +29,8 @@ export default function RichTextRenderer({ content }) {
     ])
 
     return (
-        <p
-            className="my-4 text-[#0000cc] font-semibold text-base sm:text-lg leading-relaxed "
+        <div
+            className="my-4 text-[#0000cc] font-semibold text-base sm:text-lg leading-relaxed"
             dangerouslySetInnerHTML={{ __html: html }}
         />
     )
