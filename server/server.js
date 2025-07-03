@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(morgan('dev'))
 app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 app.use('/api', indexRouter)
 app.use(clientErrorHandler)
