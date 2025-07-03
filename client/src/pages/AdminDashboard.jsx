@@ -345,6 +345,7 @@ export default function AdminDashboard() {
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center text-xl text-blue-600 font-semibold">
+                <Loader2 className="animate-spin" size={24} />
                 Loading dashboard...
             </div>
         );

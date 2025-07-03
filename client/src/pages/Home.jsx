@@ -30,7 +30,7 @@ export default function Home() {
     }
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p><Loader2 className="animate-spin" size={24} />Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   if (!page || !page.sections) {

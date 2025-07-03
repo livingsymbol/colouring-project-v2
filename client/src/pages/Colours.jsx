@@ -12,7 +12,7 @@ export default function Colours() {
   const slug = window.location.pathname.split('/')[1];
   const { page, loading, error } = useGetContent(slug, 'en');
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p><Loader2 className="animate-spin" size={24} />Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   if (!page || !page.sections) {
@@ -21,19 +21,19 @@ export default function Colours() {
 
   const tabsData = [
     {
-      label: <>Physics of light<br /> and colour</>, content: <ColoursTab1 content = {page.sections[0].content}/>
+      label: <>Physics of light<br /> and colour</>, content: <ColoursTab1 content={page.sections[0].content} />
     },
     {
-      label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 content = {page.sections[1].content}/>
+      label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 content={page.sections[1].content} />
     },
     {
-      label: <>Colour<br />psychology</>, content: <ColoursTab3 content = {page.sections[2].content}/>
+      label: <>Colour<br />psychology</>, content: <ColoursTab3 content={page.sections[2].content} />
     },
     {
-      label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 content = {page.sections[3].content}/>
+      label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 content={page.sections[3].content} />
     },
     {
-      label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 content = {page.sections[4].content}/>
+      label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 content={page.sections[4].content} />
     },
   ];
 
