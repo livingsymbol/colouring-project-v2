@@ -52,13 +52,12 @@ export default function AspirationTabTemplate({ palette, symbol }) {
                         className="w-10 h-10 object-contain shrink-0"
                     />
                 </button>
-
                 <RichTextRenderer content={aspirationTabContent} />
             </div>
 
             <div className="flex flex-col md:flex-row-reverse gap-4">
-                <div className="flex-1 p-4 border rounded-lg shadow">{symbol}</div>
-                <div className="flex-1 p-4 border rounded-lg shadow">{palette}</div>
+                <div className="flex-1 p-4 md:w-[50%]">{symbol}</div>
+                <div className="flex-1 p-4 md:w-[50%]">{palette}</div>
             </div>
         </div>
     );

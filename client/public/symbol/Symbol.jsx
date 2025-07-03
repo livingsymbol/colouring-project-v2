@@ -44,21 +44,20 @@ const Symbol = forwardRef((props, ref) => {
               fillRule="evenodd"
               d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
               clipRule="evenodd"
-              stroke="#dbaf46"
+              stroke="#a2863f"
               strokeWidth="5"
             />
           </svg>
           <h1 className="text-black">Left</h1>
         </button>
 
-        <h1 className="text-5xl font-semibold text-center text-white">
+        <h1 className="text-5xl font-semibold text-center text-[#a2863f]">
           Rotate
           <br />
           qualities
         </h1>
 
-        <button onClick={rotateClockwise} className="w-fit p-2 gap-4">
-          <h1 className="text-black">Right</h1>
+        <button onClick={rotateClockwise} className="w-fit p-2 gap-4 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -69,10 +68,11 @@ const Symbol = forwardRef((props, ref) => {
               fillRule="evenodd"
               d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
               clipRule="evenodd"
-              stroke="#dbaf46"
+              stroke="#a2863f"
               strokeWidth="5"
             />
           </svg>
+          <h1 className="text-black">Right</h1>
         </button>
       </div>
       <div className="relative flex items-center justify-center w-full h-full">
@@ -92,7 +92,7 @@ const Symbol = forwardRef((props, ref) => {
                 <path
                   transform="matrix(1,0,0,-1,600.1441,212.1676)"
                   d="M0 0C78.259-135.554 31.808-308.891-103.752-387.159-239.311-465.428-412.645-418.989-490.903-283.436-569.162-147.882-522.71 25.455-387.151 103.724-251.592 181.992-78.258 135.553 0 0"
-                  fill="#dbaf46"
+                  fill="#a2863f"
                   style={{ pointerEvents: "none" }}
                   stroke="#000000"
                   strokeWidth="1"

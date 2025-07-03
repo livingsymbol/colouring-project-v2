@@ -21,33 +21,31 @@ const ColorTester = ({ color }) => {
   };
 
   return (
-    <div className="flex-col order-2 lg:order-1 w-3/4 md:w-1/3 lg:w-[20%] flex items-center justify-center gap-y-4">
-      <div className="h-full w-full flex flex-col items-center gap-4  border-2 border-[#dbaf46] p-4 rounded-md">
-        <h1 className="text-[#dbaf46] font-semibold bg-white w-2/3 lg:w-full h-16 rounded-md text-center ">
-          Try your colours below
-        </h1>
-        <div
-          className="w-2/3 lg:w-full h-16 cursor-pointer rounded-md transition-colors duration-300 ease-in-out"
-          style={{ backgroundColor: spaces[0] }}
-          onClick={() => handleSpaceClick(0)}
-        />
-        <div
-          className="w-2/3 lg:w-full h-16 cursor-pointer rounded-md transition-colors duration-300 ease-in-out"
-          style={{ backgroundColor: spaces[1] }}
-          onClick={() => handleSpaceClick(1)}
-        />
-        <div
-          className="w-2/3 lg:w-full h-16 cursor-pointer rounded-md transition-colors duration-300 ease-in-out"
-          style={{ backgroundColor: spaces[2] }}
-          onClick={() => handleSpaceClick(2)}
-        />
-        <button
-          onClick={handleClear}
-          className="px-2 py-1 md:px-4 md:py-2 text-md md:text-lg font-semibold text-[#dbaf46] bg-white  rounded-lg shadow duration-100 hover:-translate-y-1 hover:bg-[#dbaf46] hover:text-white"
-        >
-          Clear
-        </button>
+    <div className="h-full w-full flex flex-col items-center gap-4">
+      <div className="text-[#c7b73a] flex justify-center items-center font-semibold bg-white w-full h-10 rounded-md border-2 border-[#c7b73a]">
+        Try selected colours below
       </div>
+      <div
+        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 border-[#c7b73a] ease-in-out"
+        style={{ backgroundColor: spaces[0] }}
+        onClick={() => handleSpaceClick(0)}
+      />
+      <div
+        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 border-[#c7b73a] ease-in-out"
+        style={{ backgroundColor: spaces[1] }}
+        onClick={() => handleSpaceClick(1)}
+      />
+      <div
+        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 border-[#c7b73a] ease-in-out"
+        style={{ backgroundColor: spaces[2] }}
+        onClick={() => handleSpaceClick(2)}
+      />
+      <button
+        onClick={handleClear}
+        className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#c7b73a] hover:text-white shadow-2xl"
+      >
+        Reset
+      </button>
     </div>
   );
 };

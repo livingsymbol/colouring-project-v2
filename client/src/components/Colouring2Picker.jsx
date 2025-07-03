@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const SwatchesPicker = ({
+const Colouring2Picker = ({
   colors,
   onColorSelect,
   swatchSize,
@@ -21,7 +21,7 @@ const SwatchesPicker = ({
         display: "grid",
         gridTemplateColumns: `repeat(${cols}, ${swatchSize}px)`,
         gridGap: "5px",
-        padding: "5px",
+        width:"100%"
       }}
     >
       {colors.flat().map((color, index) => (
@@ -35,7 +35,7 @@ const SwatchesPicker = ({
             cursor: "pointer",
             boxSizing: "border-box",
             border:
-              color === selectedColor ? "3px solid #000" : "1px solid #ccc", // Highlight selected color
+              color === selectedColor ? "2px solid #000" : "2px solid #a58c3a", // Highlight selected color
             transform: color === selectedColor ? "scale(1.1)" : "scale(1)", // Slightly scale up the selected swatch
             transition: "transform 0.1s ease-in-out, border 0.1s ease-in-out", // Smooth transition
           }}
@@ -45,7 +45,7 @@ const SwatchesPicker = ({
   );
 };
 
-SwatchesPicker.propTypes = {
+Colouring2Picker.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   onColorSelect: PropTypes.func.isRequired,
   swatchSize: PropTypes.number,
@@ -56,9 +56,9 @@ SwatchesPicker.propTypes = {
   selectedColor: PropTypes.string, // Added selectedColor prop type
 };
 
-SwatchesPicker.defaultProps = {
+Colouring2Picker.defaultProps = {
   swatchSize: 30,
-  gridSize: { rows: 12, cols: 15 },
+  gridSize: { rows: 5, cols: 24 },
 };
 
-export default SwatchesPicker;
+export default Colouring2Picker;
