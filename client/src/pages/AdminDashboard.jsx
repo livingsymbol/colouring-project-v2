@@ -4,6 +4,7 @@ import Tabs from '../components/Tabs';
 import Heading from '../components/Heading';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
+import AdminNavbar from '../components/AdminNavbar';
 
 export default function AdminDashboard() {
     const [approvedPosts, setApprovedPosts] = useState([]);
@@ -304,25 +305,6 @@ export default function AdminDashboard() {
             )
         },
         {
-            label: `Flagged Comments (${flaggedComments.length})`,
-            content: (
-
-                <div className="max-w-5xl mx-auto px-4 py-6">
-                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Flagged Comments</h2>
-
-                    <div className="space-y-6">
-                        {flaggedComments.length === 0 ? (
-                            <p className="text-gray-600 text-center">No flagged comments.</p>
-                        ) : (
-                            flaggedComments.map(comment => (
-                                <CommentCard key={comment._id} comment={comment} showApprove={true} showDelete={true} />
-                            )
-                            ))}
-                    </div>
-                </div>
-            )
-        },
-        {
             label: `Approved Comments (${approvedComments.length})`,
             content: (
 
@@ -335,6 +317,25 @@ export default function AdminDashboard() {
                         ) : (
                             approvedComments.map(comment => (
                                 <CommentCard key={comment._id} comment={comment} showApprove={false} showDelete={true} />
+                            )
+                            ))}
+                    </div>
+                </div>
+            )
+        },
+        {
+            label: `Flagged Comments (${flaggedComments.length})`,
+            content: (
+
+                <div className="max-w-5xl mx-auto px-4 py-6">
+                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Flagged Comments</h2>
+
+                    <div className="space-y-6">
+                        {flaggedComments.length === 0 ? (
+                            <p className="text-gray-600 text-center">No flagged comments.</p>
+                        ) : (
+                            flaggedComments.map(comment => (
+                                <CommentCard key={comment._id} comment={comment} showApprove={true} showDelete={true} />
                             )
                             ))}
                     </div>
@@ -353,16 +354,12 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div className="w-full mx-auto p-6 min-h-screen bg-gradient">
-            <button onClick={() => {
-                localStorage.clear();
-                navigate('/admin/login')
-            }}
-            >
-                Logout
-            </button>
-            <Heading> Admin Dashboard</Heading >
-            <Tabs items={tabsData} />
+        <div className="w-full min-h-screen bg-gradient">
+            <AdminNavbar />
+            <div className='p-4'>
+                <Heading> Admin Dashboard</Heading >
+                <Tabs items={tabsData} />
+            </div>
         </div >
     );
 }

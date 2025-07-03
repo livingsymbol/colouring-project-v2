@@ -58,7 +58,6 @@ export default function ForumTab3() {
         reader.readAsDataURL(file);
     };
 
-
     const handlePostSubmit = async () => {
         if (!newPost.content && !newPost.image) {
             toast.error("You must provide content or an image.");
@@ -95,6 +94,52 @@ export default function ForumTab3() {
             setIsPosting(false);
         }
     };
+
+    // using form data
+    // const handlePostSubmit = async () => {
+    //     if (!newPost.content && !newPost.image) {
+    //         toast.error("You must provide content or an image.");
+    //         return;
+    //     }
+
+    //     setIsPosting(true);
+
+    //     try {
+    //         const formData = new FormData();
+    //         formData.append('title', newPost.title);
+    //         formData.append('content', newPost.content);
+
+    //         if (newPost.image) {
+    //             formData.append('image', newPost.image); // must be a File object
+    //         }
+
+    //         const res = await axios.post(
+    //             `${import.meta.env.VITE_BACKEND_URL}/posts`,
+    //             formData,
+    //             {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    //                     'Content-Type': 'multipart/form-data',
+    //                 },
+    //             }
+    //         );
+
+    //         toast.success(res.data.message || "Post submitted for review!");
+    //         setShowCreate(false);
+    //         setNewPost({ title: '', content: '', image: null });
+    //         setPreviewUrl(null);
+
+    //         const updated = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`);
+    //         setPosts(updated.data);
+
+    //     } catch (err) {
+    //         console.error(err);
+    //         toast.error(err.response?.data?.message || "Failed to create post");
+    //     } finally {
+    //         setIsPosting(false);
+    //     }
+    // };
+
 
     return (
         <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">

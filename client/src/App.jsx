@@ -13,6 +13,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Layout from './components/Layout';
 import AdminLogin from './pages/AdminLogin';
+import AdminEdit from './pages/AdminEdit';
 import AddPage from './pages/AddPage';
 
 export default function App() {
@@ -62,6 +63,14 @@ export default function App() {
             element={
               <ProtectedRoutes requiredRole="admin">
                 <AdminDashboard />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="edit"
+            element={
+              <ProtectedRoutes requiredRole="admin">
+                <AdminEdit />
               </ProtectedRoutes>
             }
           />

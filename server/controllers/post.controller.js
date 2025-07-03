@@ -2,6 +2,90 @@ import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import cloudinary from "../utils/cloudinary.utils.js";
 
+//using multer
+
+// export const createPost = async (req, res) => {
+//     try {
+//         const { title, content } = req.body;
+
+//         if (!title && !content && !req.file) {
+//             return res.status(400).json({ message: "Content or image is required." });
+//         }
+
+//         let imageUrl = null;
+
+//         if (req.file) {
+//             try {
+//                 const uploadResult = cloudinary.uploader.upload_stream(
+//                     { folder: 'colouring-project/posts/images' },
+//                     (error, result) => {
+//                         if (error) {
+//                             console.error("Cloudinary upload error:", error);
+//                             return res.status(500).json({ message: "Image upload failed" });
+//                         }
+
+//                         imageUrl = result.secure_url;
+
+//                         // Save post after upload
+//                         const newPost = new Post({
+//                             author: req.user.id,
+//                             title,
+//                             content,
+//                             imageUrl,
+//                             isApproved: false,
+//                         });
+
+//                         newPost.save().then(() => {
+//                             return res.status(201).json({
+//                                 message: 'Post submitted for review',
+//                                 post: {
+//                                     _id: newPost._id,
+//                                     title: newPost.title,
+//                                     content: newPost.content,
+//                                     imageUrl: newPost.imageUrl,
+//                                 },
+//                             });
+//                         }).catch(err => {
+//                             return res.status(500).json({ message: 'Failed to save post', error: err.message });
+//                         });
+//                     }
+//                 );
+
+//                 // Pipe file buffer to Cloudinary stream
+//                 uploadResult.end(req.file.buffer);
+//                 return;
+
+//             } catch (err) {
+//                 console.error("Cloudinary error:", err);
+//                 return res.status(500).json({ message: "Image upload failed" });
+//             }
+//         } else {
+//             // No image case
+//             const newPost = new Post({
+//                 author: req.user.id,
+//                 title,
+//                 content,
+//                 imageUrl: null,
+//                 isApproved: false,
+//             });
+
+//             await newPost.save();
+
+//             return res.status(201).json({
+//                 message: 'Post submitted for review',
+//                 post: {
+//                     _id: newPost._id,
+//                     title: newPost.title,
+//                     content: newPost.content,
+//                     imageUrl: null,
+//                 },
+//             });
+//         }
+//     } catch (err) {
+//         res.status(500).json({ message: 'Failed to create post', error: err.message });
+//     }
+// };
+
 export const createPost = async (req, res) => {
     try {
         const { title, content, image } = req.body;
