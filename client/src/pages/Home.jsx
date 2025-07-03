@@ -8,6 +8,7 @@ import Tabs from "../components/Tabs";
 import HomeTab1 from "../components/tabs/HomeTab1";
 import HomeTab2 from "../components/tabs/HomeTab2";
 import useGetContent from '../hooks/useGetContent';
+import { Loader2 } from "lucide-react";
 
 export default function Home() {
   const slug = window.location.pathname.split('/')[1];
@@ -30,7 +31,10 @@ export default function Home() {
     }
   }, []);
 
-  if (loading) return <p><Loader2 className="animate-spin" size={24} />Loading...</p>;
+  if (loading) return <div className="flex justify-center items-center gap-x-4">
+    <Loader2 className="animate-spin text-[#3300cc]" size={32} />
+    Loading...
+  </div>;
   if (error) return <p>Error: {error}</p>;
 
   if (!page || !page.sections) {

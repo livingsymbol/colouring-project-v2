@@ -3,6 +3,7 @@ import axios from 'axios';
 import Tabs from '../components/Tabs';
 import Heading from '../components/Heading';
 import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 
 export default function AdminDashboard() {
     const [approvedPosts, setApprovedPosts] = useState([]);

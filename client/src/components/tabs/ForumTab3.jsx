@@ -172,8 +172,9 @@ export default function ForumTab3() {
             )}
 
             {loading ? (
-                <div className="flex justify-center items-center py-16">
+                <div className="flex justify-center items-center gap-x-4">
                     <Loader2 className="animate-spin text-[#3300cc]" size={32} />
+                    Loading...
                 </div>
             ) : (<div className="space-y-4">
                 {posts.map((post) => (

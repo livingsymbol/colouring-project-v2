@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react';
 import Heading from '../components/Heading'
 import Paragraph from '../components/Paragraph';
 import Tabs from '../components/Tabs';
@@ -12,7 +13,10 @@ export default function Colours() {
   const slug = window.location.pathname.split('/')[1];
   const { page, loading, error } = useGetContent(slug, 'en');
 
-  if (loading) return <p><Loader2 className="animate-spin" size={24} />Loading...</p>;
+  if (loading) return <div className="flex justify-center items-center gap-x-4">
+    <Loader2 className="animate-spin text-[#3300cc]" size={32} />
+    Loading...
+  </div>;
   if (error) return <p>Error: {error}</p>;
 
   if (!page || !page.sections) {
