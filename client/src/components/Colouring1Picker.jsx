@@ -20,7 +20,6 @@ const Colouring1Picker = ({
     const updateSize = () => {
       if (!containerRef.current) return;
       const containerWidth = containerRef.current.offsetWidth;
-      console.log('containerWidth', containerWidth)
 
       const maxGap = 5;
       const minGap = 1;

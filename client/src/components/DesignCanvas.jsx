@@ -37,7 +37,7 @@ const scoreMessages = [
   "Great! 100% harmony achieved. Colourings 3, 4 & 5 have been unlocked.",
 ];
 
-const DesignCanvas = ({ color }) => {
+const DesignCanvas = ({ color, showDesc = false }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
   const [colorArray, setColorArray] = useState(() => {
@@ -187,12 +187,15 @@ const DesignCanvas = ({ color }) => {
     <div className="w-full">
       <div className="flex flex-col gap-y-4 items-center">
         <div className="overflow-hidden w-full">
-          <Symbol_without_desc
-            ref={svgRef}
-            className="w-full h-full"
-            color={color}
-          />
-          {/* <Symbol ref={svgRef} color={color} /> */}
+
+          {showDesc ?
+            <Symbol ref={svgRef} color={color} /> :
+            <Symbol_without_desc
+              ref={svgRef}
+              className="w-full h-full"
+              color={color}
+            />
+          }
         </div>
         <canvas
           ref={canvasRef}
