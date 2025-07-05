@@ -172,41 +172,40 @@ export const colours2 = [
     ["#FF3366", "#FF1953", "#FF0040", "#E5003A", "#CC0033"],
 ]
 
+export function rgbToHex(r, g, b) {
+    return (
+        "#" +
+        [r, g, b]
+            .map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            })
+            .join("")
+    );
+}
+
 
 function hasNoDuplicates(colors) {
-    // Create a Set to store unique colors
     const colorSet = new Set();
-
-    // Iterate through the array of colors
     for (const color of colors) {
-        // Check if the color is already in the Set
         if (colorSet.has(color)) {
-            // If found, return false indicating a duplicate
             return false;
         }
-        // Add the color to the Set
         colorSet.add(color);
     }
-
-    // Return true if no duplicates are found
     return true;
 }
 
 function containsWhite(colors) {
-    // Define the hex code for white
     const whiteHex1 = "#FFFFFF";
     const whiteHex2 = "#FFF";
 
-    // Iterate through the array of colors
     for (const color of colors) {
-        // Check if the color is white
         if (color.toUpperCase() === whiteHex1 || color.toUpperCase() === whiteHex2) {
-            // If found, return true indicating a white color is present
             return true;
         }
     }
 
-    // Return false if no white color is found
     return false;
 }
 

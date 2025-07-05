@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { rgbToHex } from '../utils/scoring';
 
 const RYBwhite = ({ size = 300, onColorSelect }) => {
     const canvasRef = useRef(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 })
-
+    
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -48,7 +49,7 @@ const RYBwhite = ({ size = 300, onColorSelect }) => {
         setPointerPosition({ x, y })
         const ctx = canvas.getContext('2d');
         const pixel = ctx.getImageData(x, y, 1, 1).data;
-        const color = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+        const color = rgbToHex(pixel[0], pixel[1], pixel[2]);
         setSelectedColor(color);
         if (onColorSelect) onColorSelect(color);
     };
@@ -83,7 +84,7 @@ const RYBwhite = ({ size = 300, onColorSelect }) => {
             />
         </div>
     );
-    
+
 };
 
 // HSL to RGB conversion
