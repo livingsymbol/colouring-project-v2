@@ -206,7 +206,7 @@ const DesignCanvas = ({ color, showDesc = false }) => {
         <div className="flex justify-between gap-4">
           <div>
             <button
-              className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#c7b73a] hover:text-white shadow-2xl"
+              className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#a58c3a] hover:text-white shadow-2xl"
               onClick={revealScore}>Reveal</button>
             {/* <Modal open={open} onClose={handleClose}>
               <Box sx={style}>
@@ -221,10 +221,10 @@ const DesignCanvas = ({ color, showDesc = false }) => {
             </Modal> */}
           </div>
           <button
-            className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#c7b73a] hover:text-white shadow-2xl"
+            className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#a58c3a] hover:text-white shadow-2xl"
             onClick={saveAsPng}>Download</button>
           <button
-            className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#c7b73a] hover:text-white shadow-2xl"
+            className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#a58c3a] hover:text-white shadow-2xl"
             onClick={resetSymbol}>Reset</button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 
-const Colouring1Picker = ({
+const SwatchesColourPicker = ({
   colors,
   onColorSelect,
   swatchSize,
@@ -90,7 +90,7 @@ const Colouring1Picker = ({
   );
 };
 
-Colouring1Picker.propTypes = {
+SwatchesColourPicker.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   onColorSelect: PropTypes.func.isRequired,
   swatchSize: PropTypes.number,
@@ -101,9 +101,9 @@ Colouring1Picker.propTypes = {
   selectedColor: PropTypes.string,
 };
 
-Colouring1Picker.defaultProps = {
+SwatchesColourPicker.defaultProps = {
   swatchSize: 30,
   gridSize: { rows: 6, cols: 20 },
 };
 
-export default Colouring1Picker;
+export default SwatchesColourPicker;

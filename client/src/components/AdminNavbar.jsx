@@ -5,7 +5,7 @@ export default function AdminNavbar() {
     const location = useLocation();
 
     const navLinkStyle = ({ isActive }) =>
-        `text-md lg:text-lg xl:text-2xl text-center font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] transition-colors ${isActive ? "text-[#c7b73a]" : "text-white hover:text-[#c7b73a]"
+        `text-md lg:text-lg xl:text-2xl text-center font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] transition-colors ${isActive ? "text-[#a58c3a]" : "text-white hover:text-[#a58c3a]"
         }`;
 
     return (

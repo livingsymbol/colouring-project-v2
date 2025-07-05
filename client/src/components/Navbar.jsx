@@ -40,7 +40,7 @@ export default function Navbar() {
                                     key={name}
                                     to={path}
                                     className={({ isActive }) =>
-                                        `text-md lg:text-lg xl:text-2xl text-center hover:text-[#c7b73a] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#c7b73a]" : "text-white"
+                                        `text-md lg:text-lg xl:text-2xl text-center hover:text-[#a58c3a] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#a58c3a]" : "text-white"
                                         }`
                                     }
                                 >
@@ -99,7 +99,7 @@ export default function Navbar() {
                                 to={path}
                                 onClick={() => setIsOpen(false)}
                                 className={({ isActive }) =>
-                                    `block px-3 py-2 rounded-md font-semibold hover:text-[#c7b73a] ${isActive ? "text-[#c7b73a]" : "text-white"
+                                    `block px-3 py-2 rounded-md font-semibold hover:text-[#a58c3a] ${isActive ? "text-[#a58c3a]" : "text-white"
                                     }`
                                 }
                             >

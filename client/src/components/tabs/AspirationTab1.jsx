@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AspirationTabTemplate from "../AspirationTabTemplate";
-import Colouring1Picker from "../Colouring1Picker";
+import SwatchesColourPicker from "../SwatchesColourPicker";
 import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
@@ -17,8 +17,8 @@ export default function AspirationTab1() {
     return (
         <AspirationTabTemplate palette=
             {<div className="h-full flex flex-col justify-around">
-                <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#c7b73a] p-4 rounded-3xl shadow-2xl">
-                    <Colouring1Picker
+                <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#a58c3a] p-4 rounded-3xl shadow-2xl">
+                    <SwatchesColourPicker
                         colors={colours1}
                         onColorSelect={handleColorSelect}
                         swatchSize={25}
