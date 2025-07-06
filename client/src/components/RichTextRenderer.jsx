@@ -6,6 +6,7 @@ import Link from '@tiptap/extension-link'
 import HardBreak from '@tiptap/extension-hard-break'
 import BulletList from '@tiptap/extension-bullet-list'
 import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
 
 export default function RichTextRenderer({ content }) {
     if (!content || typeof content !== 'object') {
@@ -25,12 +26,13 @@ export default function RichTextRenderer({ content }) {
         Link,
         TextAlign.configure({ types: ['heading', 'paragraph'] }),
         BulletList,
-        ListItem
+        ListItem,
+        OrderedList
     ])
 
     return (
         <div
-            className="my-4 text-[#0000cc] font-semibold text-base sm:text-lg leading-relaxed"
+            className="my-4 text-[#0000cc] font-semibold text-base sm:text-lg leading-relaxed ProseMirror"
             dangerouslySetInnerHTML={{ __html: html }}
         />
     )

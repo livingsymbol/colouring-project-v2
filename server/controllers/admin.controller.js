@@ -1,6 +1,7 @@
 import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import sendEmail from '../utils/sendEmail.js';
+import Page from '../models/Page.js';
 
 export async function getDashboardData(req, res) {
     try {
@@ -99,15 +100,6 @@ export const deleteComment = async (req, res) => {
     }
 };
 
-export const getPendingPosts = async (req, res) => {
-    try {
-        const posts = await Post.find({ isApproved: false }).populate('author', 'username');
-        res.json(posts);
-    } catch (err) {
-        res.status(500).json({ message: 'Failed to fetch pending posts', error: err.message });
-    }
-};
-
 // Approve a post
 export const approvePost = async (req, res) => {
     const { id } = req.params;
@@ -151,5 +143,51 @@ export const deletePost = async (req, res) => {
         res.json({ message: 'Post and associated comments deleted successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Failed to delete post', error: err.message });
+    }
+};
+
+// Get relevent tab content by label and page
+export const getTabByLabel = async (req, res) => {
+    const { slug, label } = req.params;
+    const locale = req.query.locale || 'en';
+
+    try {
+        const page = await Page.findOne({ slug, locale });
+
+        if (!page) return res.status(404).json({ error: 'Page not found' });
+
+        const tab = page.sections.find(section => section.label === label);
+        if (!tab) return res.status(404).json({ error: 'Tab not found' });
+
+        res.json(tab);
+    } catch (err) {
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+// PATCH tab content by label and page
+export const patchTabByLabel = async (req, res) => {
+    const { slug, label } = req.params;
+    const locale = req.query.locale || 'en';
+    const { content } = req.body;
+
+    if (!content) {
+        return res.status(400).json({ error: 'Content is required' });
+    }
+
+    try {
+        const page = await Page.findOne({ slug, locale });
+
+        if (!page) return res.status(404).json({ error: 'Page not found' });
+
+        const tabIndex = page.sections.findIndex(section => section.label === label);
+        if (tabIndex === -1) return res.status(404).json({ error: 'Tab not found' });
+
+        page.sections[tabIndex].content = content;
+        await page.save();
+
+        res.json({ message: 'Tab content updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error' });
     }
 };
