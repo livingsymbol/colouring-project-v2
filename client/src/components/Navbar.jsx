@@ -2,12 +2,12 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const navItems = [
-    { name: "Home", path: "/home" },
-    { name: "Colours", path: "/colours" },
-    { name: "Finding Harmony", path: "/finding-harmony" },
-    { name: "Aspiration at Work", path: "/aspiration-at-work" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "Forum & your Colourings", path: "/forum-and-colouring" },
+    { name: <>Home</>, path: "/home" },
+    { name: <>Colours</>, path: "/colours" },
+    { name: <>Finding<br />Harmony</>, path: "/finding-harmony" },
+    { name: <>Aspiration<br />at Work</>, path: "/aspiration-at-work" },
+    { name: <>Gallery</>, path: "/gallery" },
+    { name: <>Forum & your<br />Colourings</>, path: "/forum-and-colouring" },
 ];
 
 export default function Navbar() {
@@ -16,7 +16,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="bg-[#3300cc]">
+            <nav className="bg-[#979bca]">
                 <div className="mx-auto px-2 md:px-4">
                     <div className="flex justify-between h-20 items-center">
                         {/* Left icons */}
@@ -40,7 +40,7 @@ export default function Navbar() {
                                     key={name}
                                     to={path}
                                     className={({ isActive }) =>
-                                        `text-md lg:text-lg xl:text-2xl text-center hover:text-[#a58c3a] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#a58c3a]" : "text-white"
+                                        `text-md lg:text-lg xl:text-2xl text-center hover:text-[#d2c460] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#d2c460]" : "text-white"
                                         }`
                                     }
                                 >
@@ -99,7 +99,7 @@ export default function Navbar() {
                                 to={path}
                                 onClick={() => setIsOpen(false)}
                                 className={({ isActive }) =>
-                                    `block px-3 py-2 rounded-md font-semibold hover:text-[#a58c3a] ${isActive ? "text-[#a58c3a]" : "text-white"
+                                    `block px-3 py-2 rounded-md font-semibold hover:text-[#d2c460] ${isActive ? "text-[#d2c460]" : "text-white"
                                     }`
                                 }
                             >
@@ -114,12 +114,12 @@ export default function Navbar() {
             {/* Full width bottom border with gradient */}
             <div
                 style={{
-                    height: "16px",
+                    height: "20px",
                     width: "100vw",
                     position: "relative",
                     left: 0,
                     right: 0,
-                    background: "linear-gradient(to bottom, #3300cc 0%, #00d5ff 50%, #3300cc 100%)",
+                    background: "linear-gradient(to bottom, #979bca 0%, #ffffff 100%)",
                     marginTop: "-8px", // to sit flush under nav
                     zIndex: 10,
                 }}

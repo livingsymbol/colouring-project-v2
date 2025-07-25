@@ -44,17 +44,17 @@ export default function Home() {
   const tabsData = [
     {
       label: (
-        <a className="underline hover:bg-blue-200" href="https://themothersguidance.com/the-mother/" target="_blank" rel="noreferrer">
+        <span>
           {page.sections[0].label}
-        </a>
+        </span>
       ),
       content: <HomeTab1 content={page.sections[0].content} />,
     },
     {
       label: (
-        <a className="underline hover:bg-blue-200" href="https://themothersguidance.com/sri-aurobindo/" target="_blank" rel="noreferrer">
+        <span>
           {page.sections[1].label}
-        </a>
+        </span>
       ),
       content: <HomeTab2 content={page.sections[1].content} />,
     },

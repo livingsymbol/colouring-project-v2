@@ -27,7 +27,6 @@ import OrderedList from '@tiptap/extension-ordered-list';
 
 const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-// Replace this with your actual list
 const PAGE_TAB_MAP = {
     'home': ['The Mother', 'Sri Aurobindo'],
     'colours': ['Physics of light and colour', 'Physiology of colour vision', 'Colour psychology', 'Colour theory in art and design', 'Colour in traditional yoga'],
