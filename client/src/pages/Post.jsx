@@ -70,7 +70,7 @@ export default function Post() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-8 space-y-10 bg-white rounded-xl">
+        <div className="max-w-4xl mx-auto p-8 space-y-10 bg-white rounded-xl  border-2">
             {loading ? (
                 <div className="flex justify-center items-center min-h-[300px]">
                     <Loader2 className="animate-spin text-[#404040]" size={36} />
@@ -125,7 +125,7 @@ export default function Post() {
                                     <button
                                         onClick={handleCommentSubmit}
                                         disabled={commentLoading || !commentInput.trim()}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="flex gap-x-2 bg-[#c7b73a] text-black border-2 font-bold px-4 py-2 rounded-lg shadow hover:bg-[#c7b63ada] transition-all duration-200 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {commentLoading ? (
                                             <>

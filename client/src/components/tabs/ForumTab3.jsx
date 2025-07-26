@@ -95,59 +95,13 @@ export default function ForumTab3() {
         }
     };
 
-    // using form data
-    // const handlePostSubmit = async () => {
-    //     if (!newPost.content && !newPost.image) {
-    //         toast.error("You must provide content or an image.");
-    //         return;
-    //     }
-
-    //     setIsPosting(true);
-
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append('title', newPost.title);
-    //         formData.append('content', newPost.content);
-
-    //         if (newPost.image) {
-    //             formData.append('image', newPost.image); // must be a File object
-    //         }
-
-    //         const res = await axios.post(
-    //             `${import.meta.env.VITE_BACKEND_URL}/posts`,
-    //             formData,
-    //             {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    //                     'Content-Type': 'multipart/form-data',
-    //                 },
-    //             }
-    //         );
-
-    //         toast.success(res.data.message || "Post submitted for review!");
-    //         setShowCreate(false);
-    //         setNewPost({ title: '', content: '', image: null });
-    //         setPreviewUrl(null);
-
-    //         const updated = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`);
-    //         setPosts(updated.data);
-
-    //     } catch (err) {
-    //         console.error(err);
-    //         toast.error(err.response?.data?.message || "Failed to create post");
-    //     } finally {
-    //         setIsPosting(false);
-    //     }
-    // };
-
-
     return (
         <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-8 md:mb-16 border-b-2 p-4">
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#404040]">Forum</h1>
                 <button
                     onClick={() => setShowCreate((prev) => !prev)}
-                    className="bg-[#fff2cd] text-black px-4 py-2 rounded-lg shadow hover:bg-[#e1d6b3] transition-colors duration-200"
+                    className="bg-[#c7b73a] text-black border-2 font-bold px-4 py-2 rounded-lg shadow hover:bg-[#c7b63ada] hover:-translate-y-1 duration-200 transition-all"
                 >
                     {showCreate ? "Cancel" : "+ Create Post"}
                 </button>
@@ -225,11 +179,12 @@ export default function ForumTab3() {
                 {posts.map((post) => (
                     <div
                         key={post._id}
-                        className="p-4 border border-gray-200 bg-gray-200 rounded-2xl shadow-md space-y-4"
+                        className="p-4 border-2 bg-gray-200 rounded-2xl shadow-md space-y-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-200 cursor-pointer"
+                        onClick={() => navigate(`/forum/post/${post._id}`)}
                     >
                         {/* User Info Row */}
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-1 text-sm text-gray-600">
-                            <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">@{post.author.username}</span>
+                            <span className="bg-blue-100 border-2 text-blue-700 px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">@{post.author.username}</span>
                             <span className="text-sm text-gray-500">
                                 {new Date(post.createdAt).toLocaleString(undefined, {
                                     dateStyle: 'medium',
@@ -246,7 +201,9 @@ export default function ForumTab3() {
 
                         {/* Content */}
                         <p className="text-gray-800 p-2 rounded-lg text-base leading-relaxed whitespace-pre-wrap">
-                            {post.content}
+                            {post.content.length > 200
+                                ? post.content.slice(0, 200) + '...'
+                                : post.content}
                         </p>
 
                         {/* Image */}
@@ -264,7 +221,7 @@ export default function ForumTab3() {
                         <div className="pt-2">
                             <button
                                 onClick={() => navigate(`/forum/post/${post._id}`)}
-                                className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline font-medium"
+                                className="inline-flex p-1 items-center gap-2 text-sm hover:-translate-y-1 transition-all duration-200 hover:bg-[#c7b63ada] font-medium bg-[#c7b73a] border-2 rounded-md text-black"
                             >
                                 <MessageCircle size={16} /> Comment
                             </button>
