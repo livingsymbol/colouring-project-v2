@@ -56,7 +56,7 @@ export default function Navbar() {
                                 type="button"
                                 aria-controls="mobile-menu"
                                 aria-expanded={isOpen}
-                                className="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#3300cc] focus:ring-[#00d5ff]"
+                                className="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#404040] focus:ring-[#00d5ff]"
                             >
                                 <span className="sr-only">Open main menu</span>
                                 {!isOpen ? (
@@ -91,7 +91,7 @@ export default function Navbar() {
                 {isOpen && (
                     <div
                         id="mobile-menu"
-                        className="md:hidden absolute top-20 left-0 w-full bg-[#3300cc] z-20 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-md"
+                        className="md:hidden absolute top-20 left-0 w-full bg-[#404040] z-20 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-md"
                     >
                         {navItems.map(({ name, path }) => (
                             <NavLink

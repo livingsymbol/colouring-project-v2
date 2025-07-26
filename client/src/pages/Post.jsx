@@ -73,7 +73,7 @@ export default function Post() {
         <div className="max-w-4xl mx-auto p-8 space-y-10 bg-white rounded-xl">
             {loading ? (
                 <div className="flex justify-center items-center min-h-[300px]">
-                    <Loader2 className="animate-spin text-[#3300cc]" size={36} />
+                    <Loader2 className="animate-spin text-[#404040]" size={36} />
                 </div>
             ) : (
                 post && (

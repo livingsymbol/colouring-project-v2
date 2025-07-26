@@ -144,10 +144,10 @@ export default function ForumTab3() {
     return (
         <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl sm:text-3xl font-bold text-[#3300cc]">Forum</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#404040]">Forum</h1>
                 <button
                     onClick={() => setShowCreate((prev) => !prev)}
-                    className="bg-[#3300cc] text-white px-4 py-2 rounded-lg shadow hover:bg-[#220099] transition-colors"
+                    className="bg-[#fff2cd] text-black px-4 py-2 rounded-lg shadow hover:bg-[#e1d6b3] transition-colors duration-200"
                 >
                     {showCreate ? "Cancel" : "+ Create Post"}
                 </button>
@@ -161,13 +161,13 @@ export default function ForumTab3() {
                 >
                     <input
                         type="text"
-                        className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#3300cc]"
+                        className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#404040]"
                         placeholder="Give a title to your post"
                         value={newPost.title}
                         onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                     />
                     <textarea
-                        className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#3300cc]"
+                        className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#404040]"
                         rows={4}
                         placeholder="What's on your mind?"
                         value={newPost.content}
@@ -218,7 +218,7 @@ export default function ForumTab3() {
 
             {loading ? (
                 <div className="flex justify-center items-center gap-x-4">
-                    <Loader2 className="animate-spin text-[#3300cc]" size={32} />
+                    <Loader2 className="animate-spin text-[#404040]" size={32} />
                     Loading...
                 </div>
             ) : (<div className="space-y-4">
@@ -239,7 +239,7 @@ export default function ForumTab3() {
                         </div>
                         {/* Title */}
                         {post.title && (
-                            <h3 className="text-lg sm:text-xl p-2 font-semibold text-[#3300cc]">
+                            <h3 className="text-lg sm:text-xl p-2 font-semibold text-[#404040]">
                                 {post.title}
                             </h3>
                         )}

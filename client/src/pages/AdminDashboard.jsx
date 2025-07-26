@@ -119,7 +119,7 @@ export default function AdminDashboard() {
 
             {/* Title */}
             {post.title && (
-                <h3 className="text-lg font-semibold text-[#3300cc]">
+                <h3 className="text-lg font-semibold text-[#404040]">
                     {post.title}
                 </h3>
             )}
@@ -249,7 +249,7 @@ export default function AdminDashboard() {
             label: `Approved Posts (${approvedPosts.length})`,
             content: (
                 <div className="max-w-5xl mx-auto px-4 py-6">
-                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Approved Posts</h2>
+                    <h2 className="text-3xl font-bold text-[#404040] mb-6">Approved Posts</h2>
 
                     <div className="space-y-6">
                         {approvedPosts.length === 0 ? (
@@ -267,7 +267,7 @@ export default function AdminDashboard() {
             label: `Partially Approved Posts (${partiallyApprovedPosts.length})`,
             content: (
                 <div className="max-w-5xl mx-auto px-4 py-6">
-                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Partially Approved Posts</h2>
+                    <h2 className="text-3xl font-bold text-[#404040] mb-6">Partially Approved Posts</h2>
 
                     <div className="space-y-6">
                         {partiallyApprovedPosts.length === 0 ? (
@@ -290,7 +290,7 @@ export default function AdminDashboard() {
             label: `Pending Posts (${pendingPosts.length})`,
             content: (
                 <div className="max-w-5xl mx-auto px-4 py-6">
-                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Pending Posts</h2>
+                    <h2 className="text-3xl font-bold text-[#404040] mb-6">Pending Posts</h2>
 
                     <div className="space-y-6">
                         {pendingPosts.length === 0 ? (
@@ -309,7 +309,7 @@ export default function AdminDashboard() {
             content: (
 
                 <div className="max-w-5xl mx-auto px-4 py-6">
-                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Approved Comments</h2>
+                    <h2 className="text-3xl font-bold text-[#404040] mb-6">Approved Comments</h2>
 
                     <div className="space-y-6">
                         {approvedComments.length === 0 ? (
@@ -328,7 +328,7 @@ export default function AdminDashboard() {
             content: (
 
                 <div className="max-w-5xl mx-auto px-4 py-6">
-                    <h2 className="text-3xl font-bold text-[#3300cc] mb-6">Flagged Comments</h2>
+                    <h2 className="text-3xl font-bold text-[#404040] mb-6">Flagged Comments</h2>
 
                     <div className="space-y-6">
                         {flaggedComments.length === 0 ? (

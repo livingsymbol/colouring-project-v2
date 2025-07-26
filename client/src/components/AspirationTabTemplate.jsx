@@ -42,7 +42,7 @@ export default function AspirationTabTemplate({ palette, symbol }) {
                     {/* Play icon + text column */}
                     <span className="flex flex-col items-center justify-center">
                         <Play size={24} className="text-gray-600 border-2 border-[#a58c3a]" />
-                        <span className="text-xs font-bold text-[#3300cc] mt-1">Play video</span>
+                        <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
                     </span>
 
                     {/* Symbol Image */}

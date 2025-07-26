@@ -32,7 +32,7 @@ export default function Home() {
   }, []);
 
   if (loading) return <div className="flex justify-center items-center gap-x-4">
-    <Loader2 className="animate-spin text-[#3300cc]" size={32} />
+    <Loader2 className="animate-spin text-[#404040]" size={32} />
     Loading...
   </div>;
   if (error) return <p>Error: {error}</p>;

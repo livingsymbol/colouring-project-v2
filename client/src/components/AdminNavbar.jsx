@@ -9,7 +9,7 @@ export default function AdminNavbar() {
         }`;
 
     return (
-        <div className="w-full bg-[#3300cc] py-4 px-6 shadow-lg flex justify-between items-center mb-6">
+        <div className="w-full bg-[#404040] py-4 px-6 shadow-lg flex justify-between items-center mb-6">
             {/* Left icons */}
             <div className="flex items-center space-x-4">
                 <img
