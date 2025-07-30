@@ -1,125 +1,154 @@
+// export const colours1 = [
+//     "#3AFF19",
+//     "#E500E5",
+//     "#FFFF19",
+//     "#0055FF",
+//     "#E54C00",
+//     "#00FFFF",
+//     "#FF0080",
+//     "#9933FF",
+//     "#CC4400",
+//     "#7019FF",
+//     "#FF7733",
+//     "#6600CC",
+//     "#CC6600",
+//     "#CC0000",
+//     "#99FF00",
+//     "#1D00E5",
+//     "#00CC44",
+//     "#FF9933",
+//     "#1966FF",
+//     "#1DCC00",
+//     "#1A00CC",
+//     "#FFAA00",
+//     "#FF8D19",
+//     "#FF1919",
+//     "#FF19FF",
+//     "#CC2900",
+//     "#CC5700",
+//     "#FF3300",
+//     "#20E500",
+//     "#CC0066",
+//     "#FF9200",
+//     "#00FF00",
+//     "#4000FF",
+//     "#8AE500",
+//     "#2000FF",
+//     "#E57300",
+//     "#CCCC00",
+//     "#FFB219",
+//     "#3377FF",
+//     "#3A00E5",
+//     "#E50000",
+//     "#CC8800",
+//     "#FF5500",
+//     "#FFBB33",
+//     "#FF6619",
+//     "#8000FF",
+//     "#3619FF",
+//     "#33FF77",
+//     "#00E5E5",
+//     "#CC7500",
+//     "#AA00FF",
+//     "#77FF33",
+//     "#4D33FF",
+//     "#E59900",
+//     "#0044CC",
+//     "#3300CC",
+//     "#A3FF19",
+//     "#5600E5",
+//     "#8D19FF",
+//     "#55FF00",
+//     "#FFFF00",
+//     "#FF00FF",
+//     "#66FF19",
+//     "#0000FF",
+//     "#44CC00",
+//     "#19FF66",
+//     "#FFD633",
+//     "#CCA300",
+//     "#E56200",
+//     "#FF0000",
+//     "#FFCC00",
+//     "#4CE500",
+//     "#7ACC00",
+//     "#8033FF",
+//     "#CC00CC",
+//     "#E52E00",
+//     "#9900E5",
+//     "#00E54D",
+//     "#FF3399",
+//     "#0000E5",
+//     "#00CCCC",
+//     "#FF6D00",
+//     "#4D00CC",
+//     "#FF4719",
+//     "#FF198D",
+//     "#00E500",
+//     "#E5B800",
+//     "#6633FF",
+//     "#E5E500",
+//     "#E58300",
+//     "#6000FF",
+//     "#00CC00",
+//     "#FF7C19",
+//     "#00FF55",
+//     "#FF9D19",
+//     "#0000CC",
+//     "#FF5C33",
+//     "#33FFFF",
+//     "#FF8000",
+//     "#24FF00",
+//     "#19FFFF",
+//     "#FFFF33",
+//     "#FF3333",
+//     "#BB33FF",
+//     "#1919FF",
+//     "#FF8A33",
+//     "#19FF19",
+//     "#50FF33",
+//     "#E50073",
+//     "#B319FF",
+//     "#33FF33",
+//     "#004DE5",
+//     "#ADFF33",
+//     "#FFD119",
+//     "#3333FF",
+//     "#8800CC",
+//     "#FF33FF",
+//     "#7300E5",
+//     "#FFA833",
+//     "#5319FF"
+// ]
+
+const PRIMARIES = ["#ff0000", "#ff9933", "#ffff00", "#009900", "#0000ff", "#6600cc"]
+
 export const colours1 = [
-    "#3AFF19",
-    "#E500E5",
-    "#FFFF19",
-    "#0055FF",
-    "#E54C00",
-    "#00FFFF",
-    "#FF0080",
-    "#9933FF",
-    "#CC4400",
-    "#7019FF",
-    "#FF7733",
-    "#6600CC",
-    "#CC6600",
-    "#CC0000",
-    "#99FF00",
-    "#1D00E5",
-    "#00CC44",
-    "#FF9933",
-    "#1966FF",
-    "#1DCC00",
-    "#1A00CC",
-    "#FFAA00",
-    "#FF8D19",
-    "#FF1919",
-    "#FF19FF",
-    "#CC2900",
-    "#CC5700",
-    "#FF3300",
-    "#20E500",
-    "#CC0066",
-    "#FF9200",
-    "#00FF00",
-    "#4000FF",
-    "#8AE500",
-    "#2000FF",
-    "#E57300",
-    "#CCCC00",
-    "#FFB219",
-    "#3377FF",
-    "#3A00E5",
-    "#E50000",
-    "#CC8800",
-    "#FF5500",
-    "#FFBB33",
-    "#FF6619",
-    "#8000FF",
-    "#3619FF",
-    "#33FF77",
-    "#00E5E5",
-    "#CC7500",
-    "#AA00FF",
-    "#77FF33",
-    "#4D33FF",
-    "#E59900",
-    "#0044CC",
-    "#3300CC",
-    "#A3FF19",
-    "#5600E5",
-    "#8D19FF",
-    "#55FF00",
-    "#FFFF00",
-    "#FF00FF",
-    "#66FF19",
-    "#0000FF",
-    "#44CC00",
-    "#19FF66",
-    "#FFD633",
-    "#CCA300",
-    "#E56200",
-    "#FF0000",
-    "#FFCC00",
-    "#4CE500",
-    "#7ACC00",
-    "#8033FF",
-    "#CC00CC",
-    "#E52E00",
-    "#9900E5",
-    "#00E54D",
-    "#FF3399",
-    "#0000E5",
-    "#00CCCC",
-    "#FF6D00",
-    "#4D00CC",
-    "#FF4719",
-    "#FF198D",
-    "#00E500",
-    "#E5B800",
-    "#6633FF",
-    "#E5E500",
-    "#E58300",
-    "#6000FF",
-    "#00CC00",
-    "#FF7C19",
-    "#00FF55",
-    "#FF9D19",
-    "#0000CC",
-    "#FF5C33",
-    "#33FFFF",
-    "#FF8000",
-    "#24FF00",
-    "#19FFFF",
-    "#FFFF33",
-    "#FF3333",
-    "#BB33FF",
-    "#1919FF",
-    "#FF8A33",
-    "#19FF19",
-    "#50FF33",
-    "#E50073",
-    "#B319FF",
-    "#33FF33",
-    "#004DE5",
-    "#ADFF33",
-    "#FFD119",
-    "#3333FF",
-    "#8800CC",
-    "#FF33FF",
-    "#7300E5",
-    "#FFA833",
-    "#5319FF"
-]
+    ["#ff5e4d", "#ff4031", "#ff0000", "#de0000", "#be0000"],
+    ["#ff6b4e", "#ff5333", "#ff3300", "#de2b00", "#be2300"],
+    ["#ff8953", "#ff7837", "#ff6600", "#de5800", "#be4a00"],
+    ["#ff9d5b", "#ff8f41", "#ff8119", "#de6f14", "#be5e10"],
+    ["#ffaf68", "#ffa450", "#ff9933", "#de842b", "#be7023"],
+    ["#ffc061", "#ffb846", "#ffaf19", "#de9814", "#be8110"],
+    ["#ffd762", "#ffd243", "#ffcc00", "#deb100", "#be9700"],
+    ["#ffd265", "#ffcc48", "#ffc619", "#deac14", "#be9210"],
+    ["#feff6b", "#ffff4b", "#ffff00", "#dede00", "#bebe00"],
+    ["#93ec60", "#83e942", "#73e600", "#63c800", "#54ab00"],
+    ["#60d859", "#42d23c", "#00cc00", "#00b100", "#009700"],
+    ["#59c353", "#3cba37", "#00b200", "#009a00", "#008300"],
+    ["#53ae4d", "#36a432", "#009900", "#008400", "#007000"],
+    ["#5ac27b", "#3dba6a", "#00b259", "#009a4c", "#008340"],
+    ["#63d7d6", "#45d1d1", "#00cccc", "#00b1b1", "#009797"],
+    ["#4a91ee", "#2f82ea", "#0073e6", "#0063c8", "#0054ab"],
+    ["#2260ff", "#0541ff", "#0000ff", "#0000de", "#0000be"],
+    ["#3b54db", "#2b38d4", "#2200cc", "#1c00b1", "#160097"],
+    ["#5048b1", "#402da5", "#330099", "#2b0084", "#230070"],
+    ["#664dc6", "#5832bd", "#4b00b3", "#40009b", "#350084"],
+    ["#7f52da", "#7236d3", "#6600cc", "#5800b1", "#4a0097"],
+    ["#9852da", "#8d36d3", "#8100cc", "#6f00b1", "#5e0097"],
+    ["#ae54d9", "#a437d3", "#9900cc", "#8400b1", "#700097"],
+    ["#f159a4", "#ec3c99", "#e6008e", "#c8007b", "#ab0068"],
+];
 
 export const colours2 = [
     ["#FF3333", "#FF1919", "#FF0000", "#E50000", "#CC0000"],
@@ -172,6 +201,24 @@ export const colours2 = [
     ["#FF3366", "#FF1953", "#FF0040", "#E5003A", "#CC0033"],
 ]
 
+export const SCORE_MESSAGE_MAP = {
+    DuplicateColours: 'DuplicateColours',
+    IncompletePetals: 'IncompletePetals',
+    Below50: 'Below50',
+    Below70: 'Below70',
+    Above70: 'Above70',
+    FullHarmony: 'FullHarmony',
+};
+
+export const SCORE_MESSAGES = {
+    [SCORE_MESSAGE_MAP.DuplicateColours]: "Duplicate colours are not harmonious.",
+    [SCORE_MESSAGE_MAP.IncompletePetals]: "Please fill all petals with colours.",
+    [SCORE_MESSAGE_MAP.Below50]: "Scored below 50%, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
+    [SCORE_MESSAGE_MAP.Below70]: "% harmony achieved, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
+    [SCORE_MESSAGE_MAP.Above70]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see “Guidance”, section 4 - Colour theory in art and design.",
+    [SCORE_MESSAGE_MAP.FullHarmony]: "Great! 100% harmony achieved. Colourings 3, 4 & 5 have been unlocked.",
+};
+
 export function rgbToHex(r, g, b) {
     return (
         "#" +
@@ -184,25 +231,44 @@ export function rgbToHex(r, g, b) {
     );
 }
 
-
-function hasNoDuplicates(colors) {
-    const colorSet = new Set();
-    for (const color of colors) {
-        if (colorSet.has(color)) {
+function hasNoDuplicates(colours) {
+    const colourSet = new Set();
+    for (const colour of colours) {
+        if (colourSet.has(colour)) {
             return false;
         }
-        colorSet.add(color);
+        colourSet.add(colour);
     }
     return true;
 }
 
-function containsWhite(colors) {
-    const whiteHex1 = "#FFFFFF";
-    const whiteHex2 = "#FFF";
-
-    for (const color of colors) {
-        if (color.toUpperCase() === whiteHex1 || color.toUpperCase() === whiteHex2) {
+function containsWhite(colours) {
+    for (const colour of colours) {
+        if (colour.toUpperCase() === "#FFFFFF") {
             return true;
+        }
+    }
+    return false;
+}
+
+function containsPrimaries(colourArray) {
+    const n = colourArray.length;
+    const normalized = colourArray.map(c => c.toLowerCase());
+
+    for (let start = 0; start < n; start++) {
+        for (let parity = 0; parity <= 1; parity++) {
+            let match = true;
+
+            for (let i = 0; i < PRIMARIES.length; i++) {
+                const index = (start + i * 2) % n;
+
+                if (index % 2 !== parity || normalized[index] !== PRIMARIES[i]) {
+                    match = false;
+                    break;
+                }
+            }
+
+            if (match) return true;
         }
     }
 
@@ -222,7 +288,7 @@ function findRowIn2DMatrix(matrix, target) {
 //helper function for correctColorOrder
 function getClosestBaseColor(hexCode, num) {
     if (num === 1) {
-        const rowNum = findRowIn2DMatrix(colors1, hexCode)
+        const rowNum = findRowIn2DMatrix(colours1, hexCode)
         if (rowNum >= 0 && rowNum < 4) return "#FF0000";
         if (rowNum >= 4 && rowNum < 8) return "#FF9933";
         if (rowNum >= 8 && rowNum < 12) return "#FFFF00";
@@ -231,7 +297,7 @@ function getClosestBaseColor(hexCode, num) {
         if (rowNum >= 20) return "#6600CC";
     }
     else {
-        const rowNum = findRowIn2DMatrix(colors2, hexCode)
+        const rowNum = findRowIn2DMatrix(colours2, hexCode)
         if (rowNum >= 0 && rowNum < 6) return "#FF0000";
         if (rowNum >= 6 && rowNum < 12) return "#FF9933";
         if (rowNum >= 12 && rowNum < 18) return "#FFFF00";
@@ -281,11 +347,11 @@ const correctColorOrder = (baseColors, num) => {
     let colorRows = [];
     if (num === 1) {
         for (let color of baseColors)
-            colorRows.push(findRowIn2DMatrix(colors1, color))
+            colorRows.push(findRowIn2DMatrix(colours1, color))
     }
     else {
         for (let color of baseColors)
-            colorRows.push(findRowIn2DMatrix(colors2, color))
+            colorRows.push(findRowIn2DMatrix(colours2, color))
     }
 
     // console.log('isSortedOrRotatedSorted(colorRows)', isSortedOrRotatedSorted(colorRows))
@@ -323,69 +389,43 @@ const countOfContainsMainSixPrimaries = (colorArray) => { //returns the no. of o
     return count;
 }
 
-const containsPrimaries = (colorArray) => {
-
-    function hasPrimary(colorArray, index) {
-        let count_hasPrimary = 0;
-        for (let color of colors1[index]) {
-            if (colorArray.indexOf(color) != -1) {
-                count_hasPrimary++;
-            }
-        }
-        return count_hasPrimary;
-    }
-
-
-    let count = 0;
-
-    for (let i = 0; i < 24; i += 4) {
-        count += hasPrimary(colorArray, i);
-    }
-    // console.log('count from inside containsPrimaries', count);
-    return count >= 6;
-}
-
 // Grading function
-export const gradeColors = (colorArray, num) => {
+export const gradeColours = (colorArray, num) => {
 
     if (containsWhite(colorArray)) {
-        // console.log("unfilled petals")
         return -3;
     }
 
     if (!hasNoDuplicates(colorArray)) {
-        // console.log("duplicates")
         return -2;
     }
 
     if (!containsPrimaries(colorArray)) {
-        // console.log("all 6 primary colors not present")
         return -1;
     }
     if (!correctColorOrder(colorArray, num)) {
-        // console.log("incorrect order")
         return -1;
     }
     if (num === 1) {
         // let countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
-        // let score = 100 - (12 - findMaxMatches(colorArray, colors1)) * 8.4;
+        // let score = 100 - (12 - findMaxMatches(colorArray, colours1)) * 8.4;
         // console.log("hello there! ",score)
         // return score === 100 ? (countOfMainSixPrimaries === 6 ? 100 : 85) : score - 8.4 * countOfMainSixPrimaries;
 
         const countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
         const maxScore = countOfMainSixPrimaries >= 3 ? 100 : 85;
-        const score = maxScore - (12 - findMaxMatches(colorArray, colors1)) * 8.4;
+        const score = maxScore - (12 - findMaxMatches(colorArray, colours1)) * 8.4;
         return score;
 
     }
     else {
         // let countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
-        // let score = 100 - (12 - findMaxMatches(colorArray, colors2)) * 8.4;
+        // let score = 100 - (12 - findMaxMatches(colorArray, colours2)) * 8.4;
         // return score === 100 ? (countOfMainSixPrimaries === 6 ? 100 : 85) : score - 8.4 * countOfMainSixPrimaries;
 
         const countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
         const maxScore = countOfMainSixPrimaries >= 3 ? 100 : 85;
-        const score = maxScore - (12 - findMaxMatches(colorArray, colors2)) * 8.4;
+        const score = maxScore - (12 - findMaxMatches(colorArray, colours2)) * 8.4;
         return score;
 
     }

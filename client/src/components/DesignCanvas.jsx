@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import Symbol from "../../public/symbol/Symbol.jsx";
 import Symbol_without_desc from "../../public/symbol/Symbol_without_desc.jsx";
-// import Box from "@mui/material/Box";
-// import Typography from "@mui/material/Typography";
-// import Modal from "@mui/material/Modal";
-import { gradeColors } from "../utils/scoring.js";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { gradeColours, SCORE_MESSAGES, SCORE_MESSAGE_MAP } from "../utils/scoring.js";
 
 const style = {
   position: "absolute",
@@ -27,15 +26,6 @@ const style = {
   alignItems: "center",
   textAlign: "center",
 };
-
-const scoreMessages = [
-  "Duplicate colours are not harmonious.",
-  "Please fill all petals with colours.",
-  "Scored below 50%, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
-  "% harmony achieved, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
-  "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see “Guidance”, section 4 - Colour theory in art and design.",
-  "Great! 100% harmony achieved. Colourings 3, 4 & 5 have been unlocked.",
-];
 
 const DesignCanvas = ({ color, showDesc = false }) => {
   const svgRef = useRef(null);
@@ -146,26 +136,28 @@ const DesignCanvas = ({ color, showDesc = false }) => {
 
   const revealScore = () => {
     console.log("final colorArray", colorArray);
-    const gradedScore = gradeColors(colorArray, 1);
+    const gradedScore = gradeColours(colorArray, 1);
+    console.log('gradedScore', gradedScore)
+
+    let message = '';
 
     if (gradedScore === -3) {
-      setScoreMessage(scoreMessages[1]);
-    }
-    if (gradedScore === -2) {
-      setScoreMessage(scoreMessages[0]);
-    }
-    if (gradedScore === -1) {
-      setScoreMessage(scoreMessages[2]);
-    }
-    if (gradedScore === 100) {
-      setScoreMessage(scoreMessages[5]);
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals];
+    } else if (gradedScore === -2) {
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
+    } else if (gradedScore === -1) {
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
+    } else if (gradedScore === 100) {
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony];
     } else if (gradedScore >= 50 && gradedScore < 70) {
-      setScoreMessage(gradedScore + scoreMessages[3]);
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${gradedScore}%`);
     } else if (gradedScore >= 70 && gradedScore < 100) {
-      setScoreMessage(gradedScore + scoreMessages[4]);
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${gradedScore}%`);
     } else {
-      setScoreMessage(scoreMessages[2]);
+      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
     }
+
+    setScoreMessage(message);
     handleOpen();
   };
 
@@ -208,7 +200,7 @@ const DesignCanvas = ({ color, showDesc = false }) => {
             <button
               className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#a58c3a] hover:text-white shadow-2xl"
               onClick={revealScore}>Reveal</button>
-            {/* <Modal open={open} onClose={handleClose}>
+            <Modal open={open} onClose={handleClose}>
               <Box sx={style}>
                 <Typography
                   id="modal-modal-title"
@@ -218,7 +210,7 @@ const DesignCanvas = ({ color, showDesc = false }) => {
                   {scoreMessage}
                 </Typography>
               </Box>
-            </Modal> */}
+            </Modal>
           </div>
           <button
             className="px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#a58c3a]  rounded-lg duration-100 hover:bg-[#a58c3a] hover:text-white shadow-2xl"

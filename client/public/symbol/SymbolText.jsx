@@ -10,6 +10,7 @@ function SymbolText(props) {
       style={{
         transform: `rotate(${props.getRotationAngle()}deg)`,
       }}
+      className={props.className}
     >
       <text
 

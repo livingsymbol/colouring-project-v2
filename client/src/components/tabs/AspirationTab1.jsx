@@ -14,12 +14,22 @@ export default function AspirationTab1() {
         setColor(color);
         setSelectedColor(color);
     };
+
+    // 1. Flatten the matrix
+    let flat = colours1.flat();
+
+    const shuffled = [...flat];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
     return (
         <AspirationTabTemplate palette=
             {<div className="h-full flex flex-col justify-around">
                 <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#a58c3a] p-4 rounded-3xl shadow-2xl">
                     <SwatchesColourPicker
-                        colors={colours1}
+                        colors={shuffled}
                         onColorSelect={handleColorSelect}
                         swatchSize={25}
                         gridSize={{ rows: 6, cols: 20 }}

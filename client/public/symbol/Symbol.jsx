@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { useState, forwardRef } from "react";
 import SymbolText from "./SymbolText";
 
@@ -6,14 +5,12 @@ const Symbol = forwardRef((props, ref) => {
   const [position, setPosition] = useState(0);
 
   const rotateClockwise = () => {
-    console.log("clock");
     if (position < 1) {
       setPosition((prevPosition) => prevPosition + 1);
     }
   };
 
   const rotateAnticlockwise = () => {
-    console.log("anticlock");
     if (position > -1) {
       setPosition((prevPosition) => prevPosition - 1);
     }
@@ -300,8 +297,9 @@ const Symbol = forwardRef((props, ref) => {
         </svg>
         <SymbolText
           getRotationAngle={getRotationAngle}
-          className="w-full h-full flex items-center justify-center"
+          className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out"
         />
+
       </div>
     </div>
   );

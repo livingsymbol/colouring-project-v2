@@ -41,7 +41,7 @@ export default function AspirationTab5() {
                             onColorSelect={handleColorSelect}
                             swatchSize={20}
                             gridSize={{ rows: 10, cols: 24 }}
-                            selectedColor={selectedColor} 
+                            selectedColor={selectedColor}
                         />
                     </div>
                     <ColourTester color={color} />
@@ -49,7 +49,7 @@ export default function AspirationTab5() {
                 </div>
                 <Paragraph>After colouring all 12 petals you may “Download” your colouring.</Paragraph>
             </div>}
-            symbol={<DesignCanvas showDesc={true} color={color} />} />
+            symbol={<DesignCanvas color={color} showDesc={true} />} />
     );
 }
 
