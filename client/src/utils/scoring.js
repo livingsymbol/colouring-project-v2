@@ -393,41 +393,21 @@ const countOfContainsMainSixPrimaries = (colorArray) => { //returns the no. of o
 export const gradeColours = (colorArray, num) => {
 
     if (containsWhite(colorArray)) {
-        return -3;
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals];
     }
 
     if (!hasNoDuplicates(colorArray)) {
-        return -2;
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
     }
 
     if (!containsPrimaries(colorArray)) {
-        return -1;
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
     }
+
     if (!correctColorOrder(colorArray, num)) {
-        return -1;
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
     }
-    if (num === 1) {
-        // let countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
-        // let score = 100 - (12 - findMaxMatches(colorArray, colours1)) * 8.4;
-        // console.log("hello there! ",score)
-        // return score === 100 ? (countOfMainSixPrimaries === 6 ? 100 : 85) : score - 8.4 * countOfMainSixPrimaries;
 
-        const countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
-        const maxScore = countOfMainSixPrimaries >= 3 ? 100 : 85;
-        const score = maxScore - (12 - findMaxMatches(colorArray, colours1)) * 8.4;
-        return score;
-
-    }
-    else {
-        // let countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
-        // let score = 100 - (12 - findMaxMatches(colorArray, colours2)) * 8.4;
-        // return score === 100 ? (countOfMainSixPrimaries === 6 ? 100 : 85) : score - 8.4 * countOfMainSixPrimaries;
-
-        const countOfMainSixPrimaries = countOfContainsMainSixPrimaries(colorArray);
-        const maxScore = countOfMainSixPrimaries >= 3 ? 100 : 85;
-        const score = maxScore - (12 - findMaxMatches(colorArray, colours2)) * 8.4;
-        return score;
-
-    }
+    
 };
 
