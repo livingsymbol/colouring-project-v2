@@ -55,7 +55,6 @@ router.post('/update', async (req, res) => {
     }
 });
 
-
 router.get('/get/:slug', async (req, res) => {
     try {
         const { slug } = req.params;
@@ -70,6 +69,24 @@ router.get('/get/:slug', async (req, res) => {
         res.status(200).json(page);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+// GET /page/titles-and-sections
+router.get("/titles-and-sections", async (req, res) => {
+    try {
+        const pages = await Page.find({}, { slug: 1, title: 1, "sections.label": 1 });
+
+        const result = pages.map(page => ({
+            slug: page.slug,
+            title: page.title,
+            sections: page.sections.map(section => section.label),
+        }));
+
+        res.json(result);
+    } catch (err) {
+        console.error("Error fetching pages:", err);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 

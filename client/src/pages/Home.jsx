@@ -64,35 +64,18 @@ export default function Home() {
   return (
     <div>
       <Heading>{page.title}</Heading>
-      {/* <Paragraph>
-        The Mother’s symbol, when experienced through colour, transforms from a static image into a vibrant, living field of consciousness that interacts with the observer’s state of being. By exploring how colour corresponds to different levels of consciousness, mental, vital, and physical, we unlock the potential for each individual to experience the symbol dynamically. The colours associated with it shift and evolve, reflecting our inner journey and development. In this way, the symbol becomes a mirror of our own transformation, continually alive and responsive to our growth. Through these pages, we invite you to join us on a journey of self-discovery experiencing the “Living Symbol of The Mother” yourself.
-        <br /><br />
-        <i>
-          “Above all, it is the will for progress and self-purification which lights the fire. The will for progress. Those who have a strong will, when they turn it towards spiritual progress and purification, automatically light the fire within themselves.”
-          <br />
-          <br />
-          “Let us offer our work to the Divine; this is the sure means of progressing.”
-          <br />
-
-          <Author>
-            The Mother
-          </Author>
-          <br />
-        </i>
-      </Paragraph> */}
-      <div className="sm:p-8">
-        <Paragraph>
+      <div className="sm:p-4">
+        <Paragraph className="italic text-right">
           “Out of the sphere of Mind he had arisen,<br />
           He had left the reign of Nature’s hues and shades;<br />
           He dwelt in his self’s colourless purity.”<br />
           - Sri Aurobindo, Savitri
         </Paragraph>
 
-        <Paragraph>
-          Colour is not merely a visual phenomenon. It is a subtle force that shapes our emotions, our thoughts, and even our spiritual progress. In our ongoing work with the Mother's symbol, we have come to see colour as both science and a form of spiritual language - one that reveals the soul's journey through its many colours. These pages seek to present a view of the coloured Mother's symbol as a living mandala, rooted in Sri Aurobindo's vision, expanded through multidisciplinary inquiry, and awakened through personal experience.
+        <Paragraph className="ProseMirror">
+          Colour is not merely a visual phenomenon. It is a subtle force that shapes our emotions, our thoughts, and even our spiritual progress. In our ongoing work with the Mother's symbol, we have come to see colour as both science and a form of spiritual language - one that reveals the soul's journey through its many colours. These pages seek to present a view of the coloured Mother's symbol as a living mandala, rooted in Sri Aurobindo's vision, expanded through multidisciplinary inquiry, and awakened through personal experience.<br /><br />
           In our journey, we encountered numerous variations of the coloured Mother's symbol, each with slightly different colours and arrangements. At first, we regarded many of these as "mistaken" or "inaccurate." Yet this judgment raised deeper questions:
           <ul>
-
             <li>
               What defines a correct or incorrect symbol?
             </li>
@@ -111,11 +94,11 @@ export default function Home() {
           The only direct guidance comes from a letter Sri Aurobindo wrote to Dr. Naik in March 1934 for six colours only:
         </Paragraph>
 
-        <Paragraph className="font-italic text-gray-500">
-          <p>“Centre and four powers, white. The twelve all of different colour in three groups:</p>
-          <p>Top group red, passing to orange towards yellow.</p>
-          <p>Next group, yellow passing through green towards blue.</p>
-          <p>And third group, blue passing through violet towards red. If white is not convenient, the centre may be gold (powder).”</p>
+        <Paragraph className="italic">
+          “Centre and four powers, white. The twelve all of different colour in three groups:<br />
+          Top group red, passing to orange towards yellow.<br />
+          Next group, yellow passing through green towards blue.<br />
+          And third group, blue passing through violet towards red. If white is not convenient, the centre may be gold (powder).”<br />
         </Paragraph>
 
         <Paragraph>
