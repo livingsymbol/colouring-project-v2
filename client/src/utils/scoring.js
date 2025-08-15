@@ -1,4 +1,7 @@
-const PRIMARIES = ["#ff0000", "#ff9933", "#ffff00", "#009900", "#0000ff", "#6600cc"]
+const PRIMARIES1 = ["#ff0000", "#ff9933", "#ffff00", "#009900", "#0000ff", "#6600cc"]
+const SECONDARIES1 = ["#ff6600", "#ffcc00", "#00cc00", "#00cccc", "#330099", "#9900cc"]
+const PRIMARIES2 = ["#FF0000", "#FF8000", "#FFFF00", "#00FF00", "#0000FF", "#8000FF"]
+const SECONDARIES2 = ["#FF5500", "#FFAA00", "#55FF00", "#00FFFF", "#4000FF", "#FF00FF"]
 
 export const colours1 = [
     ["#ff5e4d", "#ff4031", "#ff0000", "#de0000", "#be0000"],
@@ -130,28 +133,56 @@ function containsWhite(colours) {
     return false;
 }
 
-function containsPrimaries(colourArray) {
+function containsPrimaries(colourArray, num) {
     const n = colourArray.length;
     const normalized = colourArray.map(c => c.toLowerCase());
 
-    for (let start = 0; start < n; start++) {
-        for (let parity = 0; parity <= 1; parity++) {
-            let match = true;
+    if (num === 1) {
+        for (let start = 0; start < n; start++) {
+            for (let parity = 0; parity <= 1; parity++) {
+                let match = true;
 
-            for (let i = 0; i < PRIMARIES.length; i++) {
-                const index = (start + i * 2) % n;
+                for (let i = 0; i < PRIMARIES1.length; i++) {
+                    const index = (start + i * 2) % n;
 
-                if (index % 2 !== parity || normalized[index] !== PRIMARIES[i]) {
-                    match = false;
-                    break;
+                    if (index % 2 !== parity || normalized[index] !== PRIMARIES1[i]) {
+                        match = false;
+                        break;
+                    }
                 }
-            }
 
-            if (match) return true;
+                if (match) return true;
+            }
         }
     }
+    else {
+        for (let start = 0; start < n; start++) {
+            for (let parity = 0; parity <= 1; parity++) {
+                let match = true;
 
+                for (let i = 0; i < PRIMARIES2.length; i++) {
+                    const index = (start + i * 2) % n;
+
+                    if (index % 2 !== parity || normalized[index] !== PRIMARIES2[i]) {
+                        match = false;
+                        break;
+                    }
+                }
+
+                if (match) return true;
+            }
+        }
+    }
     return false;
+}
+
+function rotateArrayToStartWithPrimaryRed(colourArray) {
+    const lowerStartValue = '#ff0000';
+    const index = colourArray.findIndex(c => c.toLowerCase() === lowerStartValue);
+    if (index === -1) {
+        return colourArray.slice();
+    }
+    return colourArray.slice(index).concat(colourArray.slice(0, index));
 }
 
 function countColoursPerColumn(colourArray, num) {
@@ -178,152 +209,97 @@ function countColoursPerColumn(colourArray, num) {
     return columnCount;
 }
 
+function findPosition(colour, num) {
+    const lower = colour.toLowerCase();
+    if (num === 1) {
+        for (let r = 0; r < colours1.length; r++) {
+            for (let c = 0; c < colours1[r].length; c++) {
+                if (colours1[r][c].toLowerCase() === lower) {
+                    return [r, c];
+                }
+            }
+        }
+    }
+    else {
+        for (let r = 0; r < colours2.length; r++) {
+            for (let c = 0; c < colours2[r].length; c++) {
+                if (colours2[r][c].toLowerCase() === lower) {
+                    return [r, c];
+                }
+            }
+        }
+    }
+    return null;
+}
+
 function calculateScore(colourArray, colomnCount, num) {
-    const PERFECT_COL = 2; // zero-based index
     const WRONG_COLUMNS = [0, 1, 3, 4];
-    const WRONG_SAME_COL_THRESHOLD = 9;
-    const BASE_PENALTY_SAME_WRONG = 15; // percent
-    const PENALTY_PER_WRONG = 8.4; // percent
 
     // Step 1: Identify counts
-    const perfectCount = colomnCount[PERFECT_COL];
+    const perfectCount = colomnCount[2];
     const wrongCount = colourArray.length - perfectCount;
 
     // Step 2: Check for "same wrong column" rule
-    let score;
+    let score = 100;
     const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
-    if (maxWrongInSameCol + perfectCount === 12) { // all selections lie in 2 colomns - perfect and wrong one only
-        if (maxWrongInSameCol >= WRONG_SAME_COL_THRESHOLD) {
+    console.log('maxWrongInSameCol', maxWrongInSameCol)
+    if (maxWrongInSameCol + perfectCount === 12 && !containsPrimaries(colourArray)) { // all selections lie in 2 colomns - perfect and wrong one only
+        if (maxWrongInSameCol >= 9) {
             // Case 1: ≥9 wrong in same wrong column
-            score = 100 - BASE_PENALTY_SAME_WRONG - (perfectCount * PENALTY_PER_WRONG);
+            score -= 15 - (perfectCount * 8.4);
         } else {
             // Case 2: No same-wrong-column penalty
-            score = 100 - (wrongCount * PENALTY_PER_WRONG);
+            score -= (wrongCount * 8.4);
         }
     } else { //selections from multiple colomns
-        //! todo add that 5% and 8.4% compounding logic
+        if (!containsPrimaries(colourArray)) {
+            return score -= 51; //anything less than 50
+        }
+
+        colourArray = rotateArrayToStartWithPrimaryRed(colourArray);
+        let primaryPositions;
+        let secondaryPositions;
+        if (num === 1) {
+            primaryPositions = PRIMARIES1.map((_, i) => [i * 4, 2]);
+            secondaryPositions = SECONDARIES1.map((_, i) => [i * 4 + 2, 2]);
+            for (let secIndex = 0; secIndex < 6; secIndex++) {
+                const userSecondary = colourArray[secIndex * 2 + 1];
+                const perfectSecondaryPos = secondaryPositions[secIndex];
+                const userPos = findPosition(userSecondary, num);
+                console.log('userPos', userPos)
+                if (!userPos) continue; // not found in matrix
+
+                const verticalDist = Math.abs(userPos[0] - perfectSecondaryPos[0]);
+                const horizontalDist = Math.abs(userPos[1] - perfectSecondaryPos[1]);
+
+                score -= verticalDist * 5;
+                score -= horizontalDist * 8.4;
+            }
+
+        } else {
+            primaryPositions = PRIMARIES2.map((_, i) => [i * 8, 2]);
+            secondaryPositions = SECONDARIES2.map((_, i) => [i * 8 + 4, 2]);
+            for (let secIndex = 0; secIndex < 6; secIndex++) {
+                const userSecondary = colourArray[secIndex * 2 + 1];
+                const perfectSecondaryPos = secondaryPositions[secIndex];
+                const userPos = findPosition(userSecondary, num);
+
+                if (!userPos) continue; // not found in matrix
+
+                const verticalDist = Math.abs(userPos[0] - perfectSecondaryPos[0]);
+                const horizontalDist = Math.abs(userPos[1] - perfectSecondaryPos[1]);
+
+                score -= verticalDist * 5;
+                score -= horizontalDist * 8.4;
+            }
+        }
     }
 
     // Step 3: Floor at 0
     return Math.max(score, 0);
 }
 
-// //helper function for correctColorOrder
-// function findRowIn2DMatrix(matrix, target) {
-//     for (let i = 0; i < matrix.length; i++) {
-//         if (matrix[i].indexOf(target) !== -1) {
-//             return i; // Return the row index
-//         }
-//     }
-//     return -1; // Return -1 if the element is not found
-// }
-
-// //helper function for correctColorOrder
-// function getClosestBaseColor(hexCode, num) {
-//     if (num === 1) {
-//         const rowNum = findRowIn2DMatrix(colours1, hexCode)
-//         if (rowNum >= 0 && rowNum < 4) return "#FF0000";
-//         if (rowNum >= 4 && rowNum < 8) return "#FF9933";
-//         if (rowNum >= 8 && rowNum < 12) return "#FFFF00";
-//         if (rowNum >= 12 && rowNum < 16) return "#009900";
-//         if (rowNum >= 16 && rowNum < 20) return "#0000FF";
-//         if (rowNum >= 20) return "#6600CC";
-//     }
-//     else {
-//         const rowNum = findRowIn2DMatrix(colours2, hexCode)
-//         if (rowNum >= 0 && rowNum < 6) return "#FF0000";
-//         if (rowNum >= 6 && rowNum < 12) return "#FF9933";
-//         if (rowNum >= 12 && rowNum < 18) return "#FFFF00";
-//         if (rowNum >= 18 && rowNum < 24) return "#009900";
-//         if (rowNum >= 24 && rowNum < 30) return "#0000FF";
-//         if (rowNum >= 30) return "#6600CC";
-
-//     }
-//     return null;
-// }
-
-// const correctColorOrder = (baseColors, num) => {
-
-//     function isSortedOrRotatedSorted(arr) {
-//         const n = arr.length;
-//         let count = 0;
-
-//         for (let i = 0; i < n; i++) {
-//             if (arr[i] > arr[(i + 1) % n]) {
-//                 count++;
-//             }
-//         }
-
-//         return count <= 1;
-//     }
-
-//     function orderPersistent(baseColors, num) {
-
-//         function convertColorsToClosestBase(hexColors) {
-//             return hexColors.map(hex => {
-//                 return getClosestBaseColor(hex, num);
-//             });
-//         }
-
-//         const orderedColorsString = "#FF0000#FF0000#FF9933#FF9933#FFFF00#FFFF00#009900#009900#0000FF#0000FF#6600CC#6600CC";
-//         let closestBaseColors = convertColorsToClosestBase(baseColors);
-//         let closestBaseColorsString = ""
-//         for (let color of closestBaseColors) {
-//             closestBaseColorsString += color
-//         }
-//         closestBaseColorsString += closestBaseColorsString;
-//         // console.log('closestBaseColorsString', closestBaseColorsString)
-//         // console.log('closestBaseColorsString.includes(orderedColorsString)', closestBaseColorsString.includes(orderedColorsString))
-//         return closestBaseColorsString.includes(orderedColorsString);
-//     }
-
-//     let colorRows = [];
-//     if (num === 1) {
-//         for (let color of baseColors)
-//             colorRows.push(findRowIn2DMatrix(colours1, color))
-//     }
-//     else {
-//         for (let color of baseColors)
-//             colorRows.push(findRowIn2DMatrix(colours2, color))
-//     }
-
-//     // console.log('isSortedOrRotatedSorted(colorRows)', isSortedOrRotatedSorted(colorRows))
-//     // console.log('colorRows', colorRows)
-
-//     return isSortedOrRotatedSorted(colorRows) && orderPersistent(baseColors, num);
-// }
-
-// const findMaxMatches = (hexArray, matrix) => {
-//     const colorToColumn = {};
-//     for (let col = 0; col < matrix[0].length; col++) {
-//         for (let row = 0; row < matrix.length; row++) {
-//             colorToColumn[matrix[row][col].toLowerCase()] = col;
-//         }
-//     }
-
-//     const columnCount = new Array(matrix[0].length).fill(0);
-//     for (const hex of hexArray) {
-//         const columnIndex = colorToColumn[hex.toLowerCase()];
-//         if (columnIndex !== undefined) {
-//             columnCount[columnIndex]++;
-//         }
-//     }
-
-//     return Math.max(...columnCount);
-// };
-
-// const countOfContainsMainSixPrimaries = (colorArray) => { //returns the no. of occerences of main 6 primary colours
-//     let count = 0;
-//     const mainSix = ["#FF0000", "#FF9933", "#FFFF00", "#009900", "#0000FF", "#6600CC"];
-//     for (let color of colorArray) {
-//         if (mainSix.indexOf(color.toUpperCase()) != -1) count++;
-//     }
-//     // console.log("containsMainSixPrimaries count", count);
-//     return count;
-// }
-
 // Grading function
-
 export const gradeColours = (colourArray, num) => {
 
     if (containsWhite(colourArray)) {
@@ -341,14 +317,6 @@ export const gradeColours = (colourArray, num) => {
     if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%');
     }
-
-    // if (!containsPrimaries(colourArray)) {
-    //     return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
-    // }
-
-    // if (!correctColorOrder(colourArray, num)) {
-    //     return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
-    // }
 
     const score = calculateScore(colourArray, colomnCount, num)
     console.log('score after calculateScore function: ', score)
