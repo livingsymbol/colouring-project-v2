@@ -4,7 +4,7 @@ import Symbol_without_desc from "../../public/symbol/Symbol_without_desc.jsx";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { gradeColours, SCORE_MESSAGES, SCORE_MESSAGE_MAP } from "../utils/scoring.js";
+import { gradeColours } from "../utils/scoring.js";
 
 const style = {
   position: "absolute",
@@ -30,8 +30,8 @@ const style = {
 const DesignCanvas = ({ color, showDesc = false }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
-  const [colorArray, setColorArray] = useState(() => {
-    const savedColors = localStorage.getItem("colorArray");
+  const [colourArray, setColourArray] = useState(() => {
+    const savedColors = localStorage.getItem("colourArray");
     return savedColors ? JSON.parse(savedColors) : Array(12).fill("#fff");
   });
   const [open, setOpen] = useState(false);
@@ -61,7 +61,7 @@ const DesignCanvas = ({ color, showDesc = false }) => {
           "#9900cc",
           "#ff0000",
         ];
-        localStorage.setItem("colorArray", JSON.stringify(correctAns));
+        localStorage.setItem("colourArray", JSON.stringify(correctAns));
         setInput("");
       }
     };
@@ -75,13 +75,13 @@ const DesignCanvas = ({ color, showDesc = false }) => {
 
   useEffect(() => {
     const svgElement = svgRef.current;
-    colorArray.forEach((color, index) => {
+    colourArray.forEach((color, index) => {
       const pathElement = svgElement.querySelector(`#path-${index}`);
       if (pathElement) {
         pathElement.setAttribute("fill", color);
       }
     });
-  }, [colorArray]);
+  }, [colourArray]);
 
   useEffect(() => {
     const svgElement = svgRef.current;
@@ -94,10 +94,10 @@ const DesignCanvas = ({ color, showDesc = false }) => {
       if (target.tagName !== "svg") {
         const index = extractNumber(target.id);
         target.setAttribute("fill", color);
-        const newColorArray = [...colorArray];
-        newColorArray[index] = color;
-        setColorArray(newColorArray);
-        localStorage.setItem("colorArray", JSON.stringify(newColorArray)); // Save the updated array to localStorage
+        const newColourArray = [...colourArray];
+        newColourArray[index] = color;
+        setColourArray(newColourArray);
+        localStorage.setItem("colourArray", JSON.stringify(newColourArray)); // Save the updated array to localStorage
       }
     };
 
@@ -106,7 +106,7 @@ const DesignCanvas = ({ color, showDesc = false }) => {
     return () => {
       svgElement.removeEventListener("click", handleClick);
     };
-  }, [color, colorArray]);
+  }, [color, colourArray]);
 
   const saveAsPng = () => {
     const svgElement = svgRef.current;
@@ -135,39 +135,22 @@ const DesignCanvas = ({ color, showDesc = false }) => {
   };
 
   const revealScore = () => {
-    console.log("final colorArray", colorArray);
-    const gradedScore = gradeColours(colorArray, 1);
-    console.log('gradedScore', gradedScore)
+    // console.log("final colourArray", colourArray);
 
-    let message = '';
+    const message = gradeColours(colourArray, 1);
 
-    if (gradedScore === -3) {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals];
-    } else if (gradedScore === -2) {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
-    } else if (gradedScore === -1) {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
-    } else if (gradedScore === 100) {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony];
-    } else if (gradedScore >= 50 && gradedScore < 70) {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${gradedScore}%`);
-    } else if (gradedScore >= 70 && gradedScore < 100) {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${gradedScore}%`);
-    } else {
-      message = SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
-    }
-
+    // console.log("Score Message:", message);
     setScoreMessage(message);
     handleOpen();
   };
 
   const resetSymbol = () => {
-    const resetColorArray = Array(12).fill("#fff"); // Reset color array to all white
-    setColorArray(resetColorArray); // Update state
-    localStorage.setItem("colorArray", JSON.stringify(resetColorArray)); // Save to localStorage
+    const resetColourArray = Array(12).fill("#ffffff"); // Reset color array to all white
+    setColourArray(resetColourArray); // Update state
+    localStorage.setItem("colourArray", JSON.stringify(resetColourArray)); // Save to localStorage
 
     const svgElement = svgRef.current;
-    resetColorArray.forEach((color, index) => {
+    resetColourArray.forEach((color, index) => {
       const pathElement = svgElement.querySelector(`#path-${index}`);
       if (pathElement) {
         pathElement.setAttribute("fill", color);

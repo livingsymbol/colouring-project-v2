@@ -1,126 +1,3 @@
-// export const colours1 = [
-//     "#3AFF19",
-//     "#E500E5",
-//     "#FFFF19",
-//     "#0055FF",
-//     "#E54C00",
-//     "#00FFFF",
-//     "#FF0080",
-//     "#9933FF",
-//     "#CC4400",
-//     "#7019FF",
-//     "#FF7733",
-//     "#6600CC",
-//     "#CC6600",
-//     "#CC0000",
-//     "#99FF00",
-//     "#1D00E5",
-//     "#00CC44",
-//     "#FF9933",
-//     "#1966FF",
-//     "#1DCC00",
-//     "#1A00CC",
-//     "#FFAA00",
-//     "#FF8D19",
-//     "#FF1919",
-//     "#FF19FF",
-//     "#CC2900",
-//     "#CC5700",
-//     "#FF3300",
-//     "#20E500",
-//     "#CC0066",
-//     "#FF9200",
-//     "#00FF00",
-//     "#4000FF",
-//     "#8AE500",
-//     "#2000FF",
-//     "#E57300",
-//     "#CCCC00",
-//     "#FFB219",
-//     "#3377FF",
-//     "#3A00E5",
-//     "#E50000",
-//     "#CC8800",
-//     "#FF5500",
-//     "#FFBB33",
-//     "#FF6619",
-//     "#8000FF",
-//     "#3619FF",
-//     "#33FF77",
-//     "#00E5E5",
-//     "#CC7500",
-//     "#AA00FF",
-//     "#77FF33",
-//     "#4D33FF",
-//     "#E59900",
-//     "#0044CC",
-//     "#3300CC",
-//     "#A3FF19",
-//     "#5600E5",
-//     "#8D19FF",
-//     "#55FF00",
-//     "#FFFF00",
-//     "#FF00FF",
-//     "#66FF19",
-//     "#0000FF",
-//     "#44CC00",
-//     "#19FF66",
-//     "#FFD633",
-//     "#CCA300",
-//     "#E56200",
-//     "#FF0000",
-//     "#FFCC00",
-//     "#4CE500",
-//     "#7ACC00",
-//     "#8033FF",
-//     "#CC00CC",
-//     "#E52E00",
-//     "#9900E5",
-//     "#00E54D",
-//     "#FF3399",
-//     "#0000E5",
-//     "#00CCCC",
-//     "#FF6D00",
-//     "#4D00CC",
-//     "#FF4719",
-//     "#FF198D",
-//     "#00E500",
-//     "#E5B800",
-//     "#6633FF",
-//     "#E5E500",
-//     "#E58300",
-//     "#6000FF",
-//     "#00CC00",
-//     "#FF7C19",
-//     "#00FF55",
-//     "#FF9D19",
-//     "#0000CC",
-//     "#FF5C33",
-//     "#33FFFF",
-//     "#FF8000",
-//     "#24FF00",
-//     "#19FFFF",
-//     "#FFFF33",
-//     "#FF3333",
-//     "#BB33FF",
-//     "#1919FF",
-//     "#FF8A33",
-//     "#19FF19",
-//     "#50FF33",
-//     "#E50073",
-//     "#B319FF",
-//     "#33FF33",
-//     "#004DE5",
-//     "#ADFF33",
-//     "#FFD119",
-//     "#3333FF",
-//     "#8800CC",
-//     "#FF33FF",
-//     "#7300E5",
-//     "#FFA833",
-//     "#5319FF"
-// ]
-
 const PRIMARIES = ["#ff0000", "#ff9933", "#ffff00", "#009900", "#0000ff", "#6600cc"]
 
 export const colours1 = [
@@ -205,6 +82,7 @@ export const SCORE_MESSAGE_MAP = {
     DuplicateColours: 'DuplicateColours',
     IncompletePetals: 'IncompletePetals',
     Below50: 'Below50',
+    EightyFive: 'EightyFive',
     Below70: 'Below70',
     Above70: 'Above70',
     FullHarmony: 'FullHarmony',
@@ -216,6 +94,7 @@ export const SCORE_MESSAGES = {
     [SCORE_MESSAGE_MAP.Below50]: "Scored below 50%, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
     [SCORE_MESSAGE_MAP.Below70]: "% harmony achieved, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
     [SCORE_MESSAGE_MAP.Above70]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see “Guidance”, section 4 - Colour theory in art and design.",
+    [SCORE_MESSAGE_MAP.EightyFive]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see “Guidance”, section 4 - Colour theory in art and design.",
     [SCORE_MESSAGE_MAP.FullHarmony]: "Great! 100% harmony achieved. Colourings 3, 4 & 5 have been unlocked.",
 };
 
@@ -275,139 +154,213 @@ function containsPrimaries(colourArray) {
     return false;
 }
 
-//helper function for correctColorOrder
-function findRowIn2DMatrix(matrix, target) {
-    for (let i = 0; i < matrix.length; i++) {
-        if (matrix[i].indexOf(target) !== -1) {
-            return i; // Return the row index
-        }
-    }
-    return -1; // Return -1 if the element is not found
-}
-
-//helper function for correctColorOrder
-function getClosestBaseColor(hexCode, num) {
+function countColoursPerColumn(colourArray, num) {
+    const targetSet = new Set(colourArray.map(c => c.toLowerCase())); // case-insensitive
+    const columnCount = Array(5).fill(0);
     if (num === 1) {
-        const rowNum = findRowIn2DMatrix(colours1, hexCode)
-        if (rowNum >= 0 && rowNum < 4) return "#FF0000";
-        if (rowNum >= 4 && rowNum < 8) return "#FF9933";
-        if (rowNum >= 8 && rowNum < 12) return "#FFFF00";
-        if (rowNum >= 12 && rowNum < 16) return "#009900";
-        if (rowNum >= 16 && rowNum < 20) return "#0000FF";
-        if (rowNum >= 20) return "#6600CC";
-    }
-    else {
-        const rowNum = findRowIn2DMatrix(colours2, hexCode)
-        if (rowNum >= 0 && rowNum < 6) return "#FF0000";
-        if (rowNum >= 6 && rowNum < 12) return "#FF9933";
-        if (rowNum >= 12 && rowNum < 18) return "#FFFF00";
-        if (rowNum >= 18 && rowNum < 24) return "#009900";
-        if (rowNum >= 24 && rowNum < 30) return "#0000FF";
-        if (rowNum >= 30) return "#6600CC";
-
-    }
-    return null;
-}
-
-const correctColorOrder = (baseColors, num) => {
-
-    function isSortedOrRotatedSorted(arr) {
-        const n = arr.length;
-        let count = 0;
-
-        for (let i = 0; i < n; i++) {
-            if (arr[i] > arr[(i + 1) % n]) {
-                count++;
-            }
-        }
-
-        return count <= 1;
-    }
-
-    function orderPersistent(baseColors, num) {
-
-        function convertColorsToClosestBase(hexColors) {
-            return hexColors.map(hex => {
-                return getClosestBaseColor(hex, num);
+        for (let row of colours1) {
+            row.forEach((cell, colIndex) => {
+                if (targetSet.has(cell.toLowerCase())) {
+                    columnCount[colIndex]++;
+                }
             });
         }
-
-        const orderedColorsString = "#FF0000#FF0000#FF9933#FF9933#FFFF00#FFFF00#009900#009900#0000FF#0000FF#6600CC#6600CC";
-        let closestBaseColors = convertColorsToClosestBase(baseColors);
-        let closestBaseColorsString = ""
-        for (let color of closestBaseColors) {
-            closestBaseColorsString += color
+    } else {
+        for (let row of colours2) {
+            row.forEach((cell, colIndex) => {
+                if (targetSet.has(cell.toLowerCase())) {
+                    columnCount[colIndex]++;
+                }
+            });
         }
-        closestBaseColorsString += closestBaseColorsString;
-        // console.log('closestBaseColorsString', closestBaseColorsString)
-        // console.log('closestBaseColorsString.includes(orderedColorsString)', closestBaseColorsString.includes(orderedColorsString))
-        return closestBaseColorsString.includes(orderedColorsString);
     }
 
-    let colorRows = [];
-    if (num === 1) {
-        for (let color of baseColors)
-            colorRows.push(findRowIn2DMatrix(colours1, color))
-    }
-    else {
-        for (let color of baseColors)
-            colorRows.push(findRowIn2DMatrix(colours2, color))
-    }
-
-    // console.log('isSortedOrRotatedSorted(colorRows)', isSortedOrRotatedSorted(colorRows))
-    // console.log('colorRows', colorRows)
-
-    return isSortedOrRotatedSorted(colorRows) && orderPersistent(baseColors, num);
+    return columnCount;
 }
 
-const findMaxMatches = (hexArray, matrix) => {
-    const colorToColumn = {};
-    for (let col = 0; col < matrix[0].length; col++) {
-        for (let row = 0; row < matrix.length; row++) {
-            colorToColumn[matrix[row][col].toLowerCase()] = col;
+function calculateScore(colourArray, colomnCount, num) {
+    const PERFECT_COL = 2; // zero-based index
+    const WRONG_COLUMNS = [0, 1, 3, 4];
+    const WRONG_SAME_COL_THRESHOLD = 9;
+    const BASE_PENALTY_SAME_WRONG = 15; // percent
+    const PENALTY_PER_WRONG = 8.4; // percent
+
+    // Step 1: Identify counts
+    const perfectCount = colomnCount[PERFECT_COL];
+    const wrongCount = colourArray.length - perfectCount;
+
+    // Step 2: Check for "same wrong column" rule
+    let score;
+    const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
+    if (maxWrongInSameCol + perfectCount === 12) { // all selections lie in 2 colomns - perfect and wrong one only
+        if (maxWrongInSameCol >= WRONG_SAME_COL_THRESHOLD) {
+            // Case 1: ≥9 wrong in same wrong column
+            score = 100 - BASE_PENALTY_SAME_WRONG - (perfectCount * PENALTY_PER_WRONG);
+        } else {
+            // Case 2: No same-wrong-column penalty
+            score = 100 - (wrongCount * PENALTY_PER_WRONG);
         }
+    } else { //selections from multiple colomns
+        //! todo add that 5% and 8.4% compounding logic
     }
 
-    const columnCount = new Array(matrix[0].length).fill(0);
-    for (const hex of hexArray) {
-        const columnIndex = colorToColumn[hex.toLowerCase()];
-        if (columnIndex !== undefined) {
-            columnCount[columnIndex]++;
-        }
-    }
-
-    return Math.max(...columnCount);
-};
-
-const countOfContainsMainSixPrimaries = (colorArray) => { //returns the no. of occerences of main 6 primary colours
-    let count = 0;
-    const mainSix = ["#FF0000", "#FF9933", "#FFFF00", "#009900", "#0000FF", "#6600CC"];
-    for (let color of colorArray) {
-        if (mainSix.indexOf(color.toUpperCase()) != -1) count++;
-    }
-    // console.log("containsMainSixPrimaries count", count);
-    return count;
+    // Step 3: Floor at 0
+    return Math.max(score, 0);
 }
+
+// //helper function for correctColorOrder
+// function findRowIn2DMatrix(matrix, target) {
+//     for (let i = 0; i < matrix.length; i++) {
+//         if (matrix[i].indexOf(target) !== -1) {
+//             return i; // Return the row index
+//         }
+//     }
+//     return -1; // Return -1 if the element is not found
+// }
+
+// //helper function for correctColorOrder
+// function getClosestBaseColor(hexCode, num) {
+//     if (num === 1) {
+//         const rowNum = findRowIn2DMatrix(colours1, hexCode)
+//         if (rowNum >= 0 && rowNum < 4) return "#FF0000";
+//         if (rowNum >= 4 && rowNum < 8) return "#FF9933";
+//         if (rowNum >= 8 && rowNum < 12) return "#FFFF00";
+//         if (rowNum >= 12 && rowNum < 16) return "#009900";
+//         if (rowNum >= 16 && rowNum < 20) return "#0000FF";
+//         if (rowNum >= 20) return "#6600CC";
+//     }
+//     else {
+//         const rowNum = findRowIn2DMatrix(colours2, hexCode)
+//         if (rowNum >= 0 && rowNum < 6) return "#FF0000";
+//         if (rowNum >= 6 && rowNum < 12) return "#FF9933";
+//         if (rowNum >= 12 && rowNum < 18) return "#FFFF00";
+//         if (rowNum >= 18 && rowNum < 24) return "#009900";
+//         if (rowNum >= 24 && rowNum < 30) return "#0000FF";
+//         if (rowNum >= 30) return "#6600CC";
+
+//     }
+//     return null;
+// }
+
+// const correctColorOrder = (baseColors, num) => {
+
+//     function isSortedOrRotatedSorted(arr) {
+//         const n = arr.length;
+//         let count = 0;
+
+//         for (let i = 0; i < n; i++) {
+//             if (arr[i] > arr[(i + 1) % n]) {
+//                 count++;
+//             }
+//         }
+
+//         return count <= 1;
+//     }
+
+//     function orderPersistent(baseColors, num) {
+
+//         function convertColorsToClosestBase(hexColors) {
+//             return hexColors.map(hex => {
+//                 return getClosestBaseColor(hex, num);
+//             });
+//         }
+
+//         const orderedColorsString = "#FF0000#FF0000#FF9933#FF9933#FFFF00#FFFF00#009900#009900#0000FF#0000FF#6600CC#6600CC";
+//         let closestBaseColors = convertColorsToClosestBase(baseColors);
+//         let closestBaseColorsString = ""
+//         for (let color of closestBaseColors) {
+//             closestBaseColorsString += color
+//         }
+//         closestBaseColorsString += closestBaseColorsString;
+//         // console.log('closestBaseColorsString', closestBaseColorsString)
+//         // console.log('closestBaseColorsString.includes(orderedColorsString)', closestBaseColorsString.includes(orderedColorsString))
+//         return closestBaseColorsString.includes(orderedColorsString);
+//     }
+
+//     let colorRows = [];
+//     if (num === 1) {
+//         for (let color of baseColors)
+//             colorRows.push(findRowIn2DMatrix(colours1, color))
+//     }
+//     else {
+//         for (let color of baseColors)
+//             colorRows.push(findRowIn2DMatrix(colours2, color))
+//     }
+
+//     // console.log('isSortedOrRotatedSorted(colorRows)', isSortedOrRotatedSorted(colorRows))
+//     // console.log('colorRows', colorRows)
+
+//     return isSortedOrRotatedSorted(colorRows) && orderPersistent(baseColors, num);
+// }
+
+// const findMaxMatches = (hexArray, matrix) => {
+//     const colorToColumn = {};
+//     for (let col = 0; col < matrix[0].length; col++) {
+//         for (let row = 0; row < matrix.length; row++) {
+//             colorToColumn[matrix[row][col].toLowerCase()] = col;
+//         }
+//     }
+
+//     const columnCount = new Array(matrix[0].length).fill(0);
+//     for (const hex of hexArray) {
+//         const columnIndex = colorToColumn[hex.toLowerCase()];
+//         if (columnIndex !== undefined) {
+//             columnCount[columnIndex]++;
+//         }
+//     }
+
+//     return Math.max(...columnCount);
+// };
+
+// const countOfContainsMainSixPrimaries = (colorArray) => { //returns the no. of occerences of main 6 primary colours
+//     let count = 0;
+//     const mainSix = ["#FF0000", "#FF9933", "#FFFF00", "#009900", "#0000FF", "#6600CC"];
+//     for (let color of colorArray) {
+//         if (mainSix.indexOf(color.toUpperCase()) != -1) count++;
+//     }
+//     // console.log("containsMainSixPrimaries count", count);
+//     return count;
+// }
 
 // Grading function
-export const gradeColours = (colorArray, num) => {
 
-    if (containsWhite(colorArray)) {
+export const gradeColours = (colourArray, num) => {
+
+    if (containsWhite(colourArray)) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals];
     }
 
-    if (!hasNoDuplicates(colorArray)) {
+    if (!hasNoDuplicates(colourArray)) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
     }
 
-    if (!containsPrimaries(colorArray)) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
+    console.log('colomnCount: ', countColoursPerColumn(colourArray, num))
+
+    const colomnCount = countColoursPerColumn(colourArray, num);
+
+    if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%');
     }
 
-    if (!correctColorOrder(colorArray, num)) {
+    // if (!containsPrimaries(colourArray)) {
+    //     return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
+    // }
+
+    // if (!correctColorOrder(colourArray, num)) {
+    //     return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
+    // }
+
+    const score = calculateScore(colourArray, colomnCount, num)
+    console.log('score after calculateScore function: ', score)
+
+    if (score === 100) {
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony];
+    } else if (score >= 70) {
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${score}%`);
+    } else if (score >= 50) {
+        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${score}%`);
+    } else {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
     }
-
-    
 };
 
