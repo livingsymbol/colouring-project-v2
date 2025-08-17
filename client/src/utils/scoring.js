@@ -176,6 +176,20 @@ function containsPrimaries(colourArray, num) {
     return false;
 }
 
+function countOfPrimaryColours(colourArray, num) {
+    const colourSet = new Set(colourArray.map(c => c.toLowerCase()));
+    let count = 0;
+    const PRIMARIES = num === 1 ? PRIMARIES1 : PRIMARIES2;
+
+    for (let primary of PRIMARIES) {
+        if (colourSet.has(primary.toLowerCase())) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 function rotateArrayToStartWithPrimaryRed(colourArray) {
     const lowerStartValue = '#ff0000';
     const index = colourArray.findIndex(c => c.toLowerCase() === lowerStartValue);
@@ -242,61 +256,50 @@ function calculateScore(colourArray, colomnCount, num) {
     // Step 2: Check for "same wrong column" rule
     let score = 100;
     const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
+    const countOfPrimaries = countOfPrimaryColours(colourArray, num);
+
+    console.log('countOfPrimaries', countOfPrimaries)
     console.log('maxWrongInSameCol', maxWrongInSameCol)
-    if (maxWrongInSameCol + perfectCount === 12 && !containsPrimaries(colourArray)) { // all selections lie in 2 colomns - perfect and wrong one only
+    console.log('perfectCount', perfectCount)
+
+    if (maxWrongInSameCol + perfectCount === 12 && countOfPrimaries == 0) { // all selections lie in 2 colomns - perfect and wrong one only and no primary is present
         if (maxWrongInSameCol >= 9) {
             // Case 1: ≥9 wrong in same wrong column
-            score -= 15 - (perfectCount * 8.4);
+            score = score - 15 - (perfectCount * 8.4);
         } else {
             // Case 2: No same-wrong-column penalty
             score -= (wrongCount * 8.4);
         }
     } else { //selections from multiple colomns
-        if (!containsPrimaries(colourArray)) {
-            return score -= 51; //anything less than 50
+        if (countOfPrimaries < 6) {
+            return score -= 51; //anything less than 50 because all 6 parimaries are absent
         }
 
         colourArray = rotateArrayToStartWithPrimaryRed(colourArray);
         let primaryPositions;
         let secondaryPositions;
-        if (num === 1) {
-            primaryPositions = PRIMARIES1.map((_, i) => [i * 4, 2]);
-            secondaryPositions = SECONDARIES1.map((_, i) => [i * 4 + 2, 2]);
-            for (let secIndex = 0; secIndex < 6; secIndex++) {
-                const userSecondary = colourArray[secIndex * 2 + 1];
-                const perfectSecondaryPos = secondaryPositions[secIndex];
-                const userPos = findPosition(userSecondary, num);
-                console.log('userPos', userPos)
-                if (!userPos) continue; // not found in matrix
+        const PRIMARIES = num === 1 ? PRIMARIES1 : PRIMARIES2;
+        const SECONDARIES = num === 1 ? SECONDARIES1 : SECONDARIES2;
+        primaryPositions = PRIMARIES.map((_, i) => [i * 4 * num, 2]);
+        secondaryPositions = SECONDARIES.map((_, i) => [i * 4 * num + 2 * num, 2]);
+        for (let secIndex = 0; secIndex < 6; secIndex++) {
+            const userSecondary = colourArray[secIndex * 2 + 1];
+            const perfectSecondaryPos = secondaryPositions[secIndex];
+            const userPos = findPosition(userSecondary, num);
+            console.log('userPos', userPos)
+            if (!userPos) continue; // not found in matrix
 
-                const verticalDist = Math.abs(userPos[0] - perfectSecondaryPos[0]);
-                const horizontalDist = Math.abs(userPos[1] - perfectSecondaryPos[1]);
+            const verticalDist = Math.abs(userPos[0] - perfectSecondaryPos[0]);
+            const horizontalDist = Math.abs(userPos[1] - perfectSecondaryPos[1]);
 
-                score -= verticalDist * 5;
-                score -= horizontalDist * 8.4;
-            }
-
-        } else {
-            primaryPositions = PRIMARIES2.map((_, i) => [i * 8, 2]);
-            secondaryPositions = SECONDARIES2.map((_, i) => [i * 8 + 4, 2]);
-            for (let secIndex = 0; secIndex < 6; secIndex++) {
-                const userSecondary = colourArray[secIndex * 2 + 1];
-                const perfectSecondaryPos = secondaryPositions[secIndex];
-                const userPos = findPosition(userSecondary, num);
-
-                if (!userPos) continue; // not found in matrix
-
-                const verticalDist = Math.abs(userPos[0] - perfectSecondaryPos[0]);
-                const horizontalDist = Math.abs(userPos[1] - perfectSecondaryPos[1]);
-
-                score -= verticalDist * 5;
-                score -= horizontalDist * 8.4;
-            }
+            score -= verticalDist ? 5 : 0;
+            score -= horizontalDist ? 8.4 : 0;
         }
+
     }
 
     // Step 3: Floor at 0
-    return Math.max(score, 0);
+    return Math.max(score.toFixed(2), 0);
 }
 
 // Grading function

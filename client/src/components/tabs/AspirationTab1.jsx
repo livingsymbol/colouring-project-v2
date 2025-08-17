@@ -33,16 +33,44 @@ export default function AspirationTab1() {
         setSelectedColor(color);
     };
 
-    // Flatten and shuffle
-    const flat = colours1.flat();
-    const shuffled = [...flat];
+    const shuffled = [...colours1.flat()];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
+
+    const numRows = colours1.length;
+    const numCols = colours1[0].length;
+
+    // Step 1: Split into two equal row-wise halves
+    const half = Math.floor(numRows / 2);
+    const topHalf = colours1.slice(0, half);
+    const bottomHalf = colours1.slice(half);
+
+    // Step 2: Flatten each half column-wise
+    function flattenColumnWise(array) {
+        const result = [];
+        const rows = array.length;
+        const cols = array[0].length;
+
+        for (let col = 0; col < cols; col++) {
+            for (let row = 0; row < rows; row++) {
+                result.push(array[row][col]);
+            }
+        }
+
+        return result;
+    }
+
+    const flattenedTop = flattenColumnWise(topHalf);
+    const flattenedBottom = flattenColumnWise(bottomHalf);
+
+    // Step 3: Concatenate the two arrays
+    const finalFlattened = flattenedTop.concat(flattenedBottom);
+
     // Decide colors based on toggle
-    const colorsToShow = useShuffled ? shuffled : colours1;
+    const colorsToShow = useShuffled ? shuffled : finalFlattened;
 
     return (
         <AspirationTabTemplate
@@ -58,13 +86,19 @@ export default function AspirationTab1() {
                             </button>
                         )}
 
-                        <SwatchesColourPicker
+                        {useShuffled ? <SwatchesColourPicker
                             colors={colorsToShow}
                             onColorSelect={handleColorSelect}
                             swatchSize={25}
                             gridSize={{ rows: 6, cols: 20 }}
                             selectedColor={selectedColor}
-                        />
+                        /> : <SwatchesColourPicker
+                            colors={colorsToShow}
+                            onColorSelect={handleColorSelect}
+                            swatchSize={25}
+                            gridSize={{ rows: 10, cols: 12 }}
+                            selectedColor={selectedColor}
+                        />}
                         <ColourTester color={color} />
                     </div>
 
