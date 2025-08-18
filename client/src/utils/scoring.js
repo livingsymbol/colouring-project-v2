@@ -133,49 +133,6 @@ function containsWhite(colours) {
     return false;
 }
 
-function containsPrimaries(colourArray, num) {
-    const n = colourArray.length;
-    const normalized = colourArray.map(c => c.toLowerCase());
-
-    if (num === 1) {
-        for (let start = 0; start < n; start++) {
-            for (let parity = 0; parity <= 1; parity++) {
-                let match = true;
-
-                for (let i = 0; i < PRIMARIES1.length; i++) {
-                    const index = (start + i * 2) % n;
-
-                    if (index % 2 !== parity || normalized[index] !== PRIMARIES1[i]) {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if (match) return true;
-            }
-        }
-    }
-    else {
-        for (let start = 0; start < n; start++) {
-            for (let parity = 0; parity <= 1; parity++) {
-                let match = true;
-
-                for (let i = 0; i < PRIMARIES2.length; i++) {
-                    const index = (start + i * 2) % n;
-
-                    if (index % 2 !== parity || normalized[index] !== PRIMARIES2[i]) {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if (match) return true;
-            }
-        }
-    }
-    return false;
-}
-
 function countOfPrimaryColours(colourArray, num) {
     const colourSet = new Set(colourArray.map(c => c.toLowerCase()));
     let count = 0;
@@ -258,9 +215,9 @@ function calculateScore(colourArray, colomnCount, num) {
     const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
     const countOfPrimaries = countOfPrimaryColours(colourArray, num);
 
-    console.log('countOfPrimaries', countOfPrimaries)
-    console.log('maxWrongInSameCol', maxWrongInSameCol)
-    console.log('perfectCount', perfectCount)
+    // console.log('countOfPrimaries', countOfPrimaries)
+    // console.log('maxWrongInSameCol', maxWrongInSameCol)
+    // console.log('perfectCount', perfectCount)
 
     if (maxWrongInSameCol + perfectCount === 12 && countOfPrimaries == 0) { // all selections lie in 2 colomns - perfect and wrong one only and no primary is present
         if (maxWrongInSameCol >= 9) {
@@ -286,7 +243,6 @@ function calculateScore(colourArray, colomnCount, num) {
             const userSecondary = colourArray[secIndex * 2 + 1];
             const perfectSecondaryPos = secondaryPositions[secIndex];
             const userPos = findPosition(userSecondary, num);
-            console.log('userPos', userPos)
             if (!userPos) continue; // not found in matrix
 
             const verticalDist = Math.abs(userPos[0] - perfectSecondaryPos[0]);
@@ -313,7 +269,7 @@ export const gradeColours = (colourArray, num) => {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
     }
 
-    console.log('colomnCount: ', countColoursPerColumn(colourArray, num))
+    // console.log('colomnCount: ', countColoursPerColumn(colourArray, num))
 
     const colomnCount = countColoursPerColumn(colourArray, num);
 
@@ -322,7 +278,7 @@ export const gradeColours = (colourArray, num) => {
     }
 
     const score = calculateScore(colourArray, colomnCount, num)
-    console.log('score after calculateScore function: ', score)
+    console.log('score after calculations: ', score)
 
     if (score === 100) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony];
