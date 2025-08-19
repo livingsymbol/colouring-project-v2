@@ -4,7 +4,7 @@ import SwatchesColourPicker from "../SwatchesColourPicker";
 import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
-import { colours1 } from "../../utils/scoring";
+import { colours1, shuffledColours1 } from "../../utils/scoring";
 
 export default function AspirationTab1() {
     const [color, setColor] = useState("#fff");
@@ -32,13 +32,6 @@ export default function AspirationTab1() {
         setColor(color);
         setSelectedColor(color);
     };
-
-    const shuffled = [...colours1.flat()];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-
 
     const numRows = colours1.length;
     const numCols = colours1[0].length;
@@ -70,7 +63,7 @@ export default function AspirationTab1() {
     const finalFlattened = flattenedTop.concat(flattenedBottom);
 
     // Decide colors based on toggle
-    const colorsToShow = useShuffled ? shuffled : finalFlattened;
+    const colorsToShow = useShuffled ? shuffledColours1 : finalFlattened;
 
     return (
         <AspirationTabTemplate

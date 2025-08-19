@@ -27,7 +27,7 @@ const style = {
   textAlign: "center",
 };
 
-const DesignCanvas = ({ color, showDesc = false }) => {
+const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
   const [colourArray, setColourArray] = useState(() => {
@@ -136,8 +136,8 @@ const DesignCanvas = ({ color, showDesc = false }) => {
 
   const revealScore = () => {
     // console.log("final colourArray", colourArray);
-
-    const message = gradeColours(colourArray, 1);
+    const NUM = isColours1 ? 1 : 2;
+    const message = gradeColours(colourArray, NUM);
 
     // console.log("Score Message:", message);
     setScoreMessage(message);

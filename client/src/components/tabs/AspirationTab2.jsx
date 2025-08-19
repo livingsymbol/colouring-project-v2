@@ -63,7 +63,7 @@ export default function AspirationTab2() {
                 <Paragraph>After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring.
                 </Paragraph>
             </div>}
-            symbol={<DesignCanvas color={color} />} />
+            symbol={<DesignCanvas color={color} isColours1={false} />} />
     );
 }
 
