@@ -19,7 +19,6 @@ import {
     Select,
     Paper
 } from '@mui/material';
-
 import AdminNavbar from '../components/AdminNavbar';
 import Heading from '../components/Heading';
 import toast from 'react-hot-toast';
