@@ -1,3 +1,7 @@
-export default function FindingTab3() {
-    return <div>Finding Tab 3</div>;
+import RichTextRenderer from "../RichTextRenderer";
+
+export default function FindingTab4({ content }) {
+    return <div className="w-full">
+        <RichTextRenderer content={content} />
+    </div>;
 }

@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.post('/add', async (req, res) => {
     try {
-        const { slug, locale, title, sections } = req.body;
+        const { slug, locale, title, tabs } = req.body;
 
-        const page = new Page({ slug, locale, title, sections });
+        const page = new Page({ slug, locale, title, tabs });
         await page.save();
 
         res.status(201).json({ message: 'Page created successfully', page });
@@ -21,7 +21,7 @@ router.post('/add', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
-        const { slug, locale, title, sections } = req.body;
+        const { slug, locale, title, tabs } = req.body;
 
         if (!slug || !locale) {
             return res.status(400).json({ error: 'slug and locale are required.' });
@@ -35,14 +35,14 @@ router.post('/update', async (req, res) => {
 
         if (title) page.title = title;
 
-        if (Array.isArray(sections)) {
-            sections.forEach(newSection => {
-                const index = page.sections.findIndex(sec => sec.label === newSection.label);
+        if (Array.isArray(tabs)) {
+            tabs.forEach(newTab => {
+                const index = page.tabs.findIndex(sec => sec.label === newTab.label);
 
                 if (index !== -1) {
-                    page.sections[index].content = newSection.content;
+                    page.tabs[index].content = newTab.content;
                 } else {
-                    page.sections.push(newSection);
+                    page.tabs.push(newTab);
                 }
             });
         }
@@ -72,15 +72,15 @@ router.get('/get/:slug', async (req, res) => {
     }
 });
 
-// GET /page/titles-and-sections
-router.get("/titles-and-sections", async (req, res) => {
+// GET /page/titles-and-tabs
+router.get("/titles-and-tabs", async (req, res) => {
     try {
-        const pages = await Page.find({}, { slug: 1, title: 1, "sections.label": 1 });
+        const pages = await Page.find({}, { slug: 1, title: 1, "tabs.label": 1 });
 
         const result = pages.map(page => ({
             slug: page.slug,
             title: page.title,
-            sections: page.sections.map(section => section.label),
+            tabs: page.tabs.map(tab => tab.label),
         }));
 
         res.json(result);

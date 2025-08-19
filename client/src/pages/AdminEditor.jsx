@@ -7,6 +7,7 @@ import Link from '@tiptap/extension-link';
 import HardBreak from '@tiptap/extension-hard-break';
 import BulletList from '@tiptap/extension-bullet-list';
 import ListItem from '@tiptap/extension-list-item';
+import Image from '@tiptap/extension-image'
 import {
     Loader2,
     Bold, Italic, Underline as UnderlineIcon, List as BulletIcon,
@@ -27,7 +28,7 @@ import OrderedList from '@tiptap/extension-ordered-list';
 
 const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-// Cache for storing page titles and sections
+// Cache for storing page titles and tabs
 let cachedPageData = null;
 let cacheTimestamp = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -54,7 +55,7 @@ export default function AdminEditor() {
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
             BulletList,
             ListItem,
-            OrderedList
+            OrderedList,
         ],
         content: '',
     });
@@ -64,8 +65,8 @@ export default function AdminEditor() {
         return cachedPageData && cacheTimestamp && (Date.now() - cacheTimestamp < CACHE_DURATION);
     };
 
-    // Function to fetch page titles and sections
-    const fetchPageTitlesAndSections = async () => {
+    // Function to fetch page titles and tabs
+    const fetchPageTitlesAndTabs = async () => {
         // Return cached data if valid
         if (isCacheValid()) {
             setPages(cachedPageData);
@@ -74,7 +75,7 @@ export default function AdminEditor() {
 
         setFetchingPages(true);
         try {
-            const res = await fetch(`${VITE_BACKEND_URL}/page/titles-and-sections`);
+            const res = await fetch(`${VITE_BACKEND_URL}/page/titles-and-tabs`);
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
@@ -86,7 +87,7 @@ export default function AdminEditor() {
 
             setPages(data);
         } catch (err) {
-            console.error('Error fetching page titles and sections:', err);
+            console.error('Error fetching page titles and tabs:', err);
             toast.error('Failed to fetch page data');
             setPages([]);
         } finally {
@@ -96,7 +97,7 @@ export default function AdminEditor() {
 
     // Fetch pages on component mount
     useEffect(() => {
-        fetchPageTitlesAndSections();
+        fetchPageTitlesAndTabs();
     }, []);
 
     // Handle page selection
@@ -145,7 +146,7 @@ export default function AdminEditor() {
         try {
             const content = editor.getJSON();
             const res = await fetch(
-                `${VITE_BACKEND_URL}/admin/page/${selectedPage}/${selectedTab}?locale=en`,
+                `${VITE_BACKEND_URL}/admin/page/${selectedPage}/${encodeURIComponent(selectedTab)}?locale=en`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -172,7 +173,7 @@ export default function AdminEditor() {
         // Clear cache and refetch
         cachedPageData = null;
         cacheTimestamp = null;
-        fetchPageTitlesAndSections();
+        fetchPageTitlesAndTabs();
     };
 
     return (
@@ -220,17 +221,17 @@ export default function AdminEditor() {
                         </FormControl>
 
                         {/* Tab Dropdown */}
-                        {selectedPageData && selectedPageData.sections.length > 0 && (
+                        {selectedPageData && selectedPageData.tabs.length > 0 && (
                             <FormControl fullWidth margin="normal">
-                                <InputLabel>Select Section</InputLabel>
+                                <InputLabel>Select Tab</InputLabel>
                                 <Select
                                     value={selectedTab}
-                                    label="Select Section"
+                                    label="Select Tab"
                                     onChange={(e) => setSelectedTab(e.target.value)}
                                 >
-                                    {selectedPageData.sections.map((section) => (
-                                        <MenuItem key={section} value={section}>
-                                            {section}
+                                    {selectedPageData.tabs.map((tab) => (
+                                        <MenuItem key={tab} value={tab}>
+                                            {tab}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -314,6 +315,40 @@ export default function AdminEditor() {
                                                 <AlignRight size={16} />
                                                 Right
                                             </button>
+                                            {/* Image Upload Button */}
+                                            {/* <input
+                                                type="file"
+                                                accept="image/*"
+                                                id="imageUpload"
+                                                style={{ display: 'none' }}
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0]
+                                                    if (!file) return
+
+                                                    const localUrl = URL.createObjectURL(file) // temp URL
+                                                    editor.chain().focus().setImage({ src: localUrl, float: 'none' }).run()
+                                                    e.target.value = ''
+                                                }}
+                                            />
+
+                                            <button
+                                                onClick={() => document.getElementById('imageUpload').click()}
+                                                className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded"
+                                            >
+                                                Upload Image
+                                            </button>
+
+                                            <button onClick={() => editor.chain().focus().updateAttributes('image', { float: 'left' }).run()}>
+                                                Float Left
+                                            </button>
+                                            <button onClick={() => editor.chain().focus().updateAttributes('image', { float: 'right' }).run()}>
+                                                Float Right
+                                            </button>
+                                            <button onClick={() => editor.chain().focus().updateAttributes('image', { float: 'none' }).run()}>
+                                                No Float
+                                            </button> */}
+
+
                                         </div>
 
                                         {/* Tiptap Editor */}

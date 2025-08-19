@@ -14,7 +14,7 @@ body {
 
 .bg-gradient {
     height: 5px;
-    background: linear-gradient(to bottom, #ffffff,#ffffff, #f8d8be, #b7badb);
+    background: linear-gradient(to bottom, #ffffff, #ffffff, #f8d8be, #b7badb);
 }
 
 /* loader styles */
@@ -102,4 +102,10 @@ body {
 
 .ProseMirror li {
     margin-bottom: 0.25rem;
+}
+
+.ProseMirror img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
 }

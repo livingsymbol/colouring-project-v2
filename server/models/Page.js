@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const TabSchema = new mongoose.Schema({
-    label: { type: String, required: true },      
-    content: { type: mongoose.Schema.Types.Mixed, required: true },
+    label: { type: String, required: true },
+    content: { type: mongoose.Schema.Types.Mixed },
 });
 
 const PageSchema = new mongoose.Schema(
@@ -10,7 +10,7 @@ const PageSchema = new mongoose.Schema(
         slug: { type: String, required: true },
         locale: { type: String, required: true },
         title: { type: String },
-        sections: [TabSchema],
+        tabs: [TabSchema],
     },
     { timestamps: true }
 );

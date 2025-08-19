@@ -37,7 +37,7 @@ export default function Home() {
   </div>;
   if (error) return <p>Error: {error}</p>;
 
-  if (!page || !page.sections) {
+  if (!page || !page.tabs) {
     return <p>Page data is incomplete</p>;
   }
 
@@ -45,18 +45,18 @@ export default function Home() {
     {
       label: (
         <span>
-          {page.sections[0].label}
+          {page.tabs[0].label}
         </span>
       ),
-      content: <HomeTab1 content={page.sections[0].content} />,
+      content: <HomeTab1 content={page.tabs[0].content} />,
     },
     {
       label: (
         <span>
-          {page.sections[1].label}
+          {page.tabs[1].label}
         </span>
       ),
-      content: <HomeTab2 content={page.sections[1].content} />,
+      content: <HomeTab2 content={page.tabs[1].content} />,
     },
   ];
 

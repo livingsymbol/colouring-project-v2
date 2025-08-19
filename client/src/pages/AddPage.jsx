@@ -4,31 +4,31 @@ export default function AddPage() {
     const [slug, setSlug] = useState('');
     const [locale, setLocale] = useState('en');
     const [title, setTitle] = useState('');
-    const [sections, setSections] = useState([{ label: '', content: '' }]);
+    const [tabs, setTabs] = useState([{ label: '', content: '' }]);
     const [isUpdateMode, setIsUpdateMode] = useState(false);
 
-    const handleSectionChange = (index, field, value) => {
-        const updated = [...sections];
+    const handleTabChange = (index, field, value) => {
+        const updated = [...tabs];
         updated[index][field] = value;
-        setSections(updated);
+        setTabs(updated);
     };
 
-    const addSection = () => {
-        setSections([...sections, { label: '', content: '' }]);
+    const addTab = () => {
+        setTabs([...tabs, { label: '', content: '' }]);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const processedSections = sections.map(sec => {
+            const processedTabs = tabs.map(sec => {
                 let parsedContent = sec.content;
 
                 if (typeof sec.content === 'string') {
                     try {
                         parsedContent = JSON.parse(sec.content);
                     } catch (err) {
-                        throw new Error(`Section "${sec.label}" has invalid JSON content.`);
+                        throw new Error(`Tab "${sec.label}" has invalid JSON content.`);
                     }
                 }
 
@@ -49,7 +49,7 @@ export default function AddPage() {
                     slug,
                     locale,
                     title,
-                    sections: processedSections,
+                    tabs: processedTabs,
                 }),
             });
 
@@ -59,7 +59,7 @@ export default function AddPage() {
                 setSlug('');
                 setLocale('en');
                 setTitle('');
-                setSections([{ label: '', content: '' }]);
+                setTabs([{ label: '', content: '' }]);
             } else {
                 alert(`Error: ${data.error}`);
             }
@@ -113,26 +113,26 @@ export default function AddPage() {
                     className="border p-2 w-full"
                 />
 
-                <h2 className="font-medium">Sections</h2>
-                {sections.map((section, idx) => (
+                <h2 className="font-medium">Tabs</h2>
+                {tabs.map((tab, idx) => (
                     <div key={idx} className="space-y-2 border p-2">
                         <input
                             type="text"
                             placeholder="Label"
-                            value={section.label}
-                            onChange={e => handleSectionChange(idx, 'label', e.target.value)}
+                            value={tab.label}
+                            onChange={e => handleTabChange(idx, 'label', e.target.value)}
                             className="border p-2 w-full"
                         />
                         <textarea
                             placeholder="Content (JSON text or plain text)"
-                            value={section.content}
-                            onChange={e => handleSectionChange(idx, 'content', e.target.value)}
+                            value={tab.content}
+                            onChange={e => handleTabChange(idx, 'content', e.target.value)}
                             className="border p-2 w-full h-24"
                         />
                     </div>
                 ))}
-                <button type="button" onClick={addSection} className="bg-blue-500 text-white px-4 py-2">
-                    Add Section
+                <button type="button" onClick={addTab} className="bg-blue-500 text-white px-4 py-2">
+                    Add Tab
                 </button>
 
                 <button type="submit" className="bg-green-600 text-white px-4 py-2">

@@ -156,7 +156,7 @@ export const getTabByLabel = async (req, res) => {
 
         if (!page) return res.status(404).json({ error: 'Page not found' });
 
-        const tab = page.sections.find(section => section.label === label);
+        const tab = page.tabs.find(tab => tab.label === label);
         if (!tab) return res.status(404).json({ error: 'Tab not found' });
 
         res.json(tab);
@@ -166,28 +166,70 @@ export const getTabByLabel = async (req, res) => {
 };
 
 // PATCH tab content by label and page
+// export const patchTabByLabel = async (req, res) => {
+//     const { slug, label } = req.params;
+//     const locale = req.query.locale || 'en';
+//     const { content } = req.body;
+//     console.log('slug, label, content', slug, label, content)
+//     if (!content) {
+//         return res.status(400).json({ error: 'Content is required' });
+//     }
+
+//     try {
+//         const page = await Page.findOne({ slug, locale });
+//         if (!page) return res.status(404).json({ error: 'Page not found' });
+
+//         const tabIndex = page.tabs.findIndex(tab => tab.label === label);
+//         if (tabIndex === -1) return res.status(404).json({ error: 'Tab not found' });
+
+//         page.tabs[tabIndex].content = content;
+//         await page.save();
+
+//         console.log("4")
+//         res.json({ message: 'Tab content updated successfully' });
+//     } catch (err) {
+//         res.status(500).json({ error: 'Server error' });
+//     }
+// };
+
 export const patchTabByLabel = async (req, res) => {
-    const { slug, label } = req.params;
-    const locale = req.query.locale || 'en';
-    const { content } = req.body;
-
-    if (!content) {
-        return res.status(400).json({ error: 'Content is required' });
-    }
-
     try {
+        const { slug } = req.params;
+        // decodeURIComponent ensures spaces, commas, & etc. are correctly parsed
+        const label = decodeURIComponent(req.params.label);
+        const locale = req.query.locale || 'en';
+        const { content } = req.body;
+
+        console.log('slug, label, content:', slug, label, content);
+
+        if (!content) {
+            return res.status(400).json({ error: 'Content is required' });
+        }
+
+        // Find the page
         const page = await Page.findOne({ slug, locale });
+        if (!page) {
+            return res.status(404).json({ error: 'Page not found' });
+        }
 
-        if (!page) return res.status(404).json({ error: 'Page not found' });
+        if (!Array.isArray(page.tabs)) {
+            return res.status(400).json({ error: 'This page has no tabs defined' });
+        }
 
-        const tabIndex = page.sections.findIndex(section => section.label === label);
-        if (tabIndex === -1) return res.status(404).json({ error: 'Tab not found' });
+        // Locate the tab
+        const tabIndex = page.tabs.findIndex(tab => tab.label === label);
+        if (tabIndex === -1) {
+            return res.status(404).json({ error: `Tab with label "${label}" not found` });
+        }
 
-        page.sections[tabIndex].content = content;
+        // Update content
+        page.tabs[tabIndex].content = content;
+
         await page.save();
 
         res.json({ message: 'Tab content updated successfully' });
     } catch (err) {
+        console.error('Error updating tab content:', err);
         res.status(500).json({ error: 'Server error' });
     }
 };

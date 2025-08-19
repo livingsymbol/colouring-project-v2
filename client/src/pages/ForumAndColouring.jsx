@@ -30,7 +30,7 @@ export default function ForumAndColouring() {
     <>
       <Heading>Forum & Your Colourings</Heading>
       <Paragraph>
-        Colourings you created in the “Colours” section or colourings from the “Gallery” section you harmonized are displayed below.
+        Colourings you created in the “Colours” tab or colourings from the “Gallery” tab you harmonized are displayed below.
       </Paragraph>
       <Tabs items={tabsData} />
     </>
