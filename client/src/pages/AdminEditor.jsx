@@ -7,7 +7,6 @@ import Link from '@tiptap/extension-link';
 import HardBreak from '@tiptap/extension-hard-break';
 import BulletList from '@tiptap/extension-bullet-list';
 import ListItem from '@tiptap/extension-list-item';
-import Image from '@tiptap/extension-image'
 import {
     Loader2,
     Bold, Italic, Underline as UnderlineIcon, List as BulletIcon,
