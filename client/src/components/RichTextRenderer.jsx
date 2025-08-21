@@ -27,7 +27,7 @@ export default function RichTextRenderer({ content }) {
         TextAlign.configure({ types: ['heading', 'paragraph'] }),
         BulletList,
         ListItem,
-        OrderedList
+        // OrderedList
     ])
 
     return (

@@ -37,7 +37,7 @@ export default function Navbar() {
                         <div className="hidden md:flex md:space-x-4 lg:space-x-8 xl:space-x-12">
                             {navItems.map(({ name, path }) => (
                                 <NavLink
-                                    key={name}
+                                    key={path}
                                     to={path}
                                     className={({ isActive }) =>
                                         `text-md lg:text-lg xl:text-2xl text-center hover:text-[#d2c460] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#d2c460]" : "text-white"

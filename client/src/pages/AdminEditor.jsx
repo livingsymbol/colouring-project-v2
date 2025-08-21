@@ -53,7 +53,7 @@ export default function AdminEditor() {
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
             BulletList,
             ListItem,
-            OrderedList,
+            // OrderedList,
         ],
         content: '',
     });
