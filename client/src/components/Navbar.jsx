@@ -7,6 +7,7 @@ const navItems = [
     { name: <>Finding<br />Harmony</>, path: "/finding-harmony" },
     { name: <>Aspiration<br />at Work</>, path: "/aspiration-at-work" },
     { name: <>Gallery</>, path: "/gallery" },
+    { name: <>Library</>, path: "/library" },
     { name: <>Forum & your<br />Colourings</>, path: "/forum-and-colouring" },
 ];
 

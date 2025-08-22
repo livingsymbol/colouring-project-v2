@@ -5,6 +5,7 @@ import Colours from './pages/Colours';
 import FindingHarmony from './pages/FindingHarmony';
 import AspirationAtWork from './pages/AspirationAtWork';
 import Gallery from './pages/Gallery';
+import Library from './pages/Library';
 import ForumAndColouring from './pages/ForumAndColouring';
 import Post from './pages/Post';
 import Auth from './pages/Auth';
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="/finding-harmony" element={<ProtectedRoutes><FindingHarmony /></ProtectedRoutes>} />
               <Route path="/aspiration-at-work" element={<ProtectedRoutes><AspirationAtWork /></ProtectedRoutes>} />
               <Route path="/gallery" element={<ProtectedRoutes><Gallery /></ProtectedRoutes>} />
+              <Route path="/library" element={<ProtectedRoutes><Library /></ProtectedRoutes>} />
               <Route path="/forum-and-colouring" element={<ProtectedRoutes><ForumAndColouring /></ProtectedRoutes>} />
               <Route path="/forum/post/:id" element={<ProtectedRoutes><Post /></ProtectedRoutes>} />
             </Route>
@@ -46,6 +48,7 @@ export default function App() {
               <Route path="/finding-harmony" element={<FindingHarmony />} />
               <Route path="/aspiration-at-work" element={<AspirationAtWork />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/library" element={<Library />} />
               <Route path="/forum-and-colouring" element={<ForumAndColouring />} />
               <Route path="/forum/post/:id" element={<Post />} />
             </Route>
