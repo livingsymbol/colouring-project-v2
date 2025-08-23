@@ -1,3 +1,4 @@
+import { Play } from "lucide-react";
 import RichTextRenderer from "../RichTextRenderer";
 
 export default function FindingTab4({ content }) {
@@ -30,26 +31,46 @@ export default function FindingTab4({ content }) {
                 As per the Mother and Sri Aurobindo’s references to the Mother’s symbol and to the Matrimandir’s the twelve petal rooms, which correspond to the twelve qualities of the Mother’s symbol, there is one symbol of the Mother coloured harmoniously. All other colour variations reflect the present state of consciousness of the individual behind the Symbol’s colouring.
                 <br />
                 <br />
-                “Centre and four powers, white. The twelve, all of different colour in three groups:
-                <br />
-                <br />
-                Top group red, passing to orange towards yellow.
-                <br />
-                Next group, yellow passing through green towards blue.
-                <br />
-                And third group, blue passing through violet towards red.
-                <br />
-                If white is not convenient, the center may be gold (powder).”
-                <br />
-                <br />
-                - Sri Aurobindo
-                <br />
-                <br />
-                Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
-                <br />
-                <br />
-                <br />
             </p>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <p class="italic">
+                        “Centre and four powers, white. The twelve, all of different colour in three groups:
+                        <br /><br />
+                        Top group red, passing to orange towards yellow.
+                        <br />
+                        Next group, yellow passing through green towards blue.
+                        <br />
+                        And third group, blue passing through violet towards red.
+                        <br />
+                        If white is not convenient, the center may be gold (powder).”
+                    </p>
+
+                    <p class="text-right italic mt-2">
+                        – Sri Aurobindo
+                    </p>
+                </div>
+                <button className="flex items-center gap-3 px-4 py-2 border-2 border-[#a58c3a] rounded-2xl shadow-xl bg-white hover:shadow-lg transition">
+                    {/* Play icon + text column */}
+                    <span className="flex flex-col items-center justify-center">
+                        <Play size={24} className="text-gray-600 border-2 border-[#a58c3a]" />
+                        <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
+                    </span>
+
+                    {/* Symbol Image */}
+                    <img
+                        src="/images/button_image.png"
+                        alt="Symbol"
+                        className="w-10 h-10 object-contain shrink-0"
+                    />
+                </button>
+
+            </div>
+            <br />
+            Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
+            <br />
+            <br />
+            <br />
         </>
     </div>;
 }
