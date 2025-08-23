@@ -10,34 +10,52 @@ import ColoursTab5 from '../components/tabs/ColoursTab5';
 import useGetContent from '../hooks/useGetContent';
 
 export default function Colours() {
-  const slug = window.location.pathname.split('/')[1];
-  const { page, loading, error } = useGetContent(slug, 'en');
+  // const slug = window.location.pathname.split('/')[1];
+  // const { page, loading, error } = useGetContent(slug, 'en');
 
-  if (loading) return <div className="flex justify-center items-center gap-x-4">
-    <Loader2 className="animate-spin text-[#404040]" size={32} />
-    Loading...
-  </div>;
-  if (error) return <p>Error: {error}</p>;
+  // if (loading) return <div className="flex justify-center items-center gap-x-4">
+  //   <Loader2 className="animate-spin text-[#404040]" size={32} />
+  //   Loading...
+  // </div>;
+  // if (error) return <p>Error: {error}</p>;
 
-  if (!page || !page.tabs) {
-    return <p>Page data is incomplete</p>;
-  }
+  // if (!page || !page.tabs) {
+  //   return <p>Page data is incomplete</p>;
+  // }
+
+  // const tabsData = [
+  //   {
+  //     label: <>Physics of light<br /> and colour</>, content: <ColoursTab1 content={page.tabs[0].content} />
+  //   },
+  //   {
+  //     label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 content={page.tabs[1].content} />
+  //   },
+  //   {
+  //     label: <>Colour<br />psychology</>, content: <ColoursTab3 content={page.tabs[2].content} />
+  //   },
+  //   {
+  //     label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 content={page.tabs[3].content} />
+  //   },
+  //   {
+  //     label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 content={page.tabs[4].content} />
+  //   },
+  // ];
 
   const tabsData = [
     {
-      label: <>Physics of light<br /> and colour</>, content: <ColoursTab1 content={page.tabs[0].content} />
+      label: <>Physics of light<br /> and colour</>, content: <ColoursTab1 />
     },
     {
-      label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 content={page.tabs[1].content} />
+      label: <>Physiology of<br /> colour vision</>, content: <ColoursTab2 />
     },
     {
-      label: <>Colour<br />psychology</>, content: <ColoursTab3 content={page.tabs[2].content} />
+      label: <>Colour<br />psychology</>, content: <ColoursTab3 />
     },
     {
-      label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 content={page.tabs[3].content} />
+      label: <>Colour theory in<br /> art and design</>, content: <ColoursTab4 />
     },
     {
-      label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 content={page.tabs[4].content} />
+      label: <>Colour in<br /> traditional yoga</>, content: <ColoursTab5 />
     },
   ];
 
