@@ -2,6 +2,16 @@ import RichTextRenderer from "../RichTextRenderer";
 
 export default function FindingTab2({ content }) {
     return <div className="w-full">
-        <RichTextRenderer content={content} />
+        {/* <RichTextRenderer content={content} /> */}
+        <>
+            <p>
+                By mixing primary colours, secondary colours are created. By mixing secondary colours, tertiary colours are created. Colours will differ based on what colour model we are using, as per below.
+            </p>
+            <br />
+            <div className="mx-auto min-w-[200px] max-w-[800px] flex justify-center items-center gap-4">
+                <img src="images/ft2.1.png" alt="" className="w-1/2 h-full "/>
+                <img src="images/ft2.2.png" alt="" className="w-1/2 h-full "/>
+            </div>
+        </>
     </div>;
 }
