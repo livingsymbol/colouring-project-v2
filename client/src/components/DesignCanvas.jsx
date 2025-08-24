@@ -180,9 +180,9 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
         />
         <div className="flex justify-between gap-4">
           <div>
-            <button
+            {!showDesc && <button
               className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
-              onClick={revealScore}>Reveal</button>
+              onClick={revealScore}>Reveal</button>}
             <Modal open={open} onClose={handleClose}>
               <Box sx={style}>
                 <Typography
