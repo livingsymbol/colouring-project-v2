@@ -13,27 +13,24 @@ export default function Library() {
                         Kindly follow the links below for further readings.
 
                         <a
-                            href="/pdfs/On the Mother’s Symbol.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="/assets/pdfs/On the Mother’s Symbol.pdf"
+                            download="On the Mother’s Symbol.pdf"
                             className="underline block hover:text-blue-500 mt-2"
                         >
                             On the Mother’s Symbol
                         </a>
 
                         <a
-                            href="/pdfs/On Mother’s flag and Symbol.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="/assets/pdfs/On the Mother’s flag & Symbol.pdf"
+                            download="On the Mother’s flag & Symbol.pdf"
                             className="underline block hover:text-blue-500 mt-2"
                         >
                             On the Mother’s flag & Symbol
                         </a>
 
                         <a
-                            href="/pdfs/On Sri Aurobindo’s Symbol.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="/assets/pdfs/On Sri Aurobindo’s Symbol.pdf"
+                            download="On Sri Aurobindo’s Symbol.pdf"
                             className="underline block hover:text-blue-500 mt-2"
                         >
                             On Sri Aurobindo’s Symbol
