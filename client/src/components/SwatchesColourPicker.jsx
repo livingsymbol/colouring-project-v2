@@ -79,7 +79,7 @@ const SwatchesColourPicker = ({
               border:
                 color === selectedColor
                   ? "2px solid #000"
-                  : "2px solid #a58c3a",
+                  : "2px solid #d5af3c",
               transform: color === selectedColor ? "scale(1.1)" : "scale(1)",
               transition: "transform 0.1s ease-in-out, border 0.1s ease-in-out",
             }}

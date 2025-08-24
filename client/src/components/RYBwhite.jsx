@@ -1,103 +1,127 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { rgbToHex } from '../utils/scoring';
+import React, { useRef, useState, useEffect } from "react";
 
-const RYBwhite = ({ size = 300, onColorSelect }) => {
+const RYBwhite = ({ size = 300, onChange }) => {
     const canvasRef = useRef(null);
-    const [selectedColor, setSelectedColor] = useState(null);
-    const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 })
-    
+    const [color, setColor] = useState("#ffffff");
+
     useEffect(() => {
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
         const radius = size / 2;
-        const imageData = ctx.createImageData(size, size);
+        const image = ctx.createImageData(size, size);
+        const data = image.data;
 
-        for (let y = 0; y < size; y++) {
-            for (let x = 0; x < size; x++) {
-                const dx = x - radius;
-                const dy = y - radius;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                const angle = Math.atan2(dy, dx);
+        for (let y = -radius; y < radius; y++) {
+            for (let x = -radius; x < radius; x++) {
+                const dist = Math.sqrt(x * x + y * y);
+                if (dist <= radius) {
+                    let angle = Math.atan2(y, x) * (180 / Math.PI);
+                    if (angle < 0) angle += 360;
 
-                if (distance <= radius) {
-                    // Hue from angle
-                    let hue = (angle * 180 / Math.PI + 360) % 360;
-                    // Saturation based on distance (outer = 100%)
-                    let saturation = (distance / radius) * 100;
-                    // Lightness toward center = 100% white
-                    let lightness = 100 - (distance / radius) * 50;
+                    // Rotate 90° anti-clockwise by subtracting 90°
+                    angle = (angle - 270 + 360) % 360;
 
-                    const [r, g, b] = hslToRgb(hue, saturation, lightness);
+                    // Map angle to RYB wheel
+                    const rybHue = angleToRYB(angle);
 
-                    const index = (y * size + x) * 4;
-                    imageData.data[index] = r;
-                    imageData.data[index + 1] = g;
-                    imageData.data[index + 2] = b;
-                    imageData.data[index + 3] = 255;
+                    // Calculate how much to fade from white to the color
+                    const fadeAmount = Math.min(Math.pow(dist / radius, 2), 1);
+
+                    // Get the full saturated color
+                    const [r, g, b] = hslToRgb(rybHue / 360, 1, 0.5);
+
+                    // Blend from white (255, 255, 255) to the color based on fadeAmount
+                    const finalR = Math.round(255 * (1 - fadeAmount) + r * fadeAmount);
+                    const finalG = Math.round(255 * (1 - fadeAmount) + g * fadeAmount);
+                    const finalB = Math.round(255 * (1 - fadeAmount) + b * fadeAmount);
+                    const px = (y + radius) * size + (x + radius);
+                    data[px * 4] = finalR;
+                    data[px * 4 + 1] = finalG;
+                    data[px * 4 + 2] = finalB;
+                    data[px * 4 + 3] = 255;
                 }
             }
         }
-
-        ctx.putImageData(imageData, 0, 0);
+        ctx.putImageData(image, 0, 0);
     }, [size]);
 
     const handleClick = (e) => {
         const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        setPointerPosition({ x, y })
-        const ctx = canvas.getContext('2d');
         const pixel = ctx.getImageData(x, y, 1, 1).data;
-        const color = rgbToHex(pixel[0], pixel[1], pixel[2]);
-        setSelectedColor(color);
-        if (onColorSelect) onColorSelect(color);
+        const hex =
+            "#" +
+            ((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2])
+                .toString(16)
+                .slice(1);
+        setColor(hex);
+        if (onChange) onChange(hex);
     };
 
     return (
-        <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
-            {selectedColor && (
-                <div
-                    style={{
-                        width: '10px',
-                        height: '10px',
-                        borderRadius: '50%',
-                        border: '2px solid black',
-                        backgroundColor: selectedColor,
-                        position: 'absolute',
-                        top: pointerPosition.y - 5,
-                        left: pointerPosition.x - 5,
-                        pointerEvents: 'none', // so clicks go through
-                    }}
-                />
-            )}
+        <div className="flex flex-col items-center">
             <canvas
                 ref={canvasRef}
                 width={size}
                 height={size}
                 onClick={handleClick}
-                style={{
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    display: 'block',
-                }}
+                style={{ borderRadius: "50%", cursor: "crosshair" }}
             />
         </div>
     );
-
 };
 
-// HSL to RGB conversion
+// Convert RGB hue wheel to RYB hue wheel
+function angleToRYB(angle) {
+    // Mapping table for RYB hue (approximation)
+    const mapping = [
+        [0, 0],
+        [60, 30],
+        [120, 60],
+        [180, 120],
+        [240, 180],
+        [300, 240],
+        [360, 360],
+    ];
+
+    for (let i = 0; i < mapping.length - 1; i++) {
+        const [a0, h0] = mapping[i];
+        const [a1, h1] = mapping[i + 1];
+        if (angle >= a0 && angle <= a1) {
+            const t = (angle - a0) / (a1 - a0);
+            return h0 + t * (h1 - h0);
+        }
+    }
+    return angle;
+}
+
+// Convert HSL to RGB
 function hslToRgb(h, s, l) {
-    s /= 100;
-    l /= 100;
+    let r, g, b;
 
-    const k = n => (n + h / 30) % 12;
-    const a = s * Math.min(l, 1 - l);
-    const f = n =>
-        l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    if (s === 0) {
+        r = g = b = l;
+    } else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
 
-    return [Math.round(255 * f(0)), Math.round(255 * f(8)), Math.round(255 * f(4))];
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
 export default RYBwhite;

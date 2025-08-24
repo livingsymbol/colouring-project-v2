@@ -38,10 +38,10 @@ export default function AspirationTabTemplate({ palette, symbol }) {
         <div className="w-full space-y-8">
 
             <div className="flex flex-col-reverse justify-center md:flex-row items-center md:justify-between gap-4 lg:gap-8">
-                <button className="flex items-center gap-3 px-4 py-2 border-2 border-[#a58c3a] rounded-2xl shadow-xl bg-white hover:shadow-lg transition">
+                <button className="flex items-center gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition">
                     {/* Play icon + text column */}
                     <span className="flex flex-col items-center justify-center">
-                        <Play size={24} className="text-gray-600 border-2 border-[#a58c3a]" />
+                        <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
                         <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
                     </span>
 

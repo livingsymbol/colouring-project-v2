@@ -17,14 +17,15 @@ const RGBwhite = ({ size = 300, onColorSelect }) => {
                 const dx = x - radius;
                 const dy = y - radius;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                const norm = distance / radius;
+                const angle = Math.atan2(dy, dx);
 
                 if (distance <= radius) {
-                    const angle = Math.atan2(dy, -dx) + Math.PI;
-                    const hue = (angle * 180 / Math.PI + 360) % 360;
-                    const saturation = norm * 100;
-                    const lightness = 100 - norm * 50; // 50 at edge, 100 at center
-
+                    // Hue from angle
+                    let hue = (angle * 180 / Math.PI + 360) % 360;
+                    // Saturation based on distance (outer = 100%)
+                    let saturation = (distance / radius) * 100;
+                    // Lightness toward center = 100% white
+                    let lightness = 100 - (distance / radius) * 50;
 
                     const [r, g, b] = hslToRgb(hue, saturation, lightness);
 
@@ -45,16 +46,13 @@ const RGBwhite = ({ size = 300, onColorSelect }) => {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        setPointerPosition({ x, y });
-
+        setPointerPosition({ x, y })
         const ctx = canvas.getContext('2d');
         const pixel = ctx.getImageData(x, y, 1, 1).data;
         const color = rgbToHex(pixel[0], pixel[1], pixel[2]);
-
         setSelectedColor(color);
         if (onColorSelect) onColorSelect(color);
     };
-
 
     return (
         <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
@@ -89,6 +87,7 @@ const RGBwhite = ({ size = 300, onColorSelect }) => {
 
 };
 
+// HSL to RGB conversion
 function hslToRgb(h, s, l) {
     s /= 100;
     l /= 100;

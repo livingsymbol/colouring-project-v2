@@ -34,7 +34,7 @@ const Symbol = forwardRef((props, ref) => {
           <div
             className="flex items-center justify-center w-24 h-12 text-black font-semibold text-sm tracking-wide transition-all duration-200 group-hover:brightness-110"
             style={{
-              backgroundColor: "#a28834",
+              backgroundColor: "#d5af3c",
               clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%, 0% 50%)",
             }}
           >
@@ -42,7 +42,7 @@ const Symbol = forwardRef((props, ref) => {
           </div>
         </button>
 
-        <h1 className="text-3xl font-semibold text-center text-[#a2863f]">
+        <h1 className="text-3xl font-semibold text-center text-[#d5af3c]">
           Rotate
           <br />
           qualities
@@ -52,7 +52,7 @@ const Symbol = forwardRef((props, ref) => {
           <div
             className="flex items-center justify-center w-24 h-12 text-black font-semibold text-sm tracking-wide transition-all duration-200 group-hover:brightness-110"
             style={{
-              backgroundColor: "#a28834",
+              backgroundColor: "#d5af3c",
               clipPath: "polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%)",
             }}
           >
@@ -77,7 +77,7 @@ const Symbol = forwardRef((props, ref) => {
                 <path
                   transform="matrix(1,0,0,-1,600.1441,212.1676)"
                   d="M0 0C78.259-135.554 31.808-308.891-103.752-387.159-239.311-465.428-412.645-418.989-490.903-283.436-569.162-147.882-522.71 25.455-387.151 103.724-251.592 181.992-78.258 135.553 0 0"
-                  fill="#a2863f"
+                  fill="#d5af3c"
                   style={{ pointerEvents: "none" }}
                   stroke="#000000"
                   strokeWidth="1"

@@ -17,14 +17,15 @@ const RGBblack = ({ size = 300, onColorSelect }) => {
                 const dx = x - radius;
                 const dy = y - radius;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                const norm = distance / radius;
+                const angle = Math.atan2(dy, dx);
 
                 if (distance <= radius) {
-                    const angle = Math.atan2(dy, -dx) + Math.PI;
-                    const hue = (angle * 180 / Math.PI + 360) % 360;
-                    const saturation = norm * 100;
-                    const lightness = norm * 50; // 50 at edge, 100 at center
-
+                    // Hue from angle
+                    let hue = (angle * 180 / Math.PI + 360) % 360;
+                    // Saturation stays 100%
+                    let saturation = 100;
+                    // Lightness increases from center (black) to edge
+                    let lightness = (distance / radius) * 50;
 
                     const [r, g, b] = hslToRgb(hue, saturation, lightness);
 
@@ -86,6 +87,7 @@ const RGBblack = ({ size = 300, onColorSelect }) => {
 
 };
 
+// HSL to RGB conversion
 function hslToRgb(h, s, l) {
     s /= 100;
     l /= 100;
