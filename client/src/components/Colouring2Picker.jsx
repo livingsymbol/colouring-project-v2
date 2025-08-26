@@ -21,7 +21,7 @@ const Colouring2Picker = ({
         display: "grid",
         gridTemplateColumns: `repeat(${cols}, ${swatchSize}px)`,
         gridGap: "5px",
-        width:"100%"
+        width: "100%"
       }}
     >
       {colors.flat().map((color, index) => (
@@ -35,7 +35,7 @@ const Colouring2Picker = ({
             cursor: "pointer",
             boxSizing: "border-box",
             border:
-              color === selectedColor ? "2px solid #000" : "2px solid #a58c3a", // Highlight selected color
+              color === selectedColor ? "2px solid #000" : "2px solid #d5af3c", // Highlight selected color
             transform: color === selectedColor ? "scale(1.1)" : "scale(1)", // Slightly scale up the selected swatch
             transition: "transform 0.1s ease-in-out, border 0.1s ease-in-out", // Smooth transition
           }}

@@ -13,7 +13,7 @@ const tabsData = [
     label: <>Images to<br /> harmonize</>, content: <GalleryTab2 />
   },
   {
-    label: <>The Mother on<br /> flowers</>, content: <GalleryTab3 />
+    label: <>On<br /> flowers</>, content: <GalleryTab3 />
   },
 ];
 

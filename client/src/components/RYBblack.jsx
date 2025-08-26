@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 
-const RYBblack = ({ size = 300, onChange }) => {
+const RYBblack = ({ size = 300, onColorSelect }) => {
     const canvasRef = useRef(null);
     const [color, setColor] = useState("#ffffff");
+    const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 })
+
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -51,6 +53,7 @@ const RYBblack = ({ size = 300, onChange }) => {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
+        setPointerPosition({ x, y })
         const pixel = ctx.getImageData(x, y, 1, 1).data;
         const hex =
             "#" +
@@ -58,11 +61,26 @@ const RYBblack = ({ size = 300, onChange }) => {
                 .toString(16)
                 .slice(1);
         setColor(hex);
-        if (onChange) onChange(hex);
+        if (onColorSelect) onColorSelect(hex);
     };
 
     return (
-        <div className="flex flex-col items-center">
+        <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
+            {color && (
+                <div
+                    style={{
+                        width: '10px',
+                        height: '10px',
+                        borderRadius: '50%',
+                        border: '2px solid white',
+                        backgroundColor: color,
+                        position: 'absolute',
+                        top: pointerPosition.y - 5,
+                        left: pointerPosition.x - 5,
+                        pointerEvents: 'none', // so clicks go through
+                    }}
+                />
+            )}
             <canvas
                 ref={canvasRef}
                 width={size}

@@ -32,7 +32,7 @@ export default function RichTextRenderer({ content }) {
 
     return (
         <div
-            className="my-4 text-[#404040] font-semibold text-base sm:text-lg leading-relaxed ProseMirror"
+            className="my-4 text-[#404040] text-base sm:text-lg leading-relaxed ProseMirror"
             dangerouslySetInnerHTML={{ __html: html }}
         />
     )

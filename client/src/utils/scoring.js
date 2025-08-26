@@ -694,6 +694,8 @@ export const gradeColours = (colourArray, num) => {
     const score = calculateScore(colourArray, colomnCount, num)
     console.log('score after calculations: ', score)
 
+    
+
     if (score === 100) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony];
     } else if (score >= 70) {

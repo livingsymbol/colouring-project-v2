@@ -1,4 +1,5 @@
 import RichTextRenderer from "../RichTextRenderer";
+import Paragraph from '../Paragraph';
 
 export default function GalleryTab3() {
     return <div className="w-full">
@@ -25,7 +26,7 @@ export default function GalleryTab3() {
             "
             />
             <br />
-            <p>
+            <Paragraph>
                 <i>"Flowers speak to us when we know how to listen to them,"</i> the Mother said. <i>"It is a subtle and fragrant language."</i> The Mother identified significances of almost nine hundred flowers.
                 <br />
                 <br />
@@ -35,7 +36,7 @@ export default function GalleryTab3() {
                 <i>
                     “Not as we understand it mentally. There is a mental projection when one gives a precise significance to a flower. ... A flower does not have the equivalent of a mental consciousness.  ... It is rather like the movement of a little baby, neither a sensation nor a feeling, but something of both; it is a spontaneous movement, a very special vibration. Well, if one is in contact with this vibration, if one feels it, one receives an impression which may be translated by a thought. This is how I give a significance to flowers and plants. There is a kind of identification with the vibration, a perception of the quality it represents, and gradually through a kind of approximation (sometimes it comes suddenly, occasionally it takes time) there is a convergence of these vibrations, which are of a vital-emotional order, and the vibration of mental thought, and if there is sufficient accord one has a direct perception of what the plant may signify.”
                 </i>
-            </p>
+            </Paragraph>
             <br />
             <br />
 
@@ -64,7 +65,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “Courage is the total absence of fear in any form.”
                     <br />
                     <br />
@@ -99,10 +100,10 @@ export default function GalleryTab3() {
                     reserve and without a possibility of withdrawal, into the great adventure of the divine discovery, the great adventure of the divine meeting, the yet greater adventure of the divine Realisation; you throw yourself into the adventure without looking back and without asking for a single minute, “What’s going to happen?” For if you ask what is going to happen, you never start, you always remain stuck there, rooted to the spot, afraid to lose something, to lose your balance.”
                     <br />
                     <br />
-                </p>
-                <p className="text-right italic">
+                </Paragraph>
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -133,7 +134,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “The first condition of inner progress is to recognize whatever is or has
                     been a wrong movement in any part of  our nature – wrong idea, wrong
                     feeling, wrong speech, wrong action – and by wrong is meant what
@@ -141,13 +142,13 @@ export default function GalleryTab3() {
                     from the way of the Divine. Once recognized, it is offered to the Divine
                     for the Light and Grace to descend and substitute for it the right movement
                     of the true Consciousness.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - Sri Aurobindo
-                </p>
+                </Paragraph>
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “Above all, it is the will for progress and self-purification which lights the fire. The will for progress. Those who have a strong will, when they turn it towards spiritual progress and  purification, automatically light the fire within themselves.”
                     <br />
                     <br />
@@ -165,10 +166,10 @@ export default function GalleryTab3() {
                     <br />
                     <br />
                     “One has always something to learn and a progress to make, and in each circumstance we can find the occasion of learning the lesson and making the progress.
-                </p>
-                <p className="text-right italic">
+                </Paragraph>
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -199,7 +200,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “This means… to receive the Divine Force… and allow it to work, guiding
                     one’s sight, will and action. There must be a complete and never-failing
                     assent, a willingness to let the Divine Power do with us whatever is
@@ -217,31 +218,31 @@ export default function GalleryTab3() {
                     “It is with the widening of the consciousness and the one-pointedness of the aspiration that the receptivity increases.”
                     “Flowers are very receptive and they are happy when they are loved.” “Conscious of the Divine Will and surrendered to it.”
 
-                </p>
+                </Paragraph>
                 <br />
                 <br />
-                <p>
+                <Paragraph>
                     Q: Mother, on what does receptivity depend?
-                </p>
+                </Paragraph>
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “It depends first of all upon sincerity - on whether one really wants to receive - and then... yes, I believe the principal factors are sincerity and humility. There is nothing that closes you up more than vanity. When you are self-satisfied, you have that kind of vanity of not wanting to admit that you lack something, that you make mistakes, that you are incomplete, that you are imperfect, that you are... There is something in the nature, you know, which grows stiff in this way, which does not want to admit - it is this
                     which prevents you from receiving. You have, however, only to try it out and get the experience. If, by an effort of will you manage to make even a very tiny part of the being admit that “Ah, well, yes, I am mistaken, I should not be like that, and I should not do that and should not feel that, yes, it is a mistake”, if you manage to make it admit this, at first, as I said just now, it begins by hurting you very much, but when you hold on firmly, until this is admitted, immediately it is open - it is open and strangely a flood of light enters, and then you feel so glad afterwards, so happy that you ask yourself, “Why, was I foolish enough to resist so long?”
-                </p>
-                <p className="text-right italic">
+                </Paragraph>
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “Receptivity - the power to receive the Divine Force and to feel its presence and the presence of the Mother in it and allow it to work, guiding one's sight and will and action.”
                     <br />
                     <br />
                     “There must be a complete and never failing assent, a courageous willingness to let the Divine Power do with us whatever is needed for the work that has to be done.”
 
-                </p>
-                <p className="text-right italic">
+                </Paragraph>
+                <Paragraph className="text-right italic">
                     - Sri Aurobindo
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -272,7 +273,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “This taste for supreme adventure is aspiration – an aspiration which takes
                     hold of you completely and flings you, without calculation and without
                     reserve and without a possibility of withdrawal, into the great adventure
@@ -300,11 +301,11 @@ export default function GalleryTab3() {
 
                     “If you are in a state of conscious aspiration and very sincere, well, everything around you will be arranged in order to help in your aspiration, whether directly or indirectly, that is, either to make you progress, put you in touch with something new or to eliminate from your nature something that has to disappear. This is something quite remarkable. If you are truly in a state of intensity of aspiration, there is not a circumstance which does not come to help you to realise this aspiration. Everything comes, everything, as though there were a perfect and absolute consciousness organizing around you all things.
 
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -335,7 +336,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
 
                     “One must have an unfaltering perseverance, be ready to begin again a
                     hundred times the same thing with the same intensity with which one did it
@@ -368,11 +369,11 @@ export default function GalleryTab3() {
 
                     “Perseverance breaks down all obstacles.”
 
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -403,7 +404,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
 
                     “It is certainly, of all the movements within the reach of human consciousness,
                     <br />
@@ -444,7 +445,7 @@ export default function GalleryTab3() {
 
                     “Gratitude opens all the closed doors and allows the saving Grace to enter.”
 
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -479,7 +480,7 @@ export default function GalleryTab3() {
                 <br />
                 <br />
 
-                <p className="italic">
+                <Paragraph className="italic">
 
                     “It is very simple, when people are told “be humble”, they think
                     Immediately of “being humble before other men” and that humility is
@@ -506,11 +507,11 @@ export default function GalleryTab3() {
                     <br />
                     “True humility consists in knowing that the Supreme Consciousness, the Supreme Will alone exists and that the I is not.”
 
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -541,7 +542,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “To be sincere is to be pure. As Sri Aurobindo tells us, ‘Desire nothing but
                     the purity, force, light, wideness, calm, Ananda of the Divine Consciousness,
                     and its insistence to transform and perfect your mind, life and body.”
@@ -570,11 +571,11 @@ export default function GalleryTab3() {
                     This is what I call being sincere. When you are with someone, if you are sincere, instantaneously your way of reacting should be to do the right thing, even when you are with someone who does not do it. Take the most common example of someone who gets angry: instead of saying things that hurt, you say nothing, you keep calm and quiet, you do not catch the contagion of the anger. You have only to look at yourself to see if this is easy. It is quite an elementary thing, a very small beginning to know whether you are sincere. And I am not speaking of those who catch every contagion, even that of coarse joking nor of those who commit the same stupidity as the others. I tell you: if you look at yourself with sharp eyes, you will
                     catch in yourself insincerities by the hundred, even though you are trying to be sincere in your general attitude. You will see how
                     difficult it is.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -605,7 +606,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “In the liberation of the soul from the ignorance, the very first foundation is
                     peace, calm, the silence and quietude of the Eternal and Infinite…
                     A consummate power and greater formation of the spiritual ascension
@@ -642,11 +643,11 @@ export default function GalleryTab3() {
                     “Nowhere will you be able to find peace unless you have peace in your heart.”
                     “In peace and inner silence you will more and more become conscious of the constant Presence.”
                     “It is in peace that knowledge and power are truly effective.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -677,20 +678,20 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     The very first necessity for spiritual perfection is a perfect equality…. The
                     perfect equality of our Spirit and nature is a means by which we can move
                     back from the troubled and ignorant outer consciousness into the inner
                     kingdom of heaven and possess the Spirit’s eternal kingdoms of
                     greatness, joy and peace… “
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - Sri Aurobindo
-                </p>
+                </Paragraph>
                 <br />
 
-                <p className="italic">
+                <Paragraph className="italic">
                     “Equality: Immutable peace and calm.”
                     <br />
                     <br />
@@ -711,20 +712,20 @@ export default function GalleryTab3() {
                     <br />
 
                     “Someone who knows how to smile in all circumstances is very close to true equality of soul.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
                 <br />
 
-                <p className="italic">
+                <Paragraph className="italic">
                     “Equality does not mean a fresh ignorance or blindness; it does not call for and need not initiate a greyness of vision and a blotting out of all hues. Difference is there, variation of expression is there and this variation we shall appreciate, - far more justly than we could when the eye was clouded by a partial and erring love and hate, admiration and scorn, sympathy and antipathy, attraction and repulsion. But behind the variation we shall always see the Complete and Immutable who dwells within it and we shall feel, know or at least, if it is hidden from us, trust in the wise purpose and divine necessity of the manifestation, whether it appear to our human standards harmonious and perfect or crude and unfinished or even false and evil.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - Sri Aurobindo
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -755,17 +756,17 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     Generosity gives and gives itself without bargaining. Gives for the joy of
                     giving.”
-                </p>
+                </Paragraph>
                 <br />
 
                 Q: Sri Aurobindo says here about Mahalakshmi: “All that is poor...
                 repels her advent”?
                 <br />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
 
                     “Yes, poor, without generosity, without ardour, without amplitude,
                     without inner richness; all that is dry, cold, coiled up, prevents the coming
@@ -780,20 +781,20 @@ export default function GalleryTab3() {
                     <br />
 
                     “It is to give unstintingly, selflessly, without bargaining or any expectation. It is to give for the joy of giving. It is an opportunity that the Divine gives us for the liberation of the ego and the servitude to self-indulgence, replacing it by the joy of participation in the divine work upon earth, for a true and beautiful and harmonious equipment and ordering of a new, divinised mental, vital and physical existence in whatever way the Divine Mother herself decides in her creative vision.”
-                </p>
-                <p className="text-right italic">
+                </Paragraph>
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
                 <br />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “Nobleness and generosity are the soul's ethereal firmament; without them, one looks at an insect in a dungeon.”
 
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - Sri Aurobindo
-                </p>
+                </Paragraph>
             </>
             <br />
             <br />
@@ -824,7 +825,7 @@ export default function GalleryTab3() {
             "
                 />
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “I have very often heard people saying, “Oh! now that I am trying to be
                     good, everybody seems to be bad to me!” But this is precisely to teach you
                     that one should not be good with an interested motive, one should not be
@@ -862,19 +863,19 @@ export default function GalleryTab3() {
 
                     “A tireless benevolence, clear-seeing and comprehensive, free from all personal reaction, is the best way to love God and serve
                     Him upon earth.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - The Mother
-                </p>
+                </Paragraph>
                 <br />
-                <p className="italic">
+                <Paragraph className="italic">
                     “Good is all that helps the individual and the world towards their individual fullness.”
-                </p>
+                </Paragraph>
                 <br />
-                <p className="text-right italic">
+                <Paragraph className="text-right italic">
                     - Sri Aurobindo
-                </p>
+                </Paragraph>
             </>
         </>
     </div >;

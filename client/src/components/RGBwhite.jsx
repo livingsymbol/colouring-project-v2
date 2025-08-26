@@ -78,7 +78,7 @@ const RGBwhite = ({ size = 300, onColorSelect }) => {
                 onClick={handleClick}
                 style={{
                     borderRadius: '50%',
-                    cursor: 'pointer',
+                    cursor: 'crosshair',
                     display: 'block',
                 }}
             />

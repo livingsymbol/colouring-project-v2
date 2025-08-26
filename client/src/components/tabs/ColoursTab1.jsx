@@ -1,4 +1,5 @@
 import RichTextRenderer from "../RichTextRenderer";
+import Paragraph from "../Paragraph";
 
 export default function ColoursTab1({ content }) {
     return <div className="w-full">
@@ -14,7 +15,7 @@ export default function ColoursTab1({ content }) {
           rounded-lg
           "
             />
-            <p className="ProseMirror">
+            <Paragraph className="ProseMirror">
                 Physics offers the foundational understanding of what colour is. Light is electromagnetic energy, and visible colours are frequencies of electromagnetic radiation. They range from lower-frequency red to higher-frequency violet.
                 <br />
                 <br />
@@ -51,7 +52,7 @@ export default function ColoursTab1({ content }) {
                     <li>Saturation - ranges from "colourless" through "pale" to "vivid". The perceived colour can be described as closer to the "colourless" or purely chromatic end</li>
                     <li>Brightness - apparent amount of light, varying from "dim" to "bright"</li>
                 </ul>
-            </p>
+            </Paragraph>
         </>
 
     </div >;

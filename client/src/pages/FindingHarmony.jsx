@@ -64,6 +64,12 @@ export default function FindingHarmony() {
   return (
     <>
       <Heading>Finding Harmony</Heading>
+      <Paragraph className="text-center italic">
+        “Above all, it is the will for progress and self-purification which lights the fire. The will for progress. Those who have a strong will, when they turn it towards spiritual progress and purification, automatically light the fire within themselves.”
+        <br />
+        - The Mother
+
+      </Paragraph>
       <Paragraph>
         As part of our exploration, we discovered numerous representations of the coloured Mother’s symbol, created by different individuals, with most of them varying in colour and arrangement. Initially, we assumed that many of these symbols contained errors. However, this raised important questions: Which ones are correct, and which are not? What criteria should we use to evaluate them? Why are there so many colour variations? How do we perceive colours? What is the distinction between red and yellow? How do colours interact with each other, and how do they correspond to the different qualities bestowed by the Mother?
         <br />

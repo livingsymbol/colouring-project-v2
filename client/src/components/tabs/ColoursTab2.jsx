@@ -1,12 +1,13 @@
 // import RichTextRenderer from "../RichTextRenderer";
+import Paragraph from "../Paragraph";
 
 export default function ColoursTab2({ content }) {
     return <div className="w-full">
         {/* <RichTextRenderer content={content} /> */}
         <>
-            <p>
+            <Paragraph>
                 Physiology explores how the eye receives light and how the brain processes it. Human eyes are built to see in “RGB”, i.e. have three types of cone cells tuned to red, green, and blue light. Colour vision is initiated by the absorption of photons, small particles carrying electromagnetic radiation, within the photoreceptor cells in the retina. The human retina contains two main types of photoreceptors, rods and cones.
-            </p>
+            </Paragraph>
             <img
                 src="/images/ct2.1.png"
                 alt="Example"
@@ -18,17 +19,17 @@ export default function ColoursTab2({ content }) {
             "
             />
             <br />
-            <p className="ProseMirror">
+            <Paragraph className="ProseMirror">
                 <ul>
                     <li>Rods - vision at low light levels, no colour vision.</li>
                     <li>Cones - vision at high light levels with colour vision. Cones process light and images as they enter the eye and send signals to the brain. Defective cones cause colour blindness. </li>
 
                 </ul>
-            </p>
+            </Paragraph>
             <br />
-            <p>
+            <Paragraph>
                 Our perception of colour is a construct - a synthesis of light data interpreted by the brain. Factors that influence our perception:
-            </p>
+            </Paragraph>
             <br />
             <img
                 src="/images/ct2.2.png"
@@ -41,7 +42,7 @@ export default function ColoursTab2({ content }) {
             "
             />
             <br />
-            <p className="ProseMirror">
+            <Paragraph className="ProseMirror">
 
                 <ul>
                     <li>Lighting conditions</li>
@@ -51,7 +52,7 @@ export default function ColoursTab2({ content }) {
                 </ul>
                 <br />
                 Thus, two people looking at the same coloured Mother’s symbol may see or feel it differently. This brings tolerance and openness into our exploration: perhaps some of the variations we observed weren’t "mistakes" but expressions of individual physiological and psychological response. This also reflects the living nature of the symbol—its resonance can change depending on the state of the individual.
-            </p>
+            </Paragraph>
         </>
 
     </div>;

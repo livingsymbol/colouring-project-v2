@@ -69,7 +69,7 @@ export default function AspirationTab1() {
         <AspirationTabTemplate
             palette={
                 <div className="h-full flex flex-col justify-around">
-                    <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#a58c3a] p-4 rounded-3xl shadow-2xl">
+                    <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#d5af3c] p-4 rounded-3xl shadow-2xl">
                         {/* {devMode && (
                             <button
                                 onClick={() => setUseShuffled((prev) => !prev)}

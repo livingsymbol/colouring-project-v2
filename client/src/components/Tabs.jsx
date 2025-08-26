@@ -2,6 +2,15 @@ import { useState } from "react";
 
 export default function Tabs({ items }) {
     const [activeIndex, setActiveIndex] = useState(0);
+    const location = window.location.pathname;
+
+    const handleClick = (index) => {
+        setActiveIndex(index);
+        if (location === '/aspiration-at-work') {
+            localStorage.removeItem('colourArray')
+        }
+    }
+
     return (
         <div className="w-full flex flex-col ">
             {/* Tab Buttons */}
@@ -10,13 +19,15 @@ export default function Tabs({ items }) {
                     {items.map((item, index) => (
                         <button
                             key={index}
-                            onClick={() => setActiveIndex(index)}
-                            className={`px-8 sm:px-4 py-2 text-md sm:text-base font-semibold rounded-t-2xl transition-all duration-300 
-                                whitespace-nowrap text-[#c7b73a] border-t-2 border-x-2 border-black
+                            onClick={() => handleClick(index)}
+                            className={`px-2 py-2 w-36 text-md sm:text-base font-semibold rounded-t-2xl transition-all duration-300 
+                                whitespace-nowrap border-t-2 border-x-2 border-black
                                 ${index === activeIndex
-                                ? "bg-white hover:bg-[#e4e4ef] z-20"
-                                : "bg-[#e4e4ef] hover:bg-white z-0"
+                                    ? "bg-white hover:bg-[#e4e4ef] z-20"
+                                    : "bg-[#e4e4ef] hover:bg-white z-0"
                                 }
+                                ${location === '/home' ? "text-[#c7b73a]" : "text-black"}
+
                             `}
                         >
                             {item.label}

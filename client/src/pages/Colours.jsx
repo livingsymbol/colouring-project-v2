@@ -63,8 +63,7 @@ export default function Colours() {
     <>
       <Heading>Colours</Heading>
       <Paragraph>
-        To discern and understand the deeper principles behind colour in the Mother’s symbol, we turned to several fields of knowledge. Each discipline brought unique insights that enriched our understanding of how colour works—not just in form and perception, but in experience and consciousness.<br />
-        Science reveals how colour affects our brain and body, influencing our thoughts and actions. Colors have long been used in various fields, from psychology to art, to elicit specific emotional responses. The magic of colour, however, goes beyond its psychological impact. It also connects us to deeper spiritual realms, where colours transcend their physical properties and become symbols of inner states and transformative forces.
+        Through our dynamic meditation with the Mother’s symbol - infused with colour - we have discovered not only an aesthetic path, but a transformative practice. Each colour choice becomes a conscious act, an invocation of a Divine power, a tuning of consciousness toward harmony, love, strength, or clarity. The coloured Mother's symbol is not a fixed emblem; it is a mirror of our evolving being. Guided by Sri Aurobindo's vision, the Mother's subtle indications, and a wide range of disciplines, we have approached this work not as an interpretation but as an invitation - an invitation to experience the magic of colour as a vehicle for self-discovery. The Living Symbol of the Mother is alive in each of us. Its colours change as we change. Its radiance deepens as we deepen. Its truth reveals itself to those who seek it in silence, sincerity, and love.
       </Paragraph>
       <Tabs items={tabsData} />
     </>

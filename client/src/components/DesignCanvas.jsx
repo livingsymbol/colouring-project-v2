@@ -138,7 +138,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
     // console.log("final colourArray", colourArray);
     const NUM = isColours1 ? 1 : 2;
     const message = gradeColours(colourArray, NUM);
-
+    
     // console.log("Score Message:", message);
     setScoreMessage(message);
     handleOpen();

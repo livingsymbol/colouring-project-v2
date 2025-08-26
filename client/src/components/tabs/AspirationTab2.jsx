@@ -18,12 +18,13 @@ export default function AspirationTab2() {
     const numRows = colours2.length;
     const numCols = colours2[0].length;
 
-    // Step 1: Split into two equal row-wise halves
-    const half = Math.floor(numRows / 2);
-    const topHalf = colours2.slice(0, half);
-    const bottomHalf = colours2.slice(half);
+    // Step 1: Split into 3 equal row-wise parts
+    const third = Math.floor(numRows / 3);
+    const part1 = colours2.slice(0, third);
+    const part2 = colours2.slice(third, 2 * third);
+    const part3 = colours2.slice(2 * third);
 
-    // Step 2: Flatten each half column-wise
+    // Step 2: Flatten each part column-wise
     function flattenColumnWise(array) {
         const result = [];
         const rows = array.length;
@@ -34,26 +35,27 @@ export default function AspirationTab2() {
                 result.push(array[row][col]);
             }
         }
-
         return result;
     }
 
-    const flattenedTop = flattenColumnWise(topHalf);
-    const flattenedBottom = flattenColumnWise(bottomHalf);
+    const flattened1 = flattenColumnWise(part1);
+    const flattened2 = flattenColumnWise(part2);
+    const flattened3 = flattenColumnWise(part3);
 
-    // Step 3: Concatenate the two arrays
-    const finalFlattened = flattenedTop.concat(flattenedBottom);
+    // Step 3: Concatenate all 3 arrays
+    const finalFlattened = flattened1.concat(flattened2, flattened3);
+
 
     return (
         <AspirationTabTemplate palette=
             {<div className="h-full flex flex-col justify-around">
-                <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#a58c3a] p-4 rounded-3xl shadow-2xl">
+                <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#d5af3c] p-4 rounded-3xl shadow-2xl">
                     <div className="w-fit flex flex-col items-center justify-center gap-y-1 bg-white rounded-lg">
                         <SwatchesColourPicker
                             colors={finalFlattened}
                             onColorSelect={handleColorSelect}
-                            swatchSize={20}
-                            gridSize={{ rows: 10, cols: 24 }}
+                            swatchSize={25}
+                            gridSize={{ rows: 15, cols: 16 }}
                             selectedColor={selectedColor} // Pass the selected color to SwatchesColourPicker
                         />
                     </div>

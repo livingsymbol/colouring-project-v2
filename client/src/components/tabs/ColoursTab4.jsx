@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import RichTextRenderer from "../RichTextRenderer";
+import Paragraph from "../Paragraph";
 
 export default function ColoursTab4({ content }) {
     return <div className="w-full">
@@ -15,7 +16,7 @@ export default function ColoursTab4({ content }) {
           rounded-lg
         "
             />
-            <p className="ProseMirror">
+            <Paragraph className="ProseMirror">
                 Art and Design focuses on the practical use of colour in everyday life and creative activities, guiding the application of colour for aesthetic and emotional effects. It trains us to see relationships between form, line, contrast, and balance. Colour theory uses the colour wheel, a visual representation of colours arranged in a circle.
                 <br />
                 The colour wheel shows us how colours relate. It visually demonstrates the relationship between colours. In the following example we are looking at the RYB - red, yellow, blue color model:
@@ -27,9 +28,9 @@ export default function ColoursTab4({ content }) {
                 <br />
                 Colour theory explains how humans perceive colour, how colours mix, match and contrast as well as what messages colours communicate. For instance, warm and cool tones evoke depth, motion, and emotion.
 
-            </p>
+            </Paragraph>
             <br />
-            <p>
+            <Paragraph>
                 <img
                     src="/images/ct4.2.png"
                     alt="Example"
@@ -51,11 +52,11 @@ export default function ColoursTab4({ content }) {
         "
                 />
                 Complementary colours - opposites on the colour wheel (in the left image) heighten contrast and attention, while analogous colours - next to each other (in the right image) create harmony and flow.
-            </p>
+            </Paragraph>
             <br />
-            <p>
+            <Paragraph>
                 Another important area colour theory in art and design concerns itself with is colour mixing i.e. colour models:
-            </p>
+            </Paragraph>
             <div className="overflow-x-auto">
                 <table className="table-auto w-full border-collapse min-w-[200px]">
                     <thead>
@@ -154,17 +155,17 @@ export default function ColoursTab4({ content }) {
                 </Link>
             </div>
             <br />
-            <p>
+            <Paragraph>
                 Hue, shade, tint, tone<br />
                 Shades, tints and tones are variations of hues, i.e. variations of colours on the colour wheel.
 
-            </p>
+            </Paragraph>
             <img
                 src="/images/ct4.10.png"
                 alt="Example"
                 className="w-full"
             />
-            <p>
+            <Paragraph>
                 When we play with colours in the symbol - shifting tones, harmonizing contrasts - we are not merely decorating; we are revealing new inner compositions, new ways for the soul to experience the Divine. This is not unlike what the Impressionists or Expressionists sought: to convey inner experience through outer form.
                 <br />
                 The six colours revealed by Sri Aurobindo align with the RYB colour model: three primary and three secondary colours.
@@ -174,7 +175,7 @@ export default function ColoursTab4({ content }) {
                 Through this lens, the coloured  Mother’s symbol becomes an aesthetic-spiritual mandala, where each colour and its position communicates both vibration and meaning.
 
 
-            </p>
+            </Paragraph>
         </>
     </div>;
 }

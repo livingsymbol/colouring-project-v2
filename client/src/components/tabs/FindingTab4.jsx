@@ -1,11 +1,12 @@
 import { Play } from "lucide-react";
 import RichTextRenderer from "../RichTextRenderer";
+import Paragraph from '../Paragraph';
 
 export default function FindingTab4({ content }) {
     return <div className="w-full">
         {/* <RichTextRenderer content={content} /> */}
         <>
-            <p>
+            <Paragraph>
                 A closer distinction is needed between colour harmony and the Mother’s symbol coloured harmoniously.
                 <br />
                 <br />
@@ -31,10 +32,10 @@ export default function FindingTab4({ content }) {
                 As per the Mother and Sri Aurobindo’s references to the Mother’s symbol and to the Matrimandir’s the twelve petal rooms, which correspond to the twelve qualities of the Mother’s symbol, there is one symbol of the Mother coloured harmoniously. All other colour variations reflect the present state of consciousness of the individual behind the Symbol’s colouring.
                 <br />
                 <br />
-            </p>
+            </Paragraph>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
-                    <p class="italic">
+                    <Paragraph className="italic">
                         “Centre and four powers, white. The twelve, all of different colour in three groups:
                         <br /><br />
                         Top group red, passing to orange towards yellow.
@@ -44,16 +45,16 @@ export default function FindingTab4({ content }) {
                         And third group, blue passing through violet towards red.
                         <br />
                         If white is not convenient, the center may be gold (powder).”
-                    </p>
+                    </Paragraph>
 
-                    <p class="text-right italic mt-2">
+                    <Paragraph className="text-right italic mt-2">
                         – Sri Aurobindo
-                    </p>
+                    </Paragraph>
                 </div>
-                <button className="flex items-center gap-3 px-4 py-2 border-2 border-[#a58c3a] rounded-2xl shadow-xl bg-white hover:shadow-lg transition">
+                <button className="flex items-center gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition">
                     {/* Play icon + text column */}
                     <span className="flex flex-col items-center justify-center">
-                        <Play size={24} className="text-gray-600 border-2 border-[#a58c3a]" />
+                        <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
                         <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
                     </span>
 
@@ -66,9 +67,10 @@ export default function FindingTab4({ content }) {
                 </button>
 
             </div>
-            <br />
-            Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
-            <br />
+            <Paragraph>
+
+                Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
+            </Paragraph>
             <br />
             <br />
         </>

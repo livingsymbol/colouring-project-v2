@@ -102,7 +102,7 @@ SwatchesColourPicker.propTypes = {
 };
 
 SwatchesColourPicker.defaultProps = {
-  swatchSize: 30,
+  swatchSize: 20,
   gridSize: { rows: 6, cols: 20 },
 };
 
