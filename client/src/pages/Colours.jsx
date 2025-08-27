@@ -65,6 +65,7 @@ export default function Colours() {
       <Paragraph>
         To explore the colour arrangements with integrity, we turned to multiple scientific fields. Each discipline brought unique insights that enriched our understanding of how colours work - not just in form and perception, but in experience and consciousness.
         <br />
+        <br />
         Science reveals how colour affects our brain and body, influencing our thoughts and actions. Colours have long been used in various fields, from psychology to art, to elicit specific emotional responses. The magic of colour, however, goes beyond its psychological impact. It also connects us to deeper spiritual realms, where colours transcend their physical properties and become symbols of inner states and transformative forces.
 
       </Paragraph>

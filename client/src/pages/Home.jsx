@@ -71,10 +71,12 @@ export default function Home() {
           He dwelt in his self’s colourless purity.”<br />
           - Sri Aurobindo, Savitri
         </Paragraph>
-
+        <br />
         <Paragraph className="ProseMirror">
           Colour is not merely a visual phenomenon. It is a subtle force that shapes our emotions, our thoughts, and even our spiritual progress. In our ongoing work with the Mother's symbol, we have come to see colour as both science and a form of spiritual language - one that reveals the soul's journey through its many colours. These pages seek to present a view of the coloured Mother's symbol as a living mandala, rooted in Sri Aurobindo's vision, expanded through multidisciplinary inquiry, and awakened through personal experience.<br /><br />
           In our journey, we encountered numerous variations of the coloured Mother's symbol, each with slightly different colours and arrangements. At first, we regarded many of these as "mistaken" or "inaccurate." Yet this judgment raised deeper questions:
+          <br />
+
           <ul>
             <li>
               What defines a correct or incorrect symbol?
@@ -87,12 +89,14 @@ export default function Home() {
             </li>
           </ul>
         </Paragraph>
+        <br />
 
         <Paragraph>
           These questions led us into a deeper investigation of the meaning of colour itself.
           We discovered that the Mother did not assign a fixed set of colours to her symbol.
           The only direct guidance comes from a letter Sri Aurobindo wrote to Dr. Naik in March 1934 for six colours only:
         </Paragraph>
+        <br />
 
         <Paragraph className="italic">
           “Centre and four powers, white. The twelve all of different colour in three groups:<br />
@@ -100,6 +104,7 @@ export default function Home() {
           Next group, yellow passing through green towards blue.<br />
           And third group, blue passing through violet towards red. If white is not convenient, the centre may be gold (powder).”<br />
         </Paragraph>
+        <br />
 
         <Paragraph>
           Additionally, when the architect Roger Anger requested colours for the twelve petal rooms of the Matrimandir,
@@ -107,6 +112,7 @@ export default function Home() {
           faded since and cannot be clearly identified. Notably, for the room “Sincerity”, the Mother specified “light blue.”
           Beyond this, we found no complete colour scheme for all twelve petals from either the Mother or Sri Aurobindo.
         </Paragraph>
+        <br />
 
         <Paragraph>
           In our opinion, this absence of fixed instructions opened the door to an interpretive process.
