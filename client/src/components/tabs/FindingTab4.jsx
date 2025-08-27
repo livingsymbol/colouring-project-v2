@@ -67,6 +67,7 @@ export default function FindingTab4({ content }) {
                 </button>
 
             </div>
+            <br />
             <Paragraph>
 
                 Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.

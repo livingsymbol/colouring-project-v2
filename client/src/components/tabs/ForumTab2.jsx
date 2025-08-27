@@ -1,3 +1,7 @@
+import Paragraph from "../Paragraph";
+
 export default function ForumTab2() {
-    return <div>Forum Tab 2</div>;
+    return <Paragraph>
+        This section displays colourings from the “Gallery” section you have harmonized.
+    </Paragraph>;
 }

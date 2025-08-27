@@ -215,8 +215,8 @@ export default function GalleryTab3() {
                     the forces and the divine love towards you. The method is bad. Give yourself without calculating and without expecting anything in return, and then you will become capable of receiving.”
                     <br />
                     <br />
-                    “It is with the widening of the consciousness and the one-pointedness of the aspiration that the receptivity increases.”
-                    “Flowers are very receptive and they are happy when they are loved.” “Conscious of the Divine Will and surrendered to it.”
+                    “It is with the widening of the consciousness and the one-pointedness of the aspiration that the receptivity increases.”<br />
+                    “Flowers are very receptive and they are happy when they are loved.” <br />“Conscious of the Divine Will and surrendered to it.”
 
                 </Paragraph>
                 <br />
@@ -294,7 +294,9 @@ export default function GalleryTab3() {
                     <br />
 
                     “Aspiration is one of the marvelous gifts of grace given to human nature.”
+                    <br />
                     “We must aspire with all our being for the manifestation to come soon and complete.”
+                    <br />
                     “It is to the sincerity of your aspiration that the Love answers spontaneously.”
                     <br />
                     <br />
@@ -446,6 +448,10 @@ export default function GalleryTab3() {
                     “Gratitude opens all the closed doors and allows the saving Grace to enter.”
 
                 </Paragraph>
+                <br />
+                <Paragraph className="text-right italic">
+                    - The Mother
+                </Paragraph>
             </>
             <br />
             <br />
@@ -559,16 +565,20 @@ export default function GalleryTab3() {
                     <br />
                     <br />
                     “Do you know what perfect sincerity is?…
+                    <br />
                     Never to try to deceive oneself, never let any part of the being try to find out a way of convincing the others, never to explain favourably what one does in order to have an excuse for what one wants to do, never to close one’s eyes when something is unpleasant, never to let anything pass, telling oneself, “That is not important, next time it will be better.”
                     <br />
                     <br />
                     “Be wholly sincere, never try to deceive others. And try never to deceive yourself.
+                    <br />
                     To be constantly the true flame that burns like an offering.”
                     <br />
                     <br />
                     “The first thing is not to deceive oneself. One knows one cannot deceive the Divine; even the cleverest of the Asuras cannot deceive the Divine. But even when one has understood that, one sees that quite often in one’s life, in the course of the day, one
                     tries to deceive oneself without even knowing it, spontaneously and almost automatically. One always gives favourable explanations for all that one does, for one’s words, for one’s acts. That is what happens first. I am not speaking of obvious things like quarrelling and saying, “It is the other one’s fault”, I am speaking of the very tiny things of daily life...
+                    <br />
                     This is what I call being sincere. When you are with someone, if you are sincere, instantaneously your way of reacting should be to do the right thing, even when you are with someone who does not do it. Take the most common example of someone who gets angry: instead of saying things that hurt, you say nothing, you keep calm and quiet, you do not catch the contagion of the anger. You have only to look at yourself to see if this is easy. It is quite an elementary thing, a very small beginning to know whether you are sincere. And I am not speaking of those who catch every contagion, even that of coarse joking nor of those who commit the same stupidity as the others. I tell you: if you look at yourself with sharp eyes, you will
+                    <br />
                     catch in yourself insincerities by the hundred, even though you are trying to be sincere in your general attitude. You will see how
                     difficult it is.”
                 </Paragraph>
@@ -636,13 +646,13 @@ export default function GalleryTab3() {
                     <br />
                     <br />
 
-                    “It is only in tranquility and peace that one can know what is the best thing to do.”
-                    “If you ask from within for peace, it will come.”
-                    “There is no greater peace than that of a pure mind.”
-                    “The Divine is Supreme Peace. Be with the Divine and you will be in peace.”
-                    “Nowhere will you be able to find peace unless you have peace in your heart.”
-                    “In peace and inner silence you will more and more become conscious of the constant Presence.”
-                    “It is in peace that knowledge and power are truly effective.”
+                    “It is only in tranquility and peace that one can know what is the best thing to do.”<br />
+                    “If you ask from within for peace, it will come.”<br />
+                    “There is no greater peace than that of a pure mind.”<br />
+                    “The Divine is Supreme Peace. Be with the Divine and you will be in peace.”<br />
+                    “Nowhere will you be able to find peace unless you have peace in your heart.”<br />
+                    “In peace and inner silence you will more and more become conscious of the constant Presence.”<br />
+                    “It is in peace that knowledge and power are truly effective.”<br />
                 </Paragraph>
                 <br />
                 <Paragraph className="text-right italic">

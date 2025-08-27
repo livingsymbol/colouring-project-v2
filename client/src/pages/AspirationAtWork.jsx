@@ -44,6 +44,7 @@ export default function AspirationAtWork() {
         “Colourings 1 - 5” below allow you to experiment with colouring, while “Finding harmony” section provides you with additional guidance on the colouring.
 
       </Paragraph>
+      <br />
       <Tabs items={tabsData} />
     </>
 

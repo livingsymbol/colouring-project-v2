@@ -10,31 +10,34 @@ export default function Library() {
                     <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#fff2cc] to-white z-0 pointer-events-none" />
 
                     <div className="relative z-10">
-                        Kindly follow the links below for further readings.
+                        <Paragraph>
 
-                        <a
-                            href="/assets/pdfs/On the Mother’s Symbol.pdf"
-                            download="On the Mother’s Symbol.pdf"
-                            className="underline block hover:text-blue-500 mt-2"
-                        >
-                            On the Mother’s Symbol
-                        </a>
+                            Kindly follow the links below for further readings.
 
-                        <a
-                            href="/assets/pdfs/On the Mother’s flag & Symbol.pdf"
-                            download="On the Mother’s flag & Symbol.pdf"
-                            className="underline block hover:text-blue-500 mt-2"
-                        >
-                            On the Mother’s flag & Symbol
-                        </a>
+                            <a
+                                href="/assets/pdfs/On the Mother’s Symbol.pdf"
+                                download="On the Mother’s Symbol.pdf"
+                                className="underline block hover:text-blue-500 mt-2"
+                            >
+                                On the Mother’s Symbol
+                            </a>
 
-                        <a
-                            href="/assets/pdfs/On Sri Aurobindo’s Symbol.pdf"
-                            download="On Sri Aurobindo’s Symbol.pdf"
-                            className="underline block hover:text-blue-500 mt-2"
-                        >
-                            On Sri Aurobindo’s Symbol
-                        </a>
+                            <a
+                                href="/assets/pdfs/On the Mother’s flag & Symbol.pdf"
+                                download="On the Mother’s flag & Symbol.pdf"
+                                className="underline block hover:text-blue-500 mt-2"
+                            >
+                                On the Mother’s flag & Symbol
+                            </a>
+
+                            <a
+                                href="/assets/pdfs/On Sri Aurobindo’s Symbol.pdf"
+                                download="On Sri Aurobindo’s Symbol.pdf"
+                                className="underline block hover:text-blue-500 mt-2"
+                            >
+                                On Sri Aurobindo’s Symbol
+                            </a>
+                        </Paragraph>
                     </div>
                 </div>
             </div>

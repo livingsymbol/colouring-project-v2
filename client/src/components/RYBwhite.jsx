@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 const RYBwhite = ({ size = 300, onColorSelect }) => {
     const canvasRef = useRef(null);
-    const [color, setColor] = useState("#ffffff");
+    const [color, setColor] = useState("");
     const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 })
 
     useEffect(() => {

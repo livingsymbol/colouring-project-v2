@@ -11,7 +11,6 @@ export default function ColoursTab3({ content }) {
                 <br />
                 People perceive colours differently depending on mood, context, culture, and individual neurophysiology. Blue may appear calming to one person and cold to another. This explains why different artists and aspirants depict the symbol with different set of colours - not as error, but as expression of inner experience.
             </Paragraph>
-            <br />
             <Paragraph className="ProseMirror">
                 In everyday life, we see colours’ influence in various fields:
                 <ul>
@@ -70,9 +69,9 @@ export default function ColoursTab3({ content }) {
                     <li>Yellow: Joy, intellect, stimulation</li>
                     <li>White: Clarity, purity, transcendence</li>
                 </ul>
-
+                <br />
                 Colour perception differs across cultures and reactions to colours are somewhat learned.
-
+                <br />
                 The Mother herself assigned specific spiritual significances to colours and flowers, often reflecting these emotional-psychological resonances. For example:
                 <ul>
 
@@ -81,7 +80,7 @@ export default function ColoursTab3({ content }) {
                     <li>Gold – Supramental Light</li>
                     <li>Violet – Humility, Transformation</li>
                 </ul>
-
+                <br />
                 When these colours are placed within the symbol, they not only evoke aesthetic or decorative qualities but deep psychological movements. A petal painted  in soft pinks and greens may soothe the heart and awaken love. Thus, the symbol becomes a mirror and a catalyst - awakening qualities within us that align with the Divine forces it represents.
 
 
