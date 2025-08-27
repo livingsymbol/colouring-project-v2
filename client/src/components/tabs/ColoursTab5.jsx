@@ -50,11 +50,16 @@ export default function ColoursTab5({ content }) {
                 This invites us to approach colour not as dogma, but as a field of resonance - subtle, evolving, alive. In our work, we placed small symbols on each golden petal, indicating the integration of all consciousness levels in the Supramental. This is a way to show that nothing is left out - the whole human experience is included in the Divine transformation.
             </Paragraph>
             <br />
-            <img
-                src="/images/ct5.3.png"
-                alt="Example"
-                className="w-full"
-            />
+            <div className="flex flex-wrap justify-center items-center w-full">
+                {[3, 4, 5, 6, 7, 8, 9].map((num) => (
+                    <img
+                        key={num}
+                        src={`images/ct5.${num}.png`}
+                        alt={`ct5.${num}`}
+                        className="w-28 md:w-40 xl:w-48"
+                    />
+                ))}
+            </div>
         </>
     </div>;
 }
