@@ -246,7 +246,7 @@ export default function AdminDashboard() {
 
     const tabsData = [
         {
-            label: `Approved Posts (${approvedPosts.length})`,
+            label: <>Approved Posts<br /> ({approvedPosts.length})</>,
             content: (
                 <div className="max-w-5xl mx-auto px-4 py-6">
                     <h2 className="text-3xl font-bold text-[#404040] mb-6">Approved Posts</h2>
@@ -264,7 +264,7 @@ export default function AdminDashboard() {
             )
         },
         {
-            label: `Partially Approved Posts (${partiallyApprovedPosts.length})`,
+            label: <>Partially <br />Approved Posts<br /> ({partiallyApprovedPosts.length})</>,
             content: (
                 <div className="max-w-5xl mx-auto px-4 py-6">
                     <h2 className="text-3xl font-bold text-[#404040] mb-6">Partially Approved Posts</h2>
@@ -287,7 +287,7 @@ export default function AdminDashboard() {
             )
         },
         {
-            label: `Pending Posts (${pendingPosts.length})`,
+            label: <>Pending Posts <br />({pendingPosts.length})</>,
             content: (
                 <div className="max-w-5xl mx-auto px-4 py-6">
                     <h2 className="text-3xl font-bold text-[#404040] mb-6">Pending Posts</h2>
@@ -305,7 +305,7 @@ export default function AdminDashboard() {
             )
         },
         {
-            label: `Approved Comments (${approvedComments.length})`,
+            label: <>Approved <br />Comments<br /> ({approvedComments.length})</>,
             content: (
 
                 <div className="max-w-5xl mx-auto px-4 py-6">
@@ -324,7 +324,7 @@ export default function AdminDashboard() {
             )
         },
         {
-            label: `Flagged Comments (${flaggedComments.length})`,
+            label: <>Flagged <br />Comments<br /> ({flaggedComments.length})</>,
             content: (
 
                 <div className="max-w-5xl mx-auto px-4 py-6">

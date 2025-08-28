@@ -16,9 +16,12 @@ import Layout from './components/Layout';
 import AdminLogin from './pages/AdminLogin';
 import AdminEditor from './pages/AdminEditor';
 import AddPage from './pages/AddPage';
-
+import useGuestLogin from './hooks/useGuestLogin';
 
 export default function App() {
+
+  useGuestLogin();
+
   return (
     <>
       <Toaster position="top-center" toastOptions={{ duration: 3000 }} />

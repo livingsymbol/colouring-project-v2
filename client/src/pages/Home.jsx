@@ -1,7 +1,3 @@
-import { useEffect } from "react";
-import { useParams } from 'react-router-dom';
-import axios from "axios";
-import Author from "../components/Author";
 import Heading from "../components/Heading";
 import Paragraph from "../components/Paragraph";
 import Tabs from "../components/Tabs";
@@ -14,22 +10,6 @@ export default function Home() {
   const slug = window.location.pathname.split('/')[1];
   const { page, loading, error } = useGetContent(slug, 'en');
 
-  // create guest user
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND_URL}/auth/login/guest`)
-        .then((res) => {
-          const { token, user } = res.data;
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
-        })
-        .catch((err) => {
-          console.error("Guest login failed:", err.response?.data || err.message);
-        });
-    }
-  }, []);
 
   if (loading) return <div className="flex justify-center items-center gap-x-4">
     <Loader2 className="animate-spin text-[#404040]" size={32} />

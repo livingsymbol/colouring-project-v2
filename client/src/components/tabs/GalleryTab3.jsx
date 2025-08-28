@@ -60,7 +60,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -129,7 +129,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -195,7 +195,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -268,7 +268,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -333,7 +333,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -401,7 +401,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -477,7 +477,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -543,7 +543,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -611,7 +611,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -683,7 +683,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -761,7 +761,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
@@ -830,7 +830,7 @@ export default function GalleryTab3() {
                     className="
             float-none mx-auto sm:float-right
             sm:ml-4 mb-2
-            w-72 h-auto
+            w-96 h-auto
             rounded-lg
             "
                 />
