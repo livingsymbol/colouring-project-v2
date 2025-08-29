@@ -5,6 +5,7 @@ import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
 import { colours2 } from "../../utils/scoring";
+import Colouring2Picker from "../Colouring2Picker";
 
 // Custom hook for media query
 function useMediaQuery(query) {
@@ -69,7 +70,7 @@ export default function AspirationTab2() {
         ? { rows: 20, cols: 12 }
         : { rows: 15, cols: 16 };
 
-    const swatchSize = isSmall ? 28 : 30;
+    const swatchSize = isSmall ? 23 : 30;
 
     return (
         <AspirationTabTemplate
