@@ -22,21 +22,21 @@ const ColorTester = ({ color }) => {
 
   return (
     <div className="h-full w-full flex flex-col items-center gap-4">
-      <div className="text-[#d5af3c] flex justify-center items-center font-semibold bg-white w-full h-10 rounded-md border-2 border-[#d5af3c]">
+      <div className="text-[#d5af3c] text-center flex justify-center items-center font-semibold bg-white w-full h-12 rounded-md border-2 border-[#d5af3c]">
         Try selected colours below
       </div>
       <div
-        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 border-[#d5af3c] ease-in-out"
+        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 p-2 border-[#d5af3c] ease-in-out"
         style={{ backgroundColor: spaces[0] }}
         onClick={() => handleSpaceClick(0)}
       />
       <div
-        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 border-[#d5af3c] ease-in-out"
+        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 p-2 border-[#d5af3c] ease-in-out"
         style={{ backgroundColor: spaces[1] }}
         onClick={() => handleSpaceClick(1)}
       />
       <div
-        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 border-[#d5af3c] ease-in-out"
+        className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 p-2 border-[#d5af3c] ease-in-out"
         style={{ backgroundColor: spaces[2] }}
         onClick={() => handleSpaceClick(2)}
       />

@@ -15,14 +15,12 @@ export default function AspirationTab3() {
     return (
         <AspirationTabTemplate
             palette=
-            {<div className="h-full flex flex-col justify-around">
-                <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#d5af3c] p-4 rounded-3xl shadow-2xl">
-                    <div className="w-fit flex flex-col items-center justify-center gap-y-1 bg-white rounded-lg">
-                        <ColouringWheelPicker isRYB={true} onColorSelect={handleColorSelect} />
-                    </div>
+            {<div className="w-full flex flex-col justify-around">
+                <div className="flex flex-col gap-y-4 w-full justify-center items-center border-2 border-[#d5af3c] p-4 rounded-3xl shadow-2xl">
+                    <ColouringWheelPicker isRYB={true} onColorSelect={handleColorSelect} />
                     <ColourTester color={color} />
-
                 </div>
+
                 <Paragraph>After colouring all 12 petals you may “Download” your colouring.</Paragraph>
             </div>}
             symbol={<DesignCanvas color={color} showDesc={true} />} />

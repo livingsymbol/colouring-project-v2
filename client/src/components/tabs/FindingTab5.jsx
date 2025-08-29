@@ -11,7 +11,7 @@ export default function FindingTab5({ content }) {
             </Paragraph>
             <br />
             <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto" alt="" />
-br
+            <br />
             <Paragraph>
                 Sri Aurobindo and the Mother left us instructions on the Symbol’s colours, positions and meaning:
             </Paragraph>

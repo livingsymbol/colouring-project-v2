@@ -29,7 +29,7 @@ const Symbol = forwardRef((props, ref) => {
 
   return (
     <div>
-      <div className="flex justify-between p-4">
+      <div className="flex justify-between py-4">
         <button className="relative group" onClick={rotateAnticlockwise}>
           <div
             className="flex items-center justify-center w-24 h-12 text-black font-semibold text-sm tracking-wide transition-all duration-200 group-hover:brightness-110"
@@ -42,7 +42,7 @@ const Symbol = forwardRef((props, ref) => {
           </div>
         </button>
 
-        <h1 className="text-3xl font-semibold text-center text-[#d5af3c]">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-center text-[#d5af3c]">
           Rotate
           <br />
           qualities
@@ -60,6 +60,7 @@ const Symbol = forwardRef((props, ref) => {
           </div>
         </button>
       </div>
+
       <div className="relative flex items-center justify-center w-full h-full">
         <svg
           {...props}

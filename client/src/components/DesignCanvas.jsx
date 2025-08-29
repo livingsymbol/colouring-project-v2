@@ -160,7 +160,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col gap-y-4 items-center">
+      <div className="flex flex-col gap-y-2 items-center">
         <div className="overflow-hidden w-full">
 
           {showDesc ?
@@ -178,10 +178,10 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
           height="708.661"
           style={{ display: "none" }}
         />
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
           <div>
             {!showDesc && <button
-              className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+              className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
               onClick={revealScore}>Reveal</button>}
             <Modal open={open} onClose={handleClose}>
               <Box sx={style}>
@@ -196,10 +196,10 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
             </Modal>
           </div>
           <button
-            className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+            className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
             onClick={saveAsPng}>Download</button>
           <button
-            className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+            className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
             onClick={resetSymbol}>Reset</button>
         </div>
       </div>

@@ -21,9 +21,9 @@ const SwatchesColourPicker = ({
       if (!containerRef.current) return;
       const containerWidth = containerRef.current.offsetWidth;
 
-      const maxGap = 5;
+      const maxGap = 4;
       const minGap = 1;
-      const minSwatch = 14;
+      const minSwatch = 20;
 
       // Try to find max swatch size that fits container
       let calculatedGap = maxGap;
@@ -102,7 +102,7 @@ SwatchesColourPicker.propTypes = {
 };
 
 SwatchesColourPicker.defaultProps = {
-  swatchSize: 20,
+  swatchSize: 25,
   gridSize: { rows: 6, cols: 20 },
 };
 

@@ -55,9 +55,9 @@ export default function AspirationTabTemplate({ palette, symbol }) {
                 <RichTextRenderer content={aspirationTabContent} />
             </div>
 
-            <div className="flex flex-col md:flex-row-reverse gap-4">
-                <div className="flex-1 p-4 md:w-[50%]">{symbol}</div>
-                <div className="flex-1 p-4 md:w-[50%]">{palette}</div>
+            <div className="flex flex-col lg:flex-row-reverse gap-4">
+                <div className="w-full lg:w-[50%]">{symbol}</div>
+                <div className="w-full lg:w-[50%]">{palette}</div>
             </div>
         </div>
     );
