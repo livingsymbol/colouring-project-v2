@@ -88,9 +88,9 @@ export default function AspirationTab2() {
                         </div>
                         <ColourTester color={color} />
                     </div>
-                    <Paragraph>
-                        After colouring all 12 petals you may press “Reveal” to learn about harmony
-                        achieved or “Download” your colouring.
+                    <br />
+                    <Paragraph className="text-center">
+                        After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring.
                     </Paragraph>
                 </div>
             }

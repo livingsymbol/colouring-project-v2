@@ -22,6 +22,11 @@ export const addComment = async (req, res) => {
             res.status(201).json({ message: 'Comment added', comment });
         }
         else {
+            // 🔔 Notify admins
+            await notifyAdmins(
+                "Comment Pending Review",
+                `A new comment on post <b>${postExists.title || postExists._id}</b> has been flagged and needs review.`
+            );
             res.status(400).json({ message: 'Foul language detected, comment sent for review', comment });
         }
     } catch (err) {
@@ -52,6 +57,11 @@ export const replyToComment = async (req, res) => {
             res.status(201).json({ message: 'Reply added', reply });
         }
         else {
+            // 🔔 Notify admins
+            await notifyAdmins(
+                "Reply Pending Review",
+                `A reply to a comment on post <b>${parent.post}</b> has been flagged and requires admin approval.`
+            );
             res.status(400).json({ message: 'Foul language detected, reply sent for review', reply });
         }
     } catch (err) {

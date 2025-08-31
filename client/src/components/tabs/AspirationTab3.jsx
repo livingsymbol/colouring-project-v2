@@ -20,8 +20,8 @@ export default function AspirationTab3() {
                     <ColouringWheelPicker isRYB={true} onColorSelect={handleColorSelect} />
                     <ColourTester color={color} />
                 </div>
-
-                <Paragraph>After colouring all 12 petals you may “Download” your colouring.</Paragraph>
+                <br />
+                <Paragraph className="text-center">After colouring all 12 petals you may “Download” your colouring.</Paragraph>
             </div>}
             symbol={<DesignCanvas color={color} showDesc={true} />} />
     );

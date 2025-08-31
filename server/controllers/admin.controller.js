@@ -2,6 +2,7 @@ import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import sendEmail from '../utils/sendEmail.js';
 import Page from '../models/Page.js';
+import User from '../models/User.js';
 
 export async function getDashboardData(req, res) {
     try {
@@ -233,3 +234,47 @@ export const patchTabByLabel = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+//fetch admin notifications status
+export const getNotificationsEnabled = async (req, res) => {
+    try {
+        const admin = await User.findById(req.user.id).select("email notificationsEnabled");
+        if (!admin) {
+            return res.status(404).json({ message: "Admin not found" });
+        }
+
+        res.json({
+            email: admin.email,
+            notificationsEnabled: admin.notificationsEnabled || false,
+        });
+    } catch (err) {
+        console.error("Error fetching profile:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
+//toggle admin notifications on posts/comments approval
+export const toggleNotifications = async (req, res) => {
+    try {
+        const adminId = req.user.id;
+        const { enabled } = req.body;
+
+        if (typeof enabled !== "boolean") {
+            return res.status(400).json({ message: "enabled must be a boolean" });
+        }
+
+        const updatedAdmin = await User.findByIdAndUpdate(
+            adminId,
+            { notificationsEnabled: enabled },
+            { new: true }
+        );
+
+        res.json({
+            message: `Notifications ${enabled ? "enabled" : "disabled"}`,
+            notificationsEnabled: updatedAdmin.notificationsEnabled,
+        });
+    } catch (err) {
+        console.error("Error updating notifications:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+}

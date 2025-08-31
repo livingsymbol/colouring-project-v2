@@ -1,6 +1,6 @@
 import { createTransport } from 'nodemailer';
 
-const sendEmail = async ({ to, subject, text }) => {
+const sendEmail = async ({ to, subject, html }) => {
     const transporter = createTransport({
         service: 'gmail', // or use SendGrid, Mailgun, etc.
         auth: {
@@ -9,12 +9,16 @@ const sendEmail = async ({ to, subject, text }) => {
         },
     });
 
-    await transporter.sendMail({
-        from: `"Forum App" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        text,
-    });
+    try {
+        await transporter.sendMail({
+            from: `"Colouring Project " <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
+        });
+    } catch (error) {
+        console.error("Email send error:", error);
+    }
 };
 
 export default sendEmail;

@@ -1,6 +1,7 @@
 import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import cloudinary from "../utils/cloudinary.utils.js";
+import notifyAdmins from '../utils/notifyAdmins.js';
 
 //using multer
 
@@ -117,6 +118,12 @@ export const createPost = async (req, res) => {
         });
 
         await newPost.save();
+
+        // 🔔 Notify admins
+        await notifyAdmins(
+            "New Post Pending Approval",
+            `A new post titled <b>${newPost.title || "Untitled"}</b> has been submitted and is awaiting approval.`
+        );
 
         res.status(201).json({ message: 'Post submitted for review', post: { _id: newPost._id, title: newPost.title, content: newPost.content, imageUrl: newPost.imageUrl } });
 

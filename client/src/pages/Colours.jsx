@@ -69,6 +69,7 @@ export default function Colours() {
         Science reveals how colour affects our brain and body, influencing our thoughts and actions. Colours have long been used in various fields, from psychology to art, to elicit specific emotional responses. The magic of colour, however, goes beyond its psychological impact. It also connects us to deeper spiritual realms, where colours transcend their physical properties and become symbols of inner states and transformative forces.
 
       </Paragraph>
+        <br />
       <Tabs items={tabsData} />
     </>
   )

@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import verifyToken from '../middlewares/verifyToken.js';
 import requireAdmin from '../middlewares/requireAdmin.js';
-import { getDashboardData, approveComment, deleteComment, approvePost, deletePost, getTabByLabel, patchTabByLabel } from '../controllers/admin.controller.js';
+import { getDashboardData, approveComment, deleteComment, approvePost, deletePost, getTabByLabel, patchTabByLabel, toggleNotifications, getNotificationsEnabled } from '../controllers/admin.controller.js';
 
 router.get('/dashboard', verifyToken, requireAdmin, getDashboardData);
 
@@ -14,5 +14,8 @@ router.delete('/posts/:id', verifyToken, requireAdmin, deletePost);
 
 router.get('/page/:slug/:label', getTabByLabel);
 router.patch('/page/:slug/:label', patchTabByLabel);
+
+router.get('/notifications', verifyToken, requireAdmin, getNotificationsEnabled);
+router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
 
 export default router;
