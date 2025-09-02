@@ -710,39 +710,41 @@ function calculateScore(colourArray, colomnCount, num) {
 export const gradeColours = (colourArray, num) => {
 
     if (containsWhite(colourArray)) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals];
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals], score: 0 };
     }
 
     if (!hasNoDuplicates(colourArray)) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours], score: 0 };
     }
 
     //TODO add check: no 2 colours from same row and all primaries on order i.e. red to purple
 
     if (!containsPrimaryColours(colourArray, num)) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
     }
 
-    
+
     const colomnCount = countColoursPerColumn(colourArray, num);
-    console.log('colomnCount: ', colomnCount)
+    // console.log('colomnCount: ', colomnCount)
 
     if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%');
+        return {
+            message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%'), score: 85
+        }
     }
 
     const score = calculateScore(colourArray, colomnCount, num)
 
-    console.log('score after calculations: ', score)
+    // console.log('score after calculations: ', score)
 
     if (score === 100) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony];
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony], score };
     } else if (score >= 70) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${score}%`);
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${score}%`), score };
     } else if (score >= 50) {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${score}%`);
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${score}%`), score };
     } else {
-        return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score };
     }
 };
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toaster } from "react-hot-toast"
 
 export default function Tabs({ items }) {
     const [activeIndex, setActiveIndex] = useState(0);

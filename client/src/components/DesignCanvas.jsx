@@ -163,11 +163,11 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
   };
 
   const revealScore = () => {
-    // console.log("final colourArray", colourArray);
     const NUM = isColours1 ? 1 : 2;
-    const message = gradeColours(colourArray, NUM);
+    const { message, score } = gradeColours(colourArray, NUM);
 
     // console.log("Score Message:", message);
+    localStorage.setItem("scorecard", JSON.stringify({ colouring: NUM, score: score }));
     setScoreMessage(message);
     handleOpen();
   };
