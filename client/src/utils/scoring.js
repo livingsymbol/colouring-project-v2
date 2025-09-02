@@ -684,11 +684,8 @@ function calculateScore(colourArray, colomnCount, num) {
         //     return score -= 51; //anything less than 50 because all 6 parimaries are absent
         // }
 
-        let primaryPositions;
         let secondaryPositions;
-        const PRIMARIES = num === 1 ? PRIMARIES1 : PRIMARIES2;
         const SECONDARIES = num === 1 ? SECONDARIES1 : SECONDARIES2;
-        primaryPositions = PRIMARIES.map((_, i) => [i * 4 * num, 2]);
         secondaryPositions = SECONDARIES.map((_, i) => [i * 4 * num + 2 * num, 2]);
         for (let secIndex = 0; secIndex < 6; secIndex++) {
             const userSecondary = colourArray[secIndex * 2 + 1];
