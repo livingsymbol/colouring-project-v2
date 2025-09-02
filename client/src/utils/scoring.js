@@ -591,14 +591,20 @@ function countOfPrimaryColours(colourArray, num) {
     return count;
 }
 
-function rotateArrayToStartWithPrimaryRed(colourArray) {
-    const lowerStartValue = '#ff0000';
-    const index = colourArray.findIndex(c => c.toLowerCase() === lowerStartValue);
+function rotateArrayToStartWithPrimaryReds(colourArray, num) {
+    const primaryReds = num === 1 ? ["#ff5e4d", "#ff4031", "#ff0000", "#de0000", "#be0000"] : ["#ff3333", "#ff1919", "#ff0000", "#e50000", "#cc0000"]
+
+    const index = colourArray.findIndex(c =>
+        primaryReds.includes(c.toLowerCase())
+    );
+
     if (index === -1) {
         return colourArray.slice();
     }
+
     return colourArray.slice(index).concat(colourArray.slice(0, index));
 }
+
 
 function countColoursPerColumn(colourArray, num) {
     const targetSet = new Set(colourArray.map(c => c.toLowerCase())); // case-insensitive
@@ -650,7 +656,7 @@ function findPosition(colour, num) {
 function calculateScore(colourArray, colomnCount, num) {
     const WRONG_COLUMNS = [0, 1, 3, 4];
 
-    colourArray = rotateArrayToStartWithPrimaryRed(colourArray);
+    colourArray = rotateArrayToStartWithPrimaryReds(colourArray, num);
 
     // Step 1: Identify counts
     const perfectCount = colomnCount[2];
@@ -662,8 +668,8 @@ function calculateScore(colourArray, colomnCount, num) {
     // const countOfPrimaries = countOfPrimaryColours(colourArray, num);
 
     // console.log('countOfPrimaries', countOfPrimaries)
-    // console.log('maxWrongInSameCol', maxWrongInSameCol)
-    // console.log('perfectCount', perfectCount)
+    console.log('maxWrongInSameCol', maxWrongInSameCol)
+    console.log('perfectCount', perfectCount)
 
     if (maxWrongInSameCol + perfectCount === 12) {
         if (maxWrongInSameCol >= 9) {
@@ -714,15 +720,15 @@ export const gradeColours = (colourArray, num) => {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours];
     }
 
-    //TODO add check: no 2 colours from same row
+    //TODO add check: no 2 colours from same row and all primaries on order i.e. red to purple
 
     if (!containsPrimaryColours(colourArray, num)) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50];
     }
 
-    // console.log('colomnCount: ', countColoursPerColumn(colourArray, num))
-
+    
     const colomnCount = countColoursPerColumn(colourArray, num);
+    console.log('colomnCount: ', colomnCount)
 
     if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
         return SCORE_MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%');

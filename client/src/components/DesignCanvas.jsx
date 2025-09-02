@@ -43,10 +43,15 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    const handleKeyPress = (event) => {
-      setInput((prev) => prev + event.key);
+    const inputRef = { current: "" };
 
-      if (input.toLowerCase().includes("fill")) {
+    const handleKeyPress = (event) => {
+      inputRef.current += event.key;
+      setInput(inputRef.current); // optional, if you want to see it in state
+
+      const lowerInput = inputRef.current.toLowerCase();
+
+      if (lowerInput.includes("1fill")) {
         const correctAns = [
           "#ff6600",
           "#ff9933",
@@ -62,16 +67,39 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
           "#ff0000",
         ];
         localStorage.setItem("colourArray", JSON.stringify(correctAns));
+        setColourArray(correctAns); // <-- update state immediately
+        inputRef.current = "";
+        setInput("");
+      }
+
+      if (lowerInput.includes("2fill")) {
+        const correctAns = [
+          "#FF8000",
+          "#FFAA00",
+          "#FFFF00",
+          "#55FF00",
+          "#00FF00",
+          "#00FFFF",
+          "#0000FF",
+          "#4000FF",
+          "#8000FF",
+          "#FF00FF",
+          "#FF0000",
+          "#FF5500",
+        ];
+        localStorage.setItem("colourArray", JSON.stringify(correctAns));
+        setColourArray(correctAns); // <-- update state immediately
+        inputRef.current = "";
         setInput("");
       }
     };
 
     window.addEventListener("keypress", handleKeyPress);
-
     return () => {
       window.removeEventListener("keypress", handleKeyPress);
     };
-  }, [input]);
+  }, []);
+
 
   useEffect(() => {
     const svgElement = svgRef.current;
@@ -138,7 +166,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
     // console.log("final colourArray", colourArray);
     const NUM = isColours1 ? 1 : 2;
     const message = gradeColours(colourArray, NUM);
-    
+
     // console.log("Score Message:", message);
     setScoreMessage(message);
     handleOpen();
