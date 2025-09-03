@@ -698,7 +698,7 @@ function calculateScore(colourArray, colomnCount, num) {
 
     // Step 1: Identify counts
     const perfectCount = colomnCount[2];
-    const wrongCount = colourArray.length - perfectCount;npm 
+    const wrongCount = colourArray.length - perfectCount; 
     
     // Step 2: Check for "same wrong column" rule
     let score = 100;
