@@ -45,20 +45,10 @@
 //     )
 // }
 
-
-"use client";
-
 import Heading from '../components/Heading';
 import Paragraph from '../components/Paragraph';
-import { Worker, Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 export default function Library() {
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
-
     return (
         <>
             <Heading>Library</Heading>
@@ -71,44 +61,40 @@ export default function Library() {
                             Kindly follow the links below for further readings.
                         </Paragraph>
 
-                        <div className="mt-6 space-y-8">
-                            {/* PDF Viewer 1 */}
+                        <div className="mt-4 space-y-4">
+                            {/* PDF 1 */}
                             <div>
-                                <h3 className="font-bold">On the Mother’s Symbol</h3>
-                                <div className="h-[600px] border rounded-lg overflow-hidden">
-                                    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
-                                        <Viewer
-                                            fileUrl="/assets/pdfs/On the Mother’s Symbol.pdf"
-                                            plugins={[defaultLayoutPluginInstance]}
-                                        />
-                                    </Worker>
-                                </div>
                                 <a
-                                    href="/assets/pdfs/On the Mother’s Symbol.pdf"
-                                    download
-                                    className="underline text-blue-600 mt-2 block"
+                                    href="https://collection.cloudinary.com/dfuotedyd/f0e4eb3a181b8bdbba8c303df8af7d7c"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline block hover:text-blue-500"
                                 >
-                                    Download PDF
+                                    On the Mother’s Symbol (Download)
                                 </a>
                             </div>
 
-                            {/* PDF Viewer 2 */}
+                            {/* PDF 2 */}
                             <div>
-                                <h3 className="font-bold">On the Mother’s flag & Symbol</h3>
-                                <div className="h-[600px] border rounded-lg overflow-hidden">
-                                    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
-                                        <Viewer
-                                            fileUrl="/assets/pdfs/On the Mother’s flag & Symbol.pdf"
-                                            plugins={[defaultLayoutPluginInstance]}
-                                        />
-                                    </Worker>
-                                </div>
                                 <a
-                                    href="/assets/pdfs/On the Mother’s flag & Symbol.pdf"
-                                    download
-                                    className="underline text-blue-600 mt-2 block"
+                                    href="https://collection.cloudinary.com/dfuotedyd/fb9f9321d77cf8c5a24eab3954f2f1cc"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline block hover:text-blue-500"
                                 >
-                                    Download PDF
+                                    On the Mother’s flag & Symbol (Download)
+                                </a>
+                            </div>
+
+                            {/* PDF 3 */}
+                            <div>
+                                <a
+                                    href="https://collection.cloudinary.com/dfuotedyd/fdf742d99658f71ed2717a2d9cb87f7c"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline block hover:text-blue-500"
+                                >
+                                    On Sri Aurobindo’s Symbol (Download)
                                 </a>
                             </div>
                         </div>

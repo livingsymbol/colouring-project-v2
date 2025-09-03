@@ -1,5 +1,6 @@
 import express from 'express';
 import Page from '../models/Page.js';
+import cloudinary from '../utils/cloudinary.utils.js';
 
 const router = express.Router();
 
@@ -87,6 +88,23 @@ router.get("/titles-and-tabs", async (req, res) => {
     } catch (err) {
         console.error("Error fetching pages:", err);
         res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+router.get("/gallery", async (req, res) => {
+    try {
+        const folder = "colouring-project/gallery";
+        const result = await cloudinary.search
+            .expression(`folder:${folder}`)
+            .sort_by("public_id", "desc")
+            .max_results(50)
+            .execute();
+
+        const images = result.resources.map((r) => r.secure_url);
+        res.json(images);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch images" });
     }
 });
 
