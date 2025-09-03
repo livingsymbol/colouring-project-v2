@@ -698,22 +698,22 @@ function calculateScore(colourArray, colomnCount, num) {
 
     // Step 1: Identify counts
     const perfectCount = colomnCount[2];
-    const wrongCount = colourArray.length - perfectCount;
+    const wrongCount = colourArray.length - perfectCount;npm 
     
     // Step 2: Check for "same wrong column" rule
     let score = 100;
     const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
-    const CorrectCount = colourArray.length - maxWrongInSameCol;
+    const correctCount = colourArray.length - maxWrongInSameCol;
     // const countOfPrimaries = countOfPrimaryColours(colourArray, num);
 
     // console.log('countOfPrimaries', countOfPrimaries)
     // console.log('maxWrongInSameCol', maxWrongInSameCol)
     // console.log('perfectCount', perfectCount)
 
-    if (maxWrongInSameCol) {
+    if (maxWrongInSameCol) {     //TODO check this condition
         if (maxWrongInSameCol >= 9) {
             // Case 1: ≥9 wrong in same wrong column
-            score = score - 15 - (CorrectCount * 8.4);
+            score = score - 15 - (correctCount * 8.4);
         } else {
             // Case 2: No same-wrong-column penalty
             score -= (wrongCount * 8.4);
@@ -777,7 +777,7 @@ export const gradeColours = (colourArray, num) => {
 
     const score = calculateScore(colourArray, colomnCount, num)
 
-    // console.log('score after calculations: ', score)
+    console.log('score after calculations: ', score)
 
     if (score === 100) {
         return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony], score };
