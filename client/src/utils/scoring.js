@@ -717,7 +717,7 @@ function calculateScore(colourArray, colomnCount, num) {
         } else {
             // Case 2: No same-wrong-column penalty
             score -= (wrongCount * 8.4);
-            console.log('score', score)
+            // console.log('score', score)
         }
     } else { //selections from multiple colomns
         // if (countOfPrimaries < 6) {
@@ -767,7 +767,7 @@ export const gradeColours = (colourArray, num) => {
     }
 
     const colomnCount = countColoursPerColumn(colourArray, num);
-    console.log('colomnCount: ', colomnCount)
+    // console.log('colomnCount: ', colomnCount)
 
     if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
         return {
@@ -777,7 +777,7 @@ export const gradeColours = (colourArray, num) => {
 
     const score = calculateScore(colourArray, colomnCount, num)
 
-    console.log('score after calculations: ', score)
+    // console.log('score after calculations: ', score)
 
     if (score === 100) {
         return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony], score };
