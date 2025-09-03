@@ -166,8 +166,24 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
     const NUM = isColours1 ? 1 : 2;
     const { message, score } = gradeColours(colourArray, NUM);
 
-    // console.log("Score Message:", message);
-    localStorage.setItem("scorecard", JSON.stringify({ colouring: NUM, score: score }));
+    // Parse localStorage safely
+    let existing = [];
+    try {
+      const stored = JSON.parse(localStorage.getItem("scorecard"));
+      if (Array.isArray(stored)) {
+        existing = stored;
+      }
+    } catch (err) {
+      console.error("Invalid scorecard in localStorage, resetting.", err);
+    }
+
+    // Remove old entry for same colouring & add new
+    const updated = existing.filter((s) => s.colouring !== NUM);
+    updated.push({ colouring: NUM, score });
+
+    // Save array back
+    localStorage.setItem("scorecard", JSON.stringify(updated));
+
     setScoreMessage(message);
     handleOpen();
   };

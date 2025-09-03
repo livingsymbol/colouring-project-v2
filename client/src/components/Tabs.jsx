@@ -1,12 +1,37 @@
 import { useState } from "react";
-import { toaster } from "react-hot-toast"
+import { toast } from "react-hot-toast"
 
 export default function Tabs({ items }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const location = window.location.pathname;
 
     const handleClick = (index) => {
+        if (location === "/aspiration-at-work" && index >= 2) {
+            try {
+                const stored = localStorage.getItem("scorecard");
+                const scorecard = stored ? JSON.parse(stored) : [];
+
+                const colouring1 = scorecard.find((s) => s.colouring === 1);
+                const colouring2 = scorecard.find((s) => s.colouring === 2);
+
+                if (
+                    !colouring1 &&
+                    !colouring2 ||
+                    colouring1.score <= 70 &&
+                    colouring2.score <= 70
+                ) {
+                    toast.error("Score above 70% on either Colouring 1 or Colouring 2 to proceed further");
+                    return; // block navigation
+                }
+            } catch (err) {
+                console.error("Error checking scorecard:", err);
+                toast.error("Invalid score data.");
+                return; // block navigation
+            }
+        }
+
         setActiveIndex(index);
+
         if (location === '/aspiration-at-work') {
             localStorage.removeItem('colourArray')
         }

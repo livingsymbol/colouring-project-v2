@@ -653,6 +653,44 @@ function findPosition(colour, num) {
     return null;
 }
 
+function correctOrderAndNoSameRow(colourArray, num) {
+
+    const matrix = num === 1 ? colours1 : colours2;
+    // Step 1: Find row values
+    const rowValues = colourArray.map(str => {
+        for (let row = 0; row < matrix.length; row++) {
+            if (matrix[row].includes(str)) {
+                return row;
+            }
+        }
+        return -1; // if not found
+    });
+
+    // Step 2: Check for duplicates
+    const unique = new Set(rowValues);
+    if (unique.size !== rowValues.length) return false;
+
+    // Step 3: Check ascending
+    const isAscending = rowValues.every((val, i, a) =>
+        i === 0 || a[i - 1] <= val
+    );
+
+    if (isAscending) return true;
+
+    // Step 4: Check rotated sorted
+    let countBreaks = 0;
+    for (let i = 1; i < rowValues.length; i++) {
+        if (rowValues[i] < rowValues[i - 1]) countBreaks++;
+    }
+    // Also check last→first wrap
+    if (rowValues[0] < rowValues[rowValues.length - 1]) countBreaks++;
+
+    if (countBreaks === 1) return true;
+
+    return false;
+
+}
+
 function calculateScore(colourArray, colomnCount, num) {
     const WRONG_COLUMNS = [0, 1, 3, 4];
 
@@ -661,23 +699,25 @@ function calculateScore(colourArray, colomnCount, num) {
     // Step 1: Identify counts
     const perfectCount = colomnCount[2];
     const wrongCount = colourArray.length - perfectCount;
-
+    
     // Step 2: Check for "same wrong column" rule
     let score = 100;
     const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
+    const CorrectCount = colourArray.length - maxWrongInSameCol;
     // const countOfPrimaries = countOfPrimaryColours(colourArray, num);
 
     // console.log('countOfPrimaries', countOfPrimaries)
-    console.log('maxWrongInSameCol', maxWrongInSameCol)
-    console.log('perfectCount', perfectCount)
+    // console.log('maxWrongInSameCol', maxWrongInSameCol)
+    // console.log('perfectCount', perfectCount)
 
-    if (maxWrongInSameCol + perfectCount === 12) {
+    if (maxWrongInSameCol) {
         if (maxWrongInSameCol >= 9) {
             // Case 1: ≥9 wrong in same wrong column
-            score = score - 15 - (perfectCount * 8.4);
+            score = score - 15 - (CorrectCount * 8.4);
         } else {
             // Case 2: No same-wrong-column penalty
             score -= (wrongCount * 8.4);
+            console.log('score', score)
         }
     } else { //selections from multiple colomns
         // if (countOfPrimaries < 6) {
@@ -699,6 +739,7 @@ function calculateScore(colourArray, colomnCount, num) {
             score -= verticalDist ? 5 : 0;
             score -= horizontalDist ? 8.4 : 0;
         }
+        console.log('score', score)
 
     }
 
@@ -717,15 +758,17 @@ export const gradeColours = (colourArray, num) => {
         return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours], score: 0 };
     }
 
-    //TODO add check: no 2 colours from same row and all primaries on order i.e. red to purple
+    if (!correctOrderAndNoSameRow(colourArray, num)) {
+        console.log('hi')
+        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
+    }
 
     if (!containsPrimaryColours(colourArray, num)) {
         return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
     }
 
-
     const colomnCount = countColoursPerColumn(colourArray, num);
-    // console.log('colomnCount: ', colomnCount)
+    console.log('colomnCount: ', colomnCount)
 
     if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
         return {

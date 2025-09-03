@@ -1,6 +1,6 @@
 function Heading({ children }) {
   return (
-    <h1 className="w-full text-xl sm:text-3xl xl:text-5xl text-[#c7b73a] flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 font-semibold gap-y-4 sm:gap-x-10">
+    <h1 className="w-full text-center text-xl sm:text-3xl xl:text-5xl text-[#c7b73a] flex items-center justify-between mb-6 sm:mb-8 font-semibold gap-y-4 sm:gap-x-10">
       <img
         src="/images/heading_symbol_left.png"
         alt="heading_symbol_left"
