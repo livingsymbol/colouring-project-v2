@@ -759,7 +759,6 @@ export const gradeColours = (colourArray, num) => {
     }
 
     if (!correctOrderAndNoSameRow(colourArray, num)) {
-        console.log('hi')
         return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
     }
 

@@ -11,9 +11,10 @@ export default function Tabs({ items }) {
                 const stored = localStorage.getItem("scorecard");
                 const scorecard = stored ? JSON.parse(stored) : [];
 
-                const colouring1 = scorecard.find((s) => s.colouring === 1);
-                const colouring2 = scorecard.find((s) => s.colouring === 2);
-
+                const colouring1 = scorecard.find((s) => s.colouring === 1) || { colouring: 1, score: 0 };
+                const colouring2 = scorecard.find((s) => s.colouring === 2) || { colouring: 2, score: 0 };
+                console.log('colouring1', colouring1)
+                console.log('colouring2', colouring2)
                 if (
                     !colouring1 &&
                     !colouring2 ||
@@ -21,12 +22,12 @@ export default function Tabs({ items }) {
                     colouring2.score <= 70
                 ) {
                     toast.error("Score above 70% on either Colouring 1 or Colouring 2 to proceed further");
-                    return; // block navigation
+                    return;
                 }
             } catch (err) {
                 console.error("Error checking scorecard:", err);
                 toast.error("Invalid score data.");
-                return; // block navigation
+                return;
             }
         }
 

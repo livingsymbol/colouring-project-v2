@@ -187,7 +187,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
     setScoreMessage(message);
     handleOpen();
   };
-
+  
   const resetSymbol = () => {
     const resetColourArray = Array(12).fill("#ffffff"); // Reset color array to all white
     setColourArray(resetColourArray); // Update state
