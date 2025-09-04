@@ -239,12 +239,55 @@ export default function AdminDashboard() {
     const handleApprove = async (type, id) => {
         setActionLoading((prev) => ({ ...prev, [id]: true }));
         try {
-            await axios.patch(
+            const res = await axios.patch(
                 `${import.meta.env.VITE_BACKEND_URL}/admin/${type}/${id}`,
                 approvalChanges[id],
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
-            await fetchData(); // refresh without reload
+
+            const updatedItem = res.data.post || res.data.comment;
+
+            setData((prev) => {
+                if (type === "posts") {
+                    // Remove the post from all buckets
+                    let newApproved = prev.approvedPosts.filter((p) => p._id !== id);
+                    let newPartial = prev.partiallyApprovedPosts.filter((p) => p._id !== id);
+                    let newPending = prev.pendingPosts.filter((p) => p._id !== id);
+
+                    // Re-insert into the correct bucket based on latest state
+                    if (updatedItem.isApproved) {
+                        newApproved = [...newApproved, updatedItem];
+                    } else if (updatedItem.isContentApproved || updatedItem.isImageApproved) {
+                        newPartial = [...newPartial, updatedItem];
+                    } else {
+                        newPending = [...newPending, updatedItem];
+                    }
+
+                    return {
+                        ...prev,
+                        approvedPosts: newApproved,
+                        partiallyApprovedPosts: newPartial,
+                        pendingPosts: newPending,
+                    };
+                }
+
+                if (type === "comments") {
+                    return {
+                        ...prev,
+                        flaggedComments: prev.flaggedComments.filter((c) => c._id !== id),
+                        approvedComments: [...prev.approvedComments, updatedItem],
+                    };
+                }
+
+                return prev;
+            });
+
+            // Clear approval changes for this item
+            setApprovalChanges((prev) => {
+                const copy = { ...prev };
+                delete copy[id];
+                return copy;
+            });
         } catch (err) {
             console.error("Approve failed", err);
         } finally {
@@ -258,7 +301,24 @@ export default function AdminDashboard() {
             await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/${type}/${id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            await fetchData(); // refresh without reload
+
+            setData((prev) => {
+                if (type === "posts") {
+                    return {
+                        ...prev,
+                        approvedPosts: prev.approvedPosts.filter((p) => p._id !== id),
+                        partiallyApprovedPosts: prev.partiallyApprovedPosts.filter((p) => p._id !== id),
+                        pendingPosts: prev.pendingPosts.filter((p) => p._id !== id),
+                    };
+                } else if (type === "comments") {
+                    return {
+                        ...prev,
+                        approvedComments: prev.approvedComments.filter((c) => c._id !== id),
+                        flaggedComments: prev.flaggedComments.filter((c) => c._id !== id),
+                    };
+                }
+                return prev;
+            });
         } catch (err) {
             console.error("Delete failed", err);
         } finally {
@@ -266,9 +326,10 @@ export default function AdminDashboard() {
         }
     };
 
+
     const tabConfig = [
         {
-            label: `Approved Posts (${data.approvedPosts.length})`,
+            label: <>Approved Posts<br /> ({data.approvedPosts.length})</>,
             items: data.approvedPosts,
             render: (post) => (
                 <PostCard
@@ -281,7 +342,7 @@ export default function AdminDashboard() {
             ),
         },
         {
-            label: `Partially Approved Posts (${data.partiallyApprovedPosts.length})`,
+            label: <>Partially <br />Approved Posts <br />({data.partiallyApprovedPosts.length})</>,
             items: data.partiallyApprovedPosts,
             render: (post) => (
                 <PostCard
@@ -295,7 +356,7 @@ export default function AdminDashboard() {
             ),
         },
         {
-            label: `Pending Posts (${data.pendingPosts.length})`,
+            label: <>Pending Posts <br />({data.pendingPosts.length})</>,
             items: data.pendingPosts,
             render: (post) => (
                 <PostCard
@@ -309,14 +370,14 @@ export default function AdminDashboard() {
             ),
         },
         {
-            label: `Approved Comments (${data.approvedComments.length})`,
+            label: <>Approved<br /> Comments <br />({data.approvedComments.length})</>,
             items: data.approvedComments,
             render: (comment) => (
                 <CommentCard comment={comment} onDelete={(id) => handleDelete("comments", id)} />
             ),
         },
         {
-            label: `Flagged Comments (${data.flaggedComments.length})`,
+            label: <>Flagged<br /> Comments <br />({data.flaggedComments.length})</>,
             items: data.flaggedComments,
             render: (comment) => (
                 <CommentCard

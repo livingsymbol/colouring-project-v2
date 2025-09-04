@@ -113,11 +113,15 @@ export const approvePost = async (req, res) => {
         if (approveImage !== undefined) post.isImageApproved = approveImage;
         if (approveContent !== undefined) post.isContentApproved = approveContent;
 
-        post.isApproved = post.isImageApproved && post.isContentApproved;
+        if (post.imageUrl) {
+            post.isApproved = post.isContentApproved && post.isImageApproved;
+        } else {
+            post.isApproved = post.isContentApproved;
+        }
 
         await post.save();
 
-        if (post.isApproved && process.env.USE_CREDENTIAL_AUTH === 'true' && post.author?.email) {
+        if (process.env.USE_CREDENTIAL_AUTH === 'true' && post.isApproved && post.author?.email) {
             await sendEmail({
                 to: post.author.email,
                 subject: 'Your post has been approved',

@@ -1,6 +1,7 @@
 import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import { isClean } from '../utils/comment.utils.js';
+import notifyAdmins from '../utils/notifyAdmins.js';
 
 export const addComment = async (req, res) => {
     try {
@@ -14,7 +15,8 @@ export const addComment = async (req, res) => {
             post: postId,
             author: req.user.id,
             content,
-            isFlagged
+            isFlagged,
+            isApproved: false
         });
         await comment.save();
 
@@ -39,7 +41,11 @@ export const replyToComment = async (req, res) => {
         const { content } = req.body;
         const { commentId } = req.params;
 
-        const parent = await Comment.findById(commentId);
+        const parent = await Comment.findById(commentId).populate({
+            path: "post",
+            select: "title"
+        });
+
         if (!parent) return res.status(404).json({ message: 'Parent comment not found' });
 
         const isFlagged = await isClean(content);
@@ -60,7 +66,7 @@ export const replyToComment = async (req, res) => {
             // 🔔 Notify admins
             await notifyAdmins(
                 "Reply Pending Review",
-                `A reply to a comment on post <b>${parent.post}</b> has been flagged and requires admin approval.`
+                `A reply to a comment on post <b>${parent.post.title}</b> has been flagged and requires admin approval.`
             );
             res.status(400).json({ message: 'Foul language detected, reply sent for review', reply });
         }

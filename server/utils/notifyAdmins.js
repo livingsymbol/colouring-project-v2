@@ -7,11 +7,11 @@ const notifyAdmins = async (subject, message) => {
     const emails = admins.map(admin => admin.email).filter(Boolean);
     if (!emails.length) return;
 
-    await sendEmail(
-        emails,
+    await sendEmail({
+        to: emails,
         subject,
-        `<p>${message}</p>`
-    );
+        html: `<p>${message}</p>`
+    });
 };
 
 export default notifyAdmins;
