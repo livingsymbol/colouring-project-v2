@@ -27,7 +27,7 @@ const style = {
   textAlign: "center",
 };
 
-const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
+const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5 = false }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
   const [colourArray, setColourArray] = useState(() => {
@@ -38,6 +38,9 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
   const [scoreMessage, setScoreMessage] = useState("");
 
   const [input, setInput] = useState(""); // State to store the user's input
+
+  const [illumination, setIllumination] = useState(0.5); // 0-1
+  const [intensity, setIntensity] = useState(0); // 0-1
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -187,7 +190,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
     setScoreMessage(message);
     handleOpen();
   };
-  
+
   const resetSymbol = () => {
     const resetColourArray = Array(12).fill("#ffffff"); // Reset color array to all white
     setColourArray(resetColourArray); // Update state
@@ -205,10 +208,11 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
   return (
     <div className="w-full">
       <div className="flex flex-col gap-y-2 items-center">
-        <div className="overflow-hidden w-full">
+        <div className="overflow-hidden w-full relative">
 
           {showDesc ?
-            <Symbol ref={svgRef} className="w-full h-full" color={color} /> :
+            <Symbol ref={svgRef} className="w-full h-full" color={color} illumination={illumination} intensity={intensity} isColouring5={isColouring5} />
+            :
             <Symbol_without_desc
               ref={svgRef}
               className="w-full h-full"
@@ -216,6 +220,51 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true }) => {
             />
           }
         </div>
+        {/* Sliders */}
+        {isColouring5 &&
+          <div className="flex flex-col gap-4 mt-4">
+            {/* Symbol Illumination */}
+            <label className="flex flex-col gap-1">
+              <span className="text-md font-medium text-gray-700">
+                Symbol Illumination
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">Silver</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={illumination}
+                  onChange={(e) => setIllumination(parseFloat(e.target.value))}
+                  className="w-full accent-yellow-500"
+                />
+                <span className="text-sm text-gray-500">Gold</span>
+              </div>
+            </label>
+
+            {/* Illumination Intensity */}
+            <label className="flex flex-col gap-1">
+              <span className="text-md font-medium text-gray-700">
+                Illumination Intensity
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">Min</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={intensity}
+                  onChange={(e) => setIntensity(parseFloat(e.target.value))}
+                  className="w-full accent-yellow-500"
+                />
+                <span className="text-sm text-gray-500">Max</span>
+              </div>
+            </label>
+          </div>
+        }
+        <br />
         <canvas
           ref={canvasRef}
           width="708.661"

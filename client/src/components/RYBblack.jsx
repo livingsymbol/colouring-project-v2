@@ -188,7 +188,6 @@ export default function RYBblack({ size = 300, onColorSelect }) {
         setColor(hex);
         if (onColorSelect) onColorSelect(hex);
     };
-      
 
     return (
         <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>

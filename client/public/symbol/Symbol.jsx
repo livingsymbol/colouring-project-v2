@@ -4,6 +4,17 @@ import SymbolText from "./SymbolText";
 const Symbol = forwardRef((props, ref) => {
   const [position, setPosition] = useState(0);
 
+  const silverOpacity =
+    props.illumination <= 0.5
+      ? Math.min((1 - props.illumination * 2) * props.intensity, 0.75)
+      : 0;
+
+  const goldOpacity =
+    props.illumination >= 0.5
+      ? Math.min((props.illumination * 2 - 1) * props.intensity, 0.75)
+      : 0;
+
+
   const rotateClockwise = () => {
     if (position < 1) {
       setPosition((prevPosition) => prevPosition + 1);
@@ -62,6 +73,7 @@ const Symbol = forwardRef((props, ref) => {
       </div>
 
       <div className="relative flex items-center justify-center w-full h-full">
+
         <svg
           {...props}
           ref={ref}
@@ -72,9 +84,25 @@ const Symbol = forwardRef((props, ref) => {
           className="absolute z-10 w-full h-full"
           style={{ pointerEvents: "none" }}
         >
+
+          <defs>
+            <clipPath id="symbol-clip">
+              <path
+                transform="matrix(1,0,0,-1,600.1441,212.1676)"
+                d="M0 0C78.259-135.554 31.808-308.891-103.752-387.159-239.311-465.428-412.645-418.989-490.903-283.436-569.162-147.882-522.71 25.455-387.151 103.724-251.592 181.992-78.258 135.553 0 0"
+                fill="#d5af3c"
+                style={{ pointerEvents: "none" }}
+                stroke="#000000"
+                strokeWidth="1"
+              />
+            </clipPath>
+          </defs>
+
           <g id="layer_1" data-name="Vrstva 1">
             <g id="layer_1" data-name="Vrstva 1">
               <g clipPath="url(#clip_0)">
+
+                {/* golden outline */}
                 <path
                   transform="matrix(1,0,0,-1,600.1441,212.1676)"
                   d="M0 0C78.259-135.554 31.808-308.891-103.752-387.159-239.311-465.428-412.645-418.989-490.903-283.436-569.162-147.882-522.71 25.455-387.151 103.724-251.592 181.992-78.258 135.553 0 0"
@@ -83,38 +111,10 @@ const Symbol = forwardRef((props, ref) => {
                   stroke="#000000"
                   strokeWidth="1"
                 />
-                <path
-                  transform="matrix(1,0,0,-1,275.7271,284.04023)"
-                  d="M0 0C-4.438 4.575-11.852 4.252-15.905-.666-25.64-12.475-40.601-36.111-40.6-69.836-40.599-103.561-25.635-127.199-15.9-139.008-11.846-143.927-4.432-144.25 .005-139.675L38.611-99.875C32.359-91.493 28.657-81.098 28.657-69.839 28.656-58.58 32.357-48.185 38.608-39.805V-39.803Z"
-                  fill="#ffffff"
-                  style={{ pointerEvents: "none" }}
-                  stroke="#000000"
-                  strokeWidth="1"
-                />
-                <path
-                  transform="matrix(1,0,0,-1,284.835,432.8493)"
-                  d="M0 0C-4.574-4.437-4.251-11.852 .667-15.906 12.476-25.642 36.111-40.606 69.833-40.608 103.555-40.609 127.19-25.646 138.999-15.911 143.916-11.857 144.238-4.443 139.664-.005L99.864 38.606H99.863C91.483 32.355 81.089 28.654 69.831 28.654 58.572 28.655 48.178 32.357 39.798 38.609H39.797Z"
-                  fill="#ffffff"
-                  style={{ pointerEvents: "none" }}
-                  stroke="#000000"
-                  strokeWidth="1"
-                />
-                <path
-                  transform="matrix(1,0,0,-1,284.8286,274.9621)"
-                  d="M0 0C-4.574 4.438-4.251 11.853 .666 15.906 12.474 25.642 36.108 40.604 69.831 40.603 103.553 40.602 127.188 25.637 138.997 15.901 143.915 11.847 144.238 4.433 139.664-.005L99.867-38.614H99.866C91.485-32.362 81.092-28.66 69.833-28.659 58.575-28.659 48.181-32.36 39.801-38.611H39.8Z"
-                  fill="#ffffff"
-                  style={{ pointerEvents: "none" }}
-                  stroke="#000000"
-                  strokeWidth="1"
-                />
-                <path
-                  transform="matrix(1,0,0,-1,433.6206,284.0465)"
-                  d="M0 0C4.437 4.575 11.851 4.251 15.905-.667 25.641-12.477 40.604-36.114 40.605-69.839 40.606-103.564 25.645-127.2 15.91-139.01 11.856-143.928 4.443-144.25 .006-139.676L-38.603-99.872V-99.871C-32.353-91.49-28.651-81.097-28.651-69.836-28.652-58.577-32.354-48.183-38.605-39.801V-39.8Z"
-                  fill="#ffffff"
-                  style={{ pointerEvents: "none" }}
-                  stroke="#000000"
-                  strokeWidth="1"
-                />
+
+
+
+                {/* 12 petals id path-<0-11> */}
                 <path
                   transform="matrix(1,0,0,-1,475.2788,108.93231)"
                   d="M0 0C-33.004 16.108-67.904 25.012-102.686 27.225-109.366 27.65-114.934 22.483-114.871 15.976L-114.658-115.169C-97.066-116.206-76.952-121.228-60.342-129.853L5.036-15.851C8.339-10.215 6.039-2.947 0 0"
@@ -273,6 +273,68 @@ const Symbol = forwardRef((props, ref) => {
                 />
               </g>
 
+              {props.isColouring5 && <foreignObject width="100%" height="100%" clipPath="url(#symbol-clip)">
+                <div className="absolute inset-0 pointer-events-none z-20 rounded-full">
+                  {/* Silver Glitter */}
+                  <div
+                    className="absolute inset-0 bg-repeat opacity-0 transition-opacity duration-300"
+                    style={{
+                      backgroundImage: "url('/images/silver-glitter.jpg')",
+                      backgroundSize: "cover",
+                      mixBlendMode: "overlay",
+                      opacity: silverOpacity,
+                      backgroundPosition: `${props.illumination * 100}% 0`,
+                      transition: "opacity 0.3s ease, background-position 0.3s ease",
+                    }}
+                  />
+                  {/* Gold Glitter */}
+                  <div
+                    className="absolute inset-0 bg-repeat opacity-0 transition-opacity duration-300"
+                    style={{
+                      backgroundImage: "url('/images/gold-glitter.jpg')",
+                      backgroundSize: "cover",
+                      mixBlendMode: "overlay",
+                      opacity: goldOpacity,
+                      backgroundPosition: `${props.illumination * 100}% 0`,
+                      transition: "opacity 0.3s ease, background-position 0.3s ease",
+                    }}
+                  />
+                </div>
+              </foreignObject>}
+
+              {/* inner petals */}
+              <path
+                transform="matrix(1,0,0,-1,275.7271,284.04023)"
+                d="M0 0C-4.438 4.575-11.852 4.252-15.905-.666-25.64-12.475-40.601-36.111-40.6-69.836-40.599-103.561-25.635-127.199-15.9-139.008-11.846-143.927-4.432-144.25 .005-139.675L38.611-99.875C32.359-91.493 28.657-81.098 28.657-69.839 28.656-58.58 32.357-48.185 38.608-39.805V-39.803Z"
+                fill="#ffffff"
+                style={{ pointerEvents: "none" }}
+                stroke="#000000"
+                strokeWidth="1"
+              />
+              <path
+                transform="matrix(1,0,0,-1,284.835,432.8493)"
+                d="M0 0C-4.574-4.437-4.251-11.852 .667-15.906 12.476-25.642 36.111-40.606 69.833-40.608 103.555-40.609 127.19-25.646 138.999-15.911 143.916-11.857 144.238-4.443 139.664-.005L99.864 38.606H99.863C91.483 32.355 81.089 28.654 69.831 28.654 58.572 28.655 48.178 32.357 39.798 38.609H39.797Z"
+                fill="#ffffff"
+                style={{ pointerEvents: "none" }}
+                stroke="#000000"
+                strokeWidth="1"
+              />
+              <path
+                transform="matrix(1,0,0,-1,284.8286,274.9621)"
+                d="M0 0C-4.574 4.438-4.251 11.853 .666 15.906 12.474 25.642 36.108 40.604 69.831 40.603 103.553 40.602 127.188 25.637 138.997 15.901 143.915 11.847 144.238 4.433 139.664-.005L99.867-38.614H99.866C91.485-32.362 81.092-28.66 69.833-28.659 58.575-28.659 48.181-32.36 39.801-38.611H39.8Z"
+                fill="#ffffff"
+                style={{ pointerEvents: "none" }}
+                stroke="#000000"
+                strokeWidth="1"
+              />
+              <path
+                transform="matrix(1,0,0,-1,433.6206,284.0465)"
+                d="M0 0C4.437 4.575 11.851 4.251 15.905-.667 25.641-12.477 40.604-36.114 40.605-69.839 40.606-103.564 25.645-127.2 15.91-139.01 11.856-143.928 4.443-144.25 .006-139.676L-38.603-99.872V-99.871C-32.353-91.49-28.651-81.097-28.651-69.836-28.652-58.577-32.354-48.183-38.605-39.801V-39.8Z"
+                fill="#ffffff"
+                style={{ pointerEvents: "none" }}
+                stroke="#000000"
+                strokeWidth="1"
+              />
               <g clipPath="url(#clip_1)">
                 <path
                   transform="matrix(1,0,0,-1,379.8199,328.74873)"
@@ -300,7 +362,6 @@ const Symbol = forwardRef((props, ref) => {
           getRotationAngle={getRotationAngle}
           className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out"
         />
-
       </div>
     </div>
   );

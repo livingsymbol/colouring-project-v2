@@ -28,7 +28,7 @@ export default function AspirationTab5() {
                 <br />
                 <Paragraph className="text-center">After colouring all 12 petals you may “Download” your colouring.</Paragraph>
             </div>}
-            symbol={<DesignCanvas color={color} showDesc={true} />} />
+            symbol={<DesignCanvas color={color} showDesc={true} isColouring5={true} />} />
     );
 }
 
