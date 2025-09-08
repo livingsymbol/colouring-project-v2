@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from "../Paragraph";
+import PdfPageButton from "../PdfPageButton";
 
 export default function ColoursTab4({ content }) {
     return <div className="w-full">
@@ -59,94 +60,94 @@ export default function ColoursTab4({ content }) {
                 Another important area colour theory in art and design concerns itself with is colour mixing i.e. colour models:
             </Paragraph>
             {/* <div className="overflow-x-auto"> */}
-                <Paragraph className="overflow-x-auto">
+            <Paragraph className="overflow-x-auto">
 
-                    <table className="table-auto w-full border-collapse min-w-[200px]">
-                        <thead>
-                            <tr>
-                                <th className="text-left "></th>
-                                <th className="text-left ">Colour model</th>
-                                <th className="text-left ">Colour wheel</th>
-                                <th className="text-left "></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className=" font-medium">RGB</td>
-                                <td className="">
-                                    <img
-                                        src="/images/ct4.4.png"
-                                        alt="Example"
-                                        className="mb-2 sm:w-16 w-12 h-auto"
-                                    />
-                                </td>
-                                <td className="">
-                                    <img
-                                        src="/images/ct4.5.png"
-                                        alt="Example"
-                                        className="mb-2 sm:w-16 w-12 h-auto"
-                                    />
-                                </td>
-                                <td className=" text-sm sm:text-base">
-                                    <strong>RGB – Red Green Blue</strong><br />
-                                    These are primary colours of light. The more colour of light you add,
-                                    hence “additive colour model”, the closer you get to white colour as
-                                    seen in the white middle intersection. RGB is used in screens, e.g.
-                                    TVs, PCs etc.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className=" font-medium">RYB</td>
-                                <td className="">
-                                    <img
-                                        src="/images/ct4.6.png"
-                                        alt="Example"
-                                        className="mb-2 sm:w-16 w-12 h-auto"
-                                    />
-                                </td>
-                                <td className="">
-                                    <img
-                                        src="/images/ct4.7.png"
-                                        alt="Example"
-                                        className="mb-2 sm:w-16 w-12 h-auto"
-                                    />
-                                </td>
-                                <td className=" text-sm sm:text-base">
-                                    <strong>RYB – Red Yellow Blue</strong><br />
-                                    These primary colours subtract light from paper, hence “subtractive
-                                    colour model“. By adding more physical colour like pigments, inks etc.
-                                    The more physical colour you add, the closer you get to black colour
-                                    as seen in the black middle intersection. This “old” colour model is
-                                    used in traditional painting.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className=" font-medium">CMYK</td>
-                                <td className="">
-                                    <img
-                                        src="/images/ct4.8.png"
-                                        alt="Example"
-                                        className="mb-2 sm:w-16 w-12 h-auto"
-                                    />
-                                </td>
-                                <td className="">
-                                    <img
-                                        src="/images/ct4.9.png"
-                                        alt="Example"
-                                        className="mb-2 sm:w-16 w-12 h-auto"
-                                    />
-                                </td>
-                                <td className=" text-sm sm:text-base">
-                                    <strong>CMYK – Cyan, Magenta, Yellow & Key black</strong><br />
-                                    Another “subtractive colour model” that is used by printers i.e. any
-                                    colour you see on a physical surface e.g. paper, signage, packaging
-                                    etc. Did you notice, that Cyan, Magenta and Yellow are secondary
-                                    colours in the RGB scheme?
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </Paragraph>
+                <table className="table-auto w-full border-collapse min-w-[200px]">
+                    <thead>
+                        <tr>
+                            <th className="text-left "></th>
+                            <th className="text-left ">Colour model</th>
+                            <th className="text-left ">Colour wheel</th>
+                            <th className="text-left "></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className=" font-medium">RGB</td>
+                            <td className="">
+                                <img
+                                    src="/images/ct4.4.png"
+                                    alt="Example"
+                                    className="mb-2 sm:w-16 w-12 h-auto"
+                                />
+                            </td>
+                            <td className="">
+                                <img
+                                    src="/images/ct4.5.png"
+                                    alt="Example"
+                                    className="mb-2 sm:w-16 w-12 h-auto"
+                                />
+                            </td>
+                            <td className=" text-sm sm:text-base">
+                                <strong>RGB – Red Green Blue</strong><br />
+                                These are primary colours of light. The more colour of light you add,
+                                hence “additive colour model”, the closer you get to white colour as
+                                seen in the white middle intersection. RGB is used in screens, e.g.
+                                TVs, PCs etc.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className=" font-medium">RYB</td>
+                            <td className="">
+                                <img
+                                    src="/images/ct4.6.png"
+                                    alt="Example"
+                                    className="mb-2 sm:w-16 w-12 h-auto"
+                                />
+                            </td>
+                            <td className="">
+                                <img
+                                    src="/images/ct4.7.png"
+                                    alt="Example"
+                                    className="mb-2 sm:w-16 w-12 h-auto"
+                                />
+                            </td>
+                            <td className=" text-sm sm:text-base">
+                                <strong>RYB – Red Yellow Blue</strong><br />
+                                These primary colours subtract light from paper, hence “subtractive
+                                colour model“. By adding more physical colour like pigments, inks etc.
+                                The more physical colour you add, the closer you get to black colour
+                                as seen in the black middle intersection. This “old” colour model is
+                                used in traditional painting.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className=" font-medium">CMYK</td>
+                            <td className="">
+                                <img
+                                    src="/images/ct4.8.png"
+                                    alt="Example"
+                                    className="mb-2 sm:w-16 w-12 h-auto"
+                                />
+                            </td>
+                            <td className="">
+                                <img
+                                    src="/images/ct4.9.png"
+                                    alt="Example"
+                                    className="mb-2 sm:w-16 w-12 h-auto"
+                                />
+                            </td>
+                            <td className=" text-sm sm:text-base">
+                                <strong>CMYK – Cyan, Magenta, Yellow & Key black</strong><br />
+                                Another “subtractive colour model” that is used by printers i.e. any
+                                colour you see on a physical surface e.g. paper, signage, packaging
+                                etc. Did you notice, that Cyan, Magenta and Yellow are secondary
+                                colours in the RGB scheme?
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </Paragraph>
 
             {/* </div> */}
             <div className="flex justify-end">
@@ -182,6 +183,8 @@ export default function ColoursTab4({ content }) {
 
 
             </Paragraph>
+            <PdfPageButton name="living-symbol" page={23} />
+
         </>
     </div>;
 }

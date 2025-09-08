@@ -1,5 +1,6 @@
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from "../Paragraph";
+import PdfPageButton from "../PdfPageButton";
 
 export default function ColoursTab3({ content }) {
     return <div className="w-full">
@@ -85,6 +86,8 @@ export default function ColoursTab3({ content }) {
 
 
             </Paragraph>
+            <PdfPageButton name="living-symbol" page={11} />
+
         </>
 
     </div>;

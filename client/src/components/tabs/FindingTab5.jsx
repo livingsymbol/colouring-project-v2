@@ -1,5 +1,6 @@
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from '../Paragraph';
+import PdfPageButton from "../PdfPageButton";
 
 export default function FindingTab5({ content }) {
     return <div className="w-full">
@@ -86,6 +87,8 @@ export default function FindingTab5({ content }) {
                     </Paragraph>
                 </div>
             </div>
+            <PdfPageButton name="living-symbol" page={0} />
+
         </>
     </div >;
 }

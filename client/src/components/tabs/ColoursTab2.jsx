@@ -1,5 +1,6 @@
 // import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from "../Paragraph";
+import PdfPageButton from "../PdfPageButton";
 
 export default function ColoursTab2({ content }) {
     return <div className="w-full">
@@ -53,6 +54,8 @@ export default function ColoursTab2({ content }) {
                 <br />
                 Thus, two people looking at the same coloured Mother’s symbol may see or feel it differently. This brings tolerance and openness into our exploration: perhaps some of the variations we observed weren’t "mistakes" but expressions of individual physiological and psychological response. This also reflects the living nature of the symbol—its resonance can change depending on the state of the individual.
             </Paragraph>
+            <PdfPageButton name="living-symbol" page={8} />
+
         </>
 
     </div>;

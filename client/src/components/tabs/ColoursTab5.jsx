@@ -1,5 +1,6 @@
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from '../Paragraph';
+import PdfPageButton from "../PdfPageButton";
 
 export default function ColoursTab5({ content }) {
     return <div className="w-full">
@@ -56,10 +57,13 @@ export default function ColoursTab5({ content }) {
                         key={num}
                         src={`images/ct5.${num}.png`}
                         alt={`ct5.${num}`}
-                    className="w-28 md:w-40 xl:w-48"
+                        className="w-28 md:w-40 xl:w-48"
                     />
                 ))}
             </div>
+
+            <PdfPageButton name="living-symbol" page={35} />
+
         </>
     </div>;
 }

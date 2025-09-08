@@ -1,6 +1,7 @@
 import { Play } from "lucide-react";
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from '../Paragraph';
+import PdfPageButton from "../PdfPageButton";
 
 export default function FindingTab4({ content }) {
     return <div className="w-full">
@@ -74,6 +75,8 @@ export default function FindingTab4({ content }) {
             </Paragraph>
             <br />
             <br />
+            <PdfPageButton name="living-symbol" page={32} />
+
         </>
     </div>;
 }

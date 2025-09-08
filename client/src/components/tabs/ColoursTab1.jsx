@@ -54,7 +54,7 @@ export default function ColoursTab1({ content }) {
                     <li>Brightness - apparent amount of light, varying from "dim" to "bright"</li>
                 </ul>
             </Paragraph>
-            <PdfPageButton page={3} />
+            <PdfPageButton name="living-symbol" page={3} />
         </>
 
     </div >;

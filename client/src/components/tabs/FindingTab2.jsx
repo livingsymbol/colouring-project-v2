@@ -1,5 +1,6 @@
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from '../Paragraph';
+import PdfPageButton from "../PdfPageButton";
 
 export default function FindingTab2({ content }) {
     return <div className="w-full">
@@ -13,6 +14,8 @@ export default function FindingTab2({ content }) {
                 <img src="images/ft2.1.png" alt="" className="w-1/2 h-full " />
                 <img src="images/ft2.2.png" alt="" className="w-1/2 h-full " />
             </div>
+            <PdfPageButton name="living-symbol" page={26} />
+
         </>
     </div>;
 }

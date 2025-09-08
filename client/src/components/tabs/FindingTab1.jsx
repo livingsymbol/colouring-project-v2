@@ -1,5 +1,6 @@
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from '../Paragraph';
+import PdfPageButton from "../PdfPageButton";
 
 export default function FindingTab1({ content }) {
     return <div className="w-full">
@@ -27,6 +28,7 @@ export default function FindingTab1({ content }) {
                 <br />
                 Some individuals perceive colours corresponding to specific musical notes and individuals as having a colour or tone, reflecting their soul’s vibration. Music, when played during meditative viewing of the symbol, can enhance or unlock new dimensions of experience combining auditory and visual vibrations to deepen contact with the Divine Presence.
             </Paragraph>
+            <PdfPageButton name="living-symbol" page={5} />
 
         </>
     </div>;
