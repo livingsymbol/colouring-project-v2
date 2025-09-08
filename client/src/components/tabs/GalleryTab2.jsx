@@ -25,7 +25,7 @@ const galleryTab2Content = {
         {
             "type": "text",
             "marks": [{ "type": "underline" }],
-            "text": "themotherssymbol@gmail.com"
+            "text": "livingsymbol@aol.com"
         },
 
     ]
