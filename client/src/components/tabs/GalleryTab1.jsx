@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import RichTextRenderer from "../RichTextRenderer";
-import Grid from "@mui/material/Grid";         // v6 Grid (Grid v2)
+import Grid from "@mui/material/Grid"; // v6 Grid (Grid v2)
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
@@ -10,14 +10,22 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 
-const galleryTab1Content = { "type": "doc", "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "Get inspired by the work of others done with sincerity, aspiration, love and surrender to The Mother. Some shared powerful inner experiences that were triggered by the symbols. On the Supramental level, there is no separation — all is united in the One. Separation begins only at the Overmind level. To illustrate this, we designed small symbols on each golden petal to signify the all-encompassing nature of the Supramental, while also indicating the varying levels of consciousness (Overmind).", },] }] }
-
-// Optional: transform Cloudinary URLs for fast thumbnails and crisp previews
-const thumb = (url) =>
-    url.replace("/upload/", "/upload/f_auto,q_auto,c_fill,w_600,h_600/");
-const full = (url) =>
-    url.replace("/upload/", "/upload/f_auto,q_auto,c_fit,w_1600/");
+const galleryTab1Content = {
+    type: "doc",
+    content: [
+        {
+            type: "paragraph",
+            content: [
+                {
+                    type: "text",
+                    text: "Get inspired by the work of others done with sincerity, aspiration, love and surrender to The Mother. Some shared powerful inner experiences that were triggered by the symbols. On the Supramental level, there is no separation — all is united in the One. Separation begins only at the Overmind level. To illustrate this, we designed small symbols on each golden petal to signify the all-encompassing nature of the Supramental, while also indicating the varying levels of consciousness (Overmind).",
+                },
+            ],
+        },
+    ],
+};
 
 export default function GalleryTab1() {
     const [images, setImages] = useState([]);
@@ -31,8 +39,9 @@ export default function GalleryTab1() {
     useEffect(() => {
         (async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/page/gallery`);
-
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BACKEND_URL}/page/gallery`
+                );
                 setImages(res.data || []);
             } catch (e) {
                 console.error("Failed to fetch images", e);
@@ -92,7 +101,7 @@ export default function GalleryTab1() {
                                 }}
                             >
                                 <img
-                                    src={thumb(url)}
+                                    src={url}
                                     alt={`Gallery item ${i + 1}`}
                                     loading="lazy"
                                     style={{
@@ -111,29 +120,85 @@ export default function GalleryTab1() {
                                     }
                                 />
                             </Box>
+                            {/* Number below image */}
+                            <Typography
+                                variant="body2"
+                                align="center"
+                                sx={{ mt: 1, fontWeight: "bold" }}
+                            >
+                                {i + 1}
+                            </Typography>
                         </Grid>
                     ))}
                 </Grid>
             )}
 
-            <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen}>
-                <DialogContent sx={{ p: 0, bgcolor: "black", position: "relative" }}>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                maxWidth="xl"
+                PaperProps={{
+                    sx: {
+                        bgcolor: "black",
+                        borderRadius: 2,
+                        overflow: "hidden"
+                    }
+                }}
+            >
+                <DialogContent
+                    sx={{
+                        p: 0,
+                        bgcolor: "black",
+                        position: "relative",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}
+                >
                     <IconButton
                         onClick={handleClose}
-                        sx={{ position: "absolute", right: 8, top: 8, color: "white", zIndex: 10 }}
+                        sx={{
+                            position: "absolute",
+                            right: 8,
+                            top: 8,
+                            color: "white",
+                            zIndex: 10,
+                        }}
                         aria-label="Close"
                     >
                         <CloseIcon />
                     </IconButton>
+
                     {images[idx] && (
-                        <img
-                            src={full(images[idx])}
-                            alt={`Selected ${idx + 1}`}
-                            style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                        />
+                        <>
+                            <img
+                                src={images[idx]}
+                                alt={`Selected ${idx + 1}`}
+                                style={{
+                                    maxWidth: "90vw",
+                                    maxHeight: "80vh",
+                                    objectFit: "contain",
+                                }}
+                            />
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    color: "white",
+                                    mt: 1,
+                                    mb: 2,
+                                    fontWeight: "bold",
+                                    textAlign: "center",
+                                }}
+                            >
+                                {idx + 1} / {images.length}
+                            </Typography>
+                        </>
                     )}
                 </DialogContent>
             </Dialog>
+
         </div>
     );
 }
