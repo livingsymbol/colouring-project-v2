@@ -17,6 +17,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminEditor from './pages/AdminEditor';
 import AddPage from './pages/AddPage';
 import useGuestLogin from './hooks/useGuestLogin';
+import PdfViewer from './pages/PdfViewer';
 
 export default function App() {
 
@@ -41,6 +42,7 @@ export default function App() {
               <Route path="/library" element={<ProtectedRoutes><Library /></ProtectedRoutes>} />
               <Route path="/forum-and-colouring" element={<ProtectedRoutes><ForumAndColouring /></ProtectedRoutes>} />
               <Route path="/forum/post/:id" element={<ProtectedRoutes><Post /></ProtectedRoutes>} />
+              <Route path="/view-pdf" element={<ProtectedRoutes><PdfViewer /></ProtectedRoutes>} />
             </Route>
           </>
           :
@@ -54,6 +56,7 @@ export default function App() {
               <Route path="/library" element={<Library />} />
               <Route path="/forum-and-colouring" element={<ForumAndColouring />} />
               <Route path="/forum/post/:id" element={<Post />} />
+              <Route path="/view-pdf" element={<PdfViewer />} />
             </Route>
           </>
         }

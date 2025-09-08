@@ -1,5 +1,6 @@
 import RichTextRenderer from "../RichTextRenderer";
 import Paragraph from "../Paragraph";
+import PdfPageButton from "../PdfPageButton";
 
 export default function ColoursTab1({ content }) {
     return <div className="w-full">
@@ -53,6 +54,7 @@ export default function ColoursTab1({ content }) {
                     <li>Brightness - apparent amount of light, varying from "dim" to "bright"</li>
                 </ul>
             </Paragraph>
+            <PdfPageButton page={3} />
         </>
 
     </div >;
