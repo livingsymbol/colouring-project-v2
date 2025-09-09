@@ -248,7 +248,7 @@ export default function ColorWheel({ onColorSelect }) {
 
         // shift angle by half a slice so clicks are centered
         const sliceAngle = 360 / colors.length;
-        const shiftedAngle = (angle + sliceAngle / 2) % 360;
+        const shiftedAngle = (angle + 180 / 2) % 360;
 
         const slice = Math.floor(shiftedAngle / sliceAngle);
         const pickedColor = colors[slice];
