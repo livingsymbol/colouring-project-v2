@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 
 export default function PdfPageButton({ name, page, children }) {
     return (
-        <div className="w-full flex justify-center">
+        <div className={window.location.pathname === '/library'
+            ? "w-full flex"
+            : "w-full flex justify-center"}>
             <Link
-                to={`/view-pdf?name=${name}&page=${page}`}
+                to={`/view-pdf?name=${name}&page=${page ?? 1}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={
