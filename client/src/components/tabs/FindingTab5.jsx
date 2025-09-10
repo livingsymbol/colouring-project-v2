@@ -1,8 +1,14 @@
-import RichTextRenderer from "../RichTextRenderer";
-import Paragraph from '../Paragraph';
+import { useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import Paragraph from "../Paragraph";
 import PdfPageButton from "../PdfPageButton";
 
 export default function FindingTab5({ content }) {
+    const [open, setOpen] = useState(false);
+
     return <div className="w-full">
         {/* <RichTextRenderer content={content} /> */}
 
@@ -11,7 +17,59 @@ export default function FindingTab5({ content }) {
                 Depending on the colour model we are using, the relative position of colours to each other will vary.
             </Paragraph>
             <br />
-            <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto" alt="" />
+            <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto cursor-pointer" alt="" onClick={() => setOpen(true)} />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                fullWidth
+                maxWidth="xl"
+                // MUI v6+: style the Paper slot with slotProps
+                slotProps={{
+                    paper: {
+                        sx: {
+                            // responsive full-height on mobile, ~90vh on desktop
+                            height: { xs: "100vh", md: "90vh" },
+                            maxHeight: { xs: "100vh", md: "90vh" },
+                            m: 0, // remove default margin so height is used edge-to-edge
+                            borderRadius: { xs: 0, md: 2 },
+                            bgcolor: "background.paper",
+                        },
+                    },
+                }}
+            >
+                <div
+                    className="flex justify-center items-center gap-4 bg-black p-2 sm:p-4 h-full"
+                >
+                    <IconButton
+                        onClick={() => setOpen(false)}
+                        aria-label="close"
+                        sx={{ position: "absolute", top: 8, right: 8, color: "white", zIndex: 10 }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+
+                    {/* Left image zoomable */}
+                    <TransformWrapper initialScale={1} wheel={{ step: 0.1 }}>
+                        <TransformComponent
+                            wrapperStyle={{ width: "100%", height: "100%", border: "2px solid black", background: "white" }}
+                            contentStyle={{ width: "100%", height: "100%", objectFit: "contain" }}
+                        >
+                            <img
+                                src="images/ft5.1.png"
+                                alt="ft5.1"
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    maxHeight: "80vh",
+                                    objectFit: "contain",
+                                    cursor: "grab",
+
+                                }}
+                            />
+                        </TransformComponent>
+                    </TransformWrapper>
+                </div>
+            </Dialog>
             <br />
             <Paragraph>
                 Sri Aurobindo and the Mother left us instructions on the Symbol’s colours, positions and meaning:
