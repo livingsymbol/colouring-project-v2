@@ -1,12 +1,16 @@
+import { useState } from "react";
 import { Play } from "lucide-react";
-import RichTextRenderer from "../RichTextRenderer";
-import Paragraph from '../Paragraph';
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Paragraph from "../Paragraph";
 import PdfPageButton from "../PdfPageButton";
 
 export default function FindingTab4({ content }) {
-    return <div className="w-full">
-        {/* <RichTextRenderer content={content} /> */}
-        <>
+    const [open, setOpen] = useState(false);
+
+    return (
+        <div className="w-full">
             <Paragraph>
                 A closer distinction is needed between colour harmony and the Mother’s symbol coloured harmoniously.
                 <br />
@@ -34,6 +38,7 @@ export default function FindingTab4({ content }) {
                 <br />
                 <br />
             </Paragraph>
+
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
                     <Paragraph className="italic">
@@ -52,31 +57,71 @@ export default function FindingTab4({ content }) {
                         – Sri Aurobindo
                     </Paragraph>
                 </div>
-                <button className="flex items-center gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition">
-                    {/* Play icon + text column */}
+
+                {/* Play video button */}
+                <button
+                    onClick={() => setOpen(true)}
+                    className="flex items-center gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition"
+                >
                     <span className="flex flex-col items-center justify-center">
                         <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
                         <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
                     </span>
 
-                    {/* Symbol Image */}
                     <img
                         src="/images/button_image.png"
                         alt="Symbol"
                         className="w-10 h-10 object-contain shrink-0"
                     />
                 </button>
-
             </div>
-            <br />
-            <Paragraph>
 
+            <br />
+
+            <Paragraph>
                 Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
             </Paragraph>
+
             <br />
             <br />
+
             <PdfPageButton name="living-symbol" page={32} />
 
-        </>
-    </div>;
+            {/* Video Dialog */}
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                fullWidth
+                maxWidth="md"
+                slotProps={{
+                    paper: {
+                        sx: {
+                            bgcolor: "black",
+                            borderRadius: { xs: 0, md: 2 },
+                        },
+                    },
+                }}
+            >
+                <div className="relative w-full h-0 pb-[56.25%]">
+                    {/* Close button */}
+                    <IconButton
+                        onClick={() => setOpen(false)}
+                        aria-label="close"
+                        sx={{ position: "absolute", top: 8, right: 8, color: "white", zIndex: 10 }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+
+                    {/* Responsive YouTube embed */}
+                    <iframe
+                        src="https://www.youtube.com/embed/C_UgSQ-nphY?autoplay=1"
+                        title="YouTube video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute top-0 left-0 w-full h-full rounded-md"
+                    />
+                </div>
+            </Dialog>
+        </div>
+    );
 }
