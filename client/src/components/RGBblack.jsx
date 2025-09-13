@@ -21,7 +21,7 @@ const RGBblack = ({ size = 300, onColorSelect }) => {
 
                 if (distance <= radius) {
                     // Hue from angle
-                    let hue = (angle * 180 / Math.PI + 360) % 360;
+                    let hue = (angle * 180 / Math.PI + 450) % 360;
                     // Saturation stays 100%
                     let saturation = 100;
                     // Lightness increases from center (black) to edge

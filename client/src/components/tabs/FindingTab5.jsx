@@ -17,6 +17,10 @@ export default function FindingTab5({ content }) {
                 Depending on the colour model we are using, the relative position of colours to each other will vary.
             </Paragraph>
             <br />
+            <p className="text-center text-md border inline-block bg-yellow-100 mb-2 p-2">
+                Click on an image<br />to enlarge and zoom
+            </p>
+
             <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto cursor-pointer" alt="" onClick={() => setOpen(true)} />
             <Dialog
                 open={open}

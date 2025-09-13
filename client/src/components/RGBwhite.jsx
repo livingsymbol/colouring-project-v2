@@ -21,7 +21,7 @@ const RGBwhite = ({ size = 300, onColorSelect }) => {
 
                 if (distance <= radius) {
                     // Hue from angle
-                    let hue = (angle * 180 / Math.PI + 360) % 360;
+                    let hue = (angle * 180 / Math.PI + 450) % 360;
                     // Saturation based on distance (outer = 100%)
                     let saturation = (distance / radius) * 100;
                     // Lightness toward center = 100% white
