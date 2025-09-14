@@ -61,7 +61,7 @@ export default function FindingTab4({ content }) {
                 {/* Play video button */}
                 <button
                     onClick={() => setOpen(true)}
-                    className="flex items-center gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition"
+                    className="flex items-center cursor-pointer gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition"
                 >
                     <span className="flex flex-col items-center justify-center">
                         <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />

@@ -17,11 +17,11 @@ export default function FindingTab5({ content }) {
                 Depending on the colour model we are using, the relative position of colours to each other will vary.
             </Paragraph>
             <br />
-            <p className="text-center text-md border inline-block bg-yellow-100 mb-2 p-2">
-                Click on an image<br />to enlarge and zoom
-            </p>
+            <Paragraph>
+                Click on an image to enlarge and zoom
+            </Paragraph>
 
-            <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto cursor-pointer" alt="" onClick={() => setOpen(true)} />
+            <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto cursor-pointer hover:opacity-80" alt="" onClick={() => setOpen(true)} />
             <Dialog
                 open={open}
                 onClose={() => setOpen(false)}
@@ -42,7 +42,7 @@ export default function FindingTab5({ content }) {
                 }}
             >
                 <div
-                    className="flex justify-center items-center gap-4 bg-black p-2 sm:p-4 h-full"
+                    className="flex justify-center items-center gap-4 bg-black p-2 h-full"
                 >
                     <IconButton
                         onClick={() => setOpen(false)}
@@ -54,23 +54,48 @@ export default function FindingTab5({ content }) {
 
                     {/* Left image zoomable */}
                     <TransformWrapper initialScale={1} wheel={{ step: 0.1 }}>
-                        <TransformComponent
-                            wrapperStyle={{ width: "100%", height: "100%", border: "2px solid black", background: "white" }}
-                            contentStyle={{ width: "100%", height: "100%", objectFit: "contain" }}
-                        >
-                            <img
-                                src="images/ft5.1.png"
-                                alt="ft5.1"
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    maxHeight: "80vh",
-                                    objectFit: "contain",
-                                    cursor: "grab",
+                        {({ zoomIn, zoomOut, resetTransform }) => (
+                            <>
+                                {/* Controls overlay */}
+                                <div className="absolute top-5 left-5 z-20 flex flex-col gap-2 bg-white/80 rounded p-2 shadow">
+                                    <button
+                                        onClick={() => zoomIn()}
+                                        className="p-1 bg-gray-200 rounded hover:bg-gray-300"
+                                    >
+                                        +
+                                    </button>
+                                    <button
+                                        onClick={() => zoomOut()}
+                                        className="p-1 bg-gray-200 rounded hover:bg-gray-300"
+                                    >
+                                        −
+                                    </button>
+                                    <button
+                                        onClick={() => resetTransform()}
+                                        className="p-1 bg-gray-200 rounded hover:bg-gray-300"
+                                    >
+                                        Reset
+                                    </button>
+                                </div>
+                                <TransformComponent
+                                    wrapperStyle={{ width: "100%", height: "100%", border: "2px solid black", background: "white" }}
+                                    contentStyle={{ width: "100%", height: "100%", objectFit: "contain" }}
+                                >
+                                    <img
+                                        src="images/ft5.1.png"
+                                        alt="ft5.1"
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            maxHeight: "80vh",
+                                            objectFit: "contain",
+                                            cursor: "grab",
 
-                                }}
-                            />
-                        </TransformComponent>
+                                        }}
+                                    />
+                                </TransformComponent>
+                            </>
+                        )}
                     </TransformWrapper>
                 </div>
             </Dialog>
