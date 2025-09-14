@@ -414,7 +414,7 @@ export default function ColoursTab4({ content }) {
                             <TransformWrapper
                                 initialScale={0.7}
                                 minScale={0.5}
-                                maxScale={4}
+                                maxScale={5}
                                 wheel={{ step: 0.1 }}
                             >
                                 {({ zoomIn, zoomOut, resetTransform }) => (
