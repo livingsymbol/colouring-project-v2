@@ -108,4 +108,21 @@ router.get("/gallery", async (req, res) => {
     }
 });
 
+router.get("/errors", async (req, res) => {
+    try {
+        const folder = "colouring-project/errors";
+        const result = await cloudinary.search
+            .expression(`folder:${folder}`)
+            .sort_by("public_id", "desc")
+            .max_results(50)
+            .execute();
+
+        const images = result.resources.map((r) => r.secure_url);
+        res.json(images);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch images" });
+    }
+});
+
 export default router;
