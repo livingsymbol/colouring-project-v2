@@ -19,8 +19,6 @@ const PdfViewer = () => {
     return (
         <div className="min-h-screen w-full justify-center">
             <div className="w-full h-screen">
-
-
                 <Worker
                     workerUrl={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`}
                 >

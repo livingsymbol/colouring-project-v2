@@ -4,6 +4,7 @@ import { Image as ImageIcon, MessageCircle, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
+import Paragraph from '../Paragraph';
 
 export default function ForumTab3() {
     const [posts, setPosts] = useState([]);
@@ -97,6 +98,10 @@ export default function ForumTab3() {
 
     return (
         <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">
+            <Paragraph>
+                A place to exchange on The living Symbol of The Mother, colours, your aspiration...
+            </Paragraph>
+            <br />
             <div className="flex justify-between items-center mb-8 md:mb-16 border-b-2 p-4">
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#404040]">Forum</h1>
                 <button
@@ -116,14 +121,16 @@ export default function ForumTab3() {
                     <input
                         type="text"
                         className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#404040]"
-                        placeholder="Give a title to your post"
+                        placeholder="Title"
                         value={newPost.title}
                         onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                     />
                     <textarea
                         className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#404040]"
                         rows={4}
-                        placeholder="What's on your mind?"
+                        placeholder="Your Post
+Your signature / nickname
+                        "
                         value={newPost.content}
                         onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
                     />

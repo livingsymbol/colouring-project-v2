@@ -12,7 +12,7 @@ export default function Library() {
 
                     <div className="relative z-10">
                         <Paragraph>
-                            Kindly follow the links below for further readings.
+                            Kindly follow the links below for further readings:
                         </Paragraph>
 
                         <div className="mt-4 space-y-4">
@@ -41,6 +41,12 @@ export default function Library() {
                             <div>
                                 <PdfPageButton name="living-symbol">
                                     Living Symbol
+                                </PdfPageButton>
+                            </div>
+                            {/* PDF 5 */}
+                            <div>
+                                <PdfPageButton name="The_Science_and_Magic_of_Colour">
+                                    The Science and Magic of Colour: The Living Symbol of the Mother
                                 </PdfPageButton>
                             </div>
                         </div>

@@ -12,7 +12,7 @@ const tabsData = [
     label: <>Your own<br /> colourings</>, content: <ForumTab1 />
   },
   {
-    label: <>Gallery images<br /> revisited</>, content: <ForumTab2 />
+    label: <>Gallery images<br /> harmonized</>, content: <ForumTab2 />
   },
   {
     label: <>Forum</>, content: <ForumTab3 />

@@ -3,7 +3,7 @@ import AspirationTabTemplate from "../AspirationTabTemplate";
 import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
-import RYBwhite from "../RYBwhite";
+import RGBwhite from "../RGBwhite";
 
 export default function AspirationTab5() {
     const [color, setColor] = useState("#fff");
@@ -19,7 +19,7 @@ export default function AspirationTab5() {
             {<div className="h-full flex flex-col justify-around">
                 <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#d5af3c] p-4 rounded-3xl shadow-2xl">
                     <div className="w-fit flex flex-col items-center justify-center gap-y-1 bg-white rounded-lg">
-                        <RYBwhite onColorSelect={handleColorSelect} />
+                        <RGBwhite onColorSelect={handleColorSelect} />
 
                     </div>
                     <ColourTester color={color} />
