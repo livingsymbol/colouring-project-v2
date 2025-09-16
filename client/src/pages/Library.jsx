@@ -45,7 +45,7 @@ export default function Library() {
                             </div>
                             {/* PDF 5 */}
                             <div>
-                                <PdfPageButton name="The_Science_and_Magic_of_Colour">
+                                <PdfPageButton name="The-Science-and-Magic-of-Colour">
                                     The Science and Magic of Colour: The Living Symbol of the Mother
                                 </PdfPageButton>
                             </div>
