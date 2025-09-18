@@ -1,19 +1,35 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useLocale } from "../context/LocaleContext";
 
-const navItems = [
-    { name: <>Home</>, path: "/home" },
-    { name: <>Colours</>, path: "/colours" },
-    { name: <>Finding<br />Harmony</>, path: "/finding-harmony" },
-    { name: <>Aspiration<br />at Work</>, path: "/aspiration-at-work" },
-    { name: <>Gallery</>, path: "/gallery" },
-    { name: <>Library</>, path: "/library" },
-    { name: <>Forum & your<br />Colourings</>, path: "/forum-and-colouring" },
-];
+const items = {
+    en: [
+        { name: <>Home</>, path: "/home" },
+        { name: <>Colours</>, path: "/colours" },
+        { name: <>Finding<br />Harmony</>, path: "/finding-harmony" },
+        { name: <>Aspiration<br />at Work</>, path: "/aspiration-at-work" },
+        { name: <>Gallery</>, path: "/gallery" },
+        { name: <>Library</>, path: "/library" },
+        { name: <>Forum & your<br />Colourings</>, path: "/forum-and-colouring" },
+    ],
+
+    ru: [
+        { name: <>Главная</>, path: "/home" },
+        { name: <>Цветa</>, path: "/colours" },
+        { name: <>В&nbsp;поисках<br />гармонии</>, path: "/finding-harmony" },
+        { name: <>Стремление<br />в&nbsp;действии</>, path: "/aspiration-at-work" },
+        { name: <>Галерея</>, path: "/gallery" },
+        { name: <>Библиотека</>, path: "/library" },
+        { name: <>Форум и<br />цветовые работы</>, path: "/forum-and-colouring" },
+    ],
+};
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const { locale, switchLocale } = useLocale();
+
+    const navItems = items[locale];
 
     return (
         <>
@@ -50,6 +66,25 @@ export default function Navbar() {
                             ))}
                         </div>
 
+                        {/* Language buttons (Desktop) */}
+                        <div className="hidden md:flex items-center space-x-2">
+                            <button
+                                onClick={() => switchLocale("en")}
+                                className={`px-2 py-1 font-semibold ${locale === "en" ? "text-[#d2c460]" : "text-white"
+                                    }`}
+                            >
+                                EN
+                            </button>
+                            <span className="text-white">|</span>
+                            <button
+                                onClick={() => switchLocale("ru")}
+                                className={`px-2 py-1 font-semibold ${locale === "ru" ? "text-[#d2c460]" : "text-white"
+                                    }`}
+                            >
+                                RU
+                            </button>
+                        </div>
+
                         {/* Mobile menu button */}
                         <div className="md:hidden">
                             <button
@@ -69,7 +104,11 @@ export default function Navbar() {
                                         stroke="currentColor"
                                         strokeWidth={2}
                                     >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M4 6h16M4 12h16M4 18h16"
+                                        />
                                     </svg>
                                 ) : (
                                     <svg
@@ -80,7 +119,11 @@ export default function Navbar() {
                                         stroke="currentColor"
                                         strokeWidth={2}
                                     >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
                                     </svg>
                                 )}
                             </button>
@@ -96,7 +139,7 @@ export default function Navbar() {
                     >
                         {navItems.map(({ name, path }) => (
                             <NavLink
-                                key={name}
+                                key={path}
                                 to={path}
                                 onClick={() => setIsOpen(false)}
                                 className={({ isActive }) =>
@@ -107,9 +150,33 @@ export default function Navbar() {
                                 {name}
                             </NavLink>
                         ))}
+
+                        {/* Language toggle in mobile menu */}
+                        <div className="flex justify-center space-x-2 pt-3">
+                            <button
+                                onClick={() => {
+                                    switchLocale("en");
+                                    setIsOpen(false);
+                                }}
+                                className={`px-2 py-1 font-semibold ${locale === "en" ? "text-[#d2c460]" : "text-white"
+                                    }`}
+                            >
+                                EN
+                            </button>
+                            <span className="text-white">|</span>
+                            <button
+                                onClick={() => {
+                                    switchLocale("ru");
+                                    setIsOpen(false);
+                                }}
+                                className={`px-2 py-1 font-semibold ${locale === "ru" ? "text-[#d2c460]" : "text-white"
+                                    }`}
+                            >
+                                RU
+                            </button>
+                        </div>
                     </div>
                 )}
-
             </nav>
 
             {/* Full width bottom border with gradient */}

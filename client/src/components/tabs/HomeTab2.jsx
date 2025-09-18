@@ -15,7 +15,7 @@ export default function HomeTab2({ content }) {
                     className="w-3/4 sm:w-full max-w-xs sm:max-w-none object-contain"
                 />
                 <a className="underline text-xl text-[#b0a132] hover:text-[#b0a132b8]" href="https://themothersguidance.com/sri-aurobindo/" target="_blank" rel="noreferrer">
-                    About Sri Aurobindo
+                    {locale === "en" ? "About Sri Aurobindo" : "О Шри Ауробиндо"}
                 </a>
             </div>
             <div className="sm:w-2/3 w-full">
