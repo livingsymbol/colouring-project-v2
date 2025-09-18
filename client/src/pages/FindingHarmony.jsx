@@ -46,7 +46,7 @@ export default function FindingHarmony() {
   const tabsData = [
     { label: <>Colour spectrum<br /> & vibrations</>, content: <FindingTab1 /> },
     {
-      label: <>Mixing colours,<br /> RGB & RYB<br /> colour schemes</>, content: <FindingTab2 />
+      label: <>Mixing colours,<br /> RGB & RYB<br /> colour models</>, content: <FindingTab2 />
     },
     {
       label: <>Shades & tints</>, content: <FindingTab3 />
@@ -55,7 +55,7 @@ export default function FindingHarmony() {
       label: <>What is colour<br /> harmony</>, content: <FindingTab4 />
     },
     {
-      label: <>Position & angle<br /> of colours in The<br /> Mother’s symbol</>, content: <FindingTab5 />
+      label: <>Position of<br />colours in The<br /> Mother’s symbol</>, content: <FindingTab5 />
     },
   ];
 
