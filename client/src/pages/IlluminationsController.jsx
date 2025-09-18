@@ -17,6 +17,7 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
                     />
                     <div className="flex justify-between w-full">
                         <span className="text-sm text-black">Silver</span>
+                        <span className="text-sm text-black">None</span>
                         <span className="text-sm text-black">Gold</span>
                     </div>
                 </div>

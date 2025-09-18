@@ -10,7 +10,7 @@ const Illuminations = ({ sparkleColor = 'none', count = 5, children, style, ...p
             id: sparkleId.current++,
             x: Math.random() * 100,
             y: Math.random() * 100,
-            size: Math.random() * 20 + 15,
+            size: Math.random() * 20 + 40,
             rotation: Math.random() * 360,
             birthTime: Date.now(),
             lifetime: 3000 + Math.random() * 2000, // 3-5 seconds
