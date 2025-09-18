@@ -14,168 +14,141 @@ export default function FindingTab5({ content }) {
 
         <>
             <Paragraph>
-                Depending on the colour model we are using, the relative position of colours to each other will vary.
+                The Mother provided Roger Anger, the Matrimandir architect, with the following 4 items:
             </Paragraph>
             <br />
             <Paragraph>
-                Click on an image to enlarge and zoom
-            </Paragraph>
 
-            <img src="images/ft5.1.png" className="w-full md:w-2/3 mx-auto cursor-pointer hover:opacity-80" alt="" onClick={() => setOpen(true)} />
-            <Dialog
-                open={open}
-                onClose={() => setOpen(false)}
-                fullWidth
-                maxWidth="xl"
-                // MUI v6+: style the Paper slot with slotProps
-                slotProps={{
-                    paper: {
-                        sx: {
-                            // responsive full-height on mobile, ~90vh on desktop
-                            height: { xs: "100vh", md: "90vh" },
-                            maxHeight: { xs: "100vh", md: "90vh" },
-                            m: 0, // remove default margin so height is used edge-to-edge
-                            borderRadius: { xs: 0, md: 2 },
-                            bgcolor: "background.paper",
-                        },
-                    },
-                }}
-            >
-                <div
-                    className="flex justify-center items-center gap-4 bg-black p-2 h-full"
-                >
-                    <IconButton
-                        onClick={() => setOpen(false)}
-                        aria-label="close"
-                        sx={{ position: "absolute", top: 8, right: 8, color: "white", zIndex: 10 }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
+                <ol className="px-4 md:px-8 list-decimal space-y-4">
+                    <li> Instructions Sri Aurobindo sent Dr. Naik on March 20th 1934
+                        <br />
+                        <p className="ml-4">
+                            <Paragraph className="italic">
+                                “Centre and four powers, white. The twelve, all of different colour in three groups:
+                                <br />
+                                Top group red, passing to orange towards yellow.
+                                Next group, yellow passing through green towards blue.
+                                And third group, blue passing through violet towards red.
+                                If white is not convenient, the center may be gold (powder).”
+                            </Paragraph>
 
-                    {/* Left image zoomable */}
-                    <TransformWrapper initialScale={1} wheel={{ step: 0.1 }}>
-                        {({ zoomIn, zoomOut, resetTransform }) => (
-                            <>
-                                {/* Controls overlay */}
-                                <div className="absolute top-5 left-5 z-20 flex flex-col gap-2 bg-white/80 rounded p-2 shadow">
-                                    <button
-                                        onClick={() => zoomIn()}
-                                        className="p-1 bg-gray-200 rounded hover:bg-gray-300"
-                                    >
-                                        +
-                                    </button>
-                                    <button
-                                        onClick={() => zoomOut()}
-                                        className="p-1 bg-gray-200 rounded hover:bg-gray-300"
-                                    >
-                                        −
-                                    </button>
-                                    <button
-                                        onClick={() => resetTransform()}
-                                        className="p-1 bg-gray-200 rounded hover:bg-gray-300"
-                                    >
-                                        Reset
-                                    </button>
-                                </div>
-                                <TransformComponent
-                                    wrapperStyle={{ width: "100%", height: "100%", border: "2px solid black", background: "white" }}
-                                    contentStyle={{ width: "100%", height: "100%", objectFit: "contain" }}
-                                >
-                                    <img
-                                        src="images/ft5.1.png"
-                                        alt="ft5.1"
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            maxHeight: "80vh",
-                                            objectFit: "contain",
-                                            cursor: "grab",
+                            <Paragraph className="text-right italic mt-2">
+                                – Sri Aurobindo
+                            </Paragraph>
+                        </p>
+                    </li>
 
-                                        }}
-                                    />
-                                </TransformComponent>
-                            </>
-                        )}
-                    </TransformWrapper>
-                </div>
-            </Dialog>
-            <br />
-            <Paragraph>
-                Sri Aurobindo and the Mother left us instructions on the Symbol’s colours, positions and meaning:
-            </Paragraph>
-            <br />
-            <Paragraph className="italic">
-                “Centre and four powers, white. The twelve, all of different colour in three groups:
-                <br />
-                Top group red, passing to orange towards yellow.
-                Next group, yellow passing through green towards blue.
-                And third group, blue passing through violet towards red.
-                If white is not convenient, the center may be gold (powder).”
-            </Paragraph>
+                    <li>
+                        <p className="ml-4">
+                            <Paragraph >
+                                The Mother’s coloured symbol that can be found in Roger Anger’s personal
+                                archives
 
-            <Paragraph className="text-right italic mt-2">
-                – Sri Aurobindo
-            </Paragraph>
-            <br />
-            <Paragraph>
-                Additionally, the Mother, specified that Sincerity is to be “light blue”. By now we have learned that Sri Aurobindo’s instructions correspond to the RYB scheme.
+                            </Paragraph>
+                            <img src="" alt="" /><img src="" alt="" />
+                            <Paragraph >
+                                This black & white image, that was done by Gilles G from Auroville Archives, shows that the coloured image on the left was indeed drawn according to Sri Aurobindo’s instructions.
+                            </Paragraph>
+                        </p>
+                    </li>
 
-                <br />
-                <br />
-                To determine the colours for yourself, let’s pursue an experiential method of “Entering the Living Symbol”:
-            </Paragraph>
+                    <li> This list of names for the rooms inside Matrimandir’s twelve “Petals”:
 
-            <Paragraph>
-                <ol>
-                    <li>1: Inner connection through colour meditation</li>
-                    Begin with a meditation on a particular quality such as Peace, Sincerity, or Gratitude. You are invited to visualize this quality as a colour in your inner space, noticing what shade arises spontaneously. Rather than imposing a fixed hue, let the inner perception lead the way.
-                    <br />
-                    <br />
+                        <br />
+                        <p className="ml-4">
+                            <Paragraph className="italic">
+                                Sincerity, Humility, Gratitude, Perseverance,
+                                Aspiration, Receptivity, Progress, Courage,
+                                Kindness*, Generosity, Equality, Peace.
+                            </Paragraph>
+                        </p>
+                    </li>
 
-                    <li>2: Individual exploration and creative practice</li>
-                    After the meditation, you are invited to interact with the Mother’s symbol by choosing and applying colours that reflect your current resonance with each petal’s quality. You may do this with a physical symbol or via the “Aspiration at work” section of the website. This creative process becomes a mirror of your evolving consciousness.
-                    <br />
-                    <br />
-
-                    <li>3: Reflection on your colour choices</li>
-                    Why was a particular colour chosen? Did it change during or after meditation? What inner qualities or experiences are mirrored in these selections? For example, you may have meditated on Peace finding yourself drawn to turquoise instead of the traditional blue. This becomes a gateway to dialogue - what nuance of peace is being revealed? This step deepens the understanding of how colour reflects and shapes our inner state.
-                    <br />
-                    <br />
-
-                    <li>4: Integration through symbol repainting</li>
-                    You may recompose the entire symbol based on your journey. The final image is not a universal standard but a personal map of consciousness at that moment - a living mandala that can shift as one continues to evolve.
+                    <li>This note which gives the names of the four pillars which support the Matrimandir
+                        <br />
+                        <p className="ml-4">
+                            <Paragraph className="italic">
+                                North Mahakali
+                                <br />
+                                <br />
+                                South Maheshwari
+                                <br />
+                                <br />
+                                East Mahalakshmi
+                                <br />
+                                <br />
+                                West Mahasaraswati
+                                <br />
+                                Blessings
+                            </Paragraph>
+                        </p>
+                    </li>
                 </ol>
-                <br />
-                <br />
-
-                Looking at the symbol you coloured, what colours did you finally select? What colour scheme do the colours come from?
             </Paragraph>
             <br />
-            <div className="flex flex-col sm:flex-row justify-evenly items-center gap-4">
-                <img
-                    src="/images/ft5.2.png"
-                    alt="Symbol"
-                    className="w-64 sm:w-96"
-                />
-                <div>
-                    <Paragraph className="italic">
-                        “The four central petals are
-                        <br />
-                        the four aspects of the Mother –
-                        <br />
-                        and the twelve petals, Her twelve
-                        <br />
-                        attributes.”
-                        <br />
-                    </Paragraph>
+            <Paragraph>
+                On July 17th 1972 Roger Anger notes down what the Mother had just told him on how to match the colours and names of the 12 meditation rooms:
+                <br />
+                <br />
+                Visit of 17 July 72
+                <br />
+                <br />
 
-                    <Paragraph className="text-right italic mt-2">
-                        – The Mother
-                    </Paragraph>
+                Mother gave the following answer:
+                <br />
+                The colour light blue for Sincerity
+                <br />
+                and dark blue for Peace.
+                <br />
+                One rotates towards the left.
+                <br />
+                Agreement for this solution.
+                <br />
+                <br />
+                On September 15th 1972 Roger Anger’s office produces this drawing, which shows the respective positions of the 12 meditation rooms:
+                <br />
+                <br />
+                <div  className="flex justify-center">
+
+                    <img
+                        src="/images/ft5.6.png"
+                        alt="Example"
+                        className="
+                    sm:ml-4 mb-2
+                    w-64 sm:w-1/3 h-auto
+                    rounded-lg
+                    "
+                    />
                 </div>
-            </div>
-            <PdfPageButton name="living-symbol" page={0} />
+                <br />
+                On the left is what the Mother’s instructions for the Matrimandir lead to, on the right is the present positioning of the Matrimadnir’s petals:
+                <br />
+                <br />
+                <div className="flex justify-around">
 
+                    <img
+                        src="/images/ft5.7.png"
+                        alt="Example"
+                        className="
+                    sm:ml-4 mb-2
+                    w-72 h-auto
+                    rounded-lg
+                    "
+                    />
+                    <img
+                        src="/images/ft5.8.png"
+                        alt="Example"
+                        className="
+                    sm:ml-4 mb-2
+                    w-72 h-auto
+                    rounded-lg
+                    "
+                    />
+                </div>
+                <br />
+                <br />
+                For details, please see the full article by Gilles G: On the Mother’s flag & Symbol
+            </Paragraph>
         </>
     </div >;
 }
