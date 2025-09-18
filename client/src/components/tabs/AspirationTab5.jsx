@@ -4,8 +4,13 @@ import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
 import RGBwhite from "../RGBwhite";
+import IlluminationsController from "../../pages/IlluminationsController";
 
 export default function AspirationTab5() {
+    const colorOptions = ["silver", "none", "gold"];
+    const [count, setCount] = useState(10);
+    const [colorIndex, setColorIndex] = useState(1);
+
     const [color, setColor] = useState("#fff");
     const [selectedColor, setSelectedColor] = useState(null);
 
@@ -23,12 +28,11 @@ export default function AspirationTab5() {
 
                     </div>
                     <ColourTester color={color} />
-
                 </div>
-                <br />
+                <IlluminationsController count={count} setCount={setCount} colorIndex={colorIndex} setColorIndex={setColorIndex} />
                 <Paragraph className="text-center">After colouring all 12 petals you may “Download” your colouring.</Paragraph>
             </div>}
-            symbol={<DesignCanvas color={color} showDesc={true} isColouring5={true} />} />
+            symbol={<DesignCanvas color={color} showDesc={true} isColouring5={true} sparkleColor={colorOptions[colorIndex]} count={count} />} />
     );
 }
 

@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { gradeColours } from "../utils/scoring.js";
+import IlluminationsController from "../pages/IlluminationsController.jsx";
 
 const style = {
   position: "absolute",
@@ -27,7 +28,7 @@ const style = {
   textAlign: "center",
 };
 
-const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5 = false }) => {
+const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5 = false, sparkleColor, count }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
   const [colourArray, setColourArray] = useState(() => {
@@ -211,7 +212,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
         <div className="overflow-hidden w-full relative">
 
           {showDesc ?
-            <Symbol ref={svgRef} className="w-full h-full" color={color} illumination={illumination} intensity={intensity} isColouring5={isColouring5} />
+            <Symbol ref={svgRef} className="w-full h-full" color={color} illumination={illumination} intensity={intensity} isColouring5={isColouring5} sparkleColor={sparkleColor} count={count} />
             :
             <Symbol_without_desc
               ref={svgRef}
@@ -220,51 +221,6 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
             />
           }
         </div>
-        {/* Sliders */}
-        {isColouring5 &&
-          <div className="flex flex-col gap-4 mt-4">
-            {/* Symbol Illumination */}
-            <label className="flex flex-col gap-1">
-              <span className="text-md font-medium text-gray-700">
-                Symbol Illumination
-              </span>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Silver</span>
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  value={illumination}
-                  onChange={(e) => setIllumination(parseFloat(e.target.value))}
-                  className="w-full accent-yellow-500"
-                />
-                <span className="text-sm text-gray-500">Gold</span>
-              </div>
-            </label>
-
-            {/* Illumination Intensity */}
-            <label className="flex flex-col gap-1">
-              <span className="text-md font-medium text-gray-700">
-                Illumination Intensity
-              </span>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Min</span>
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  value={intensity}
-                  onChange={(e) => setIntensity(parseFloat(e.target.value))}
-                  className="w-full accent-yellow-500"
-                />
-                <span className="text-sm text-gray-500">Max</span>
-              </div>
-            </label>
-          </div>
-        }
-        <br />
         <canvas
           ref={canvasRef}
           width="708.661"

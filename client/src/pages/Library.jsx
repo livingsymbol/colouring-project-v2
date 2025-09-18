@@ -47,7 +47,7 @@ export default function Library() {
                             {/* PDF 5 */}
                             <div>
                                 <PdfPageButton name="living-symbol">
-                                    Living Symbol
+                                    Living Symbol presentation
                                 </PdfPageButton>
                             </div>
                         </div>
