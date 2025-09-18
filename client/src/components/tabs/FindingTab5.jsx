@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Paragraph from "../Paragraph";
 import PdfPageButton from "../PdfPageButton";
+import { Link } from "react-router-dom";
 
 export default function FindingTab5({ content }) {
     const [open, setOpen] = useState(false);
@@ -39,33 +40,61 @@ export default function FindingTab5({ content }) {
                     </li>
 
                     <li>
-                        <p className="ml-4">
-                            <Paragraph >
+                        <div className="ml-4 flex flex-col lg:flex-row gap-8 items-center">
+                            <Paragraph className="flex gap-4 lg:w-1/2">
                                 The Mother’s coloured symbol that can be found in Roger Anger’s personal
                                 archives
+                                <img
+                                    src="/images/ft5.1.png"
+                                    alt="Example"
+                                    className="w-32 md:w-64 h-32 md:h-64"
+                                />
+                            </Paragraph>
 
+                            <Paragraph className="flex gap-4 lg:w-1/2">
+                                <img
+                                    src="/images/ft5.2.png"
+                                    alt="Example"
+                                    className="w-32 md:w-64 h-32 md:h-64"
+                                />
+                                This black & white image, that was done by Gilles G from Auroville Archives,
+                                shows that the coloured image on the left was indeed drawn according to Sri
+                                Aurobindo’s instructions.
                             </Paragraph>
-                            <img src="" alt="" /><img src="" alt="" />
-                            <Paragraph >
-                                This black & white image, that was done by Gilles G from Auroville Archives, shows that the coloured image on the left was indeed drawn according to Sri Aurobindo’s instructions.
-                            </Paragraph>
-                        </p>
+                        </div>
                     </li>
 
-                    <li> This list of names for the rooms inside Matrimandir’s twelve “Petals”:
 
+                    <li> This list of names for the rooms inside Matrimandir’s twelve “Petals”:
                         <br />
+                        <img
+                            src="/images/ft5.3.png"
+                            alt="Example"
+                            className="w-64 h-auto float-right my-4"
+                        />
                         <p className="ml-4">
+
                             <Paragraph className="italic">
                                 Sincerity, Humility, Gratitude, Perseverance,
+                                <br />
                                 Aspiration, Receptivity, Progress, Courage,
+                                <br />
                                 Kindness*, Generosity, Equality, Peace.
+                                <br />
+                                <br />
+
+                                * “Bonté” is often translated as “Goodness” but Mother prefers “Kindness and Goodwill”. (CMW, Vol. 12, p. 217)
                             </Paragraph>
                         </p>
                     </li>
 
                     <li>This note which gives the names of the four pillars which support the Matrimandir
                         <br />
+                        <img
+                            src="/images/ft5.4.png"
+                            alt="Example"
+                            className="w-64 h-auto float-right my-4"
+                        />
                         <p className="ml-4">
                             <Paragraph className="italic">
                                 North Mahakali
@@ -88,8 +117,14 @@ export default function FindingTab5({ content }) {
             <br />
             <Paragraph>
                 On July 17th 1972 Roger Anger notes down what the Mother had just told him on how to match the colours and names of the 12 meditation rooms:
+            </Paragraph>
+            <Paragraph>
                 <br />
-                <br />
+                <img
+                    src="/images/ft5.5.png"
+                    alt="Example"
+                    className="w-64 h-auto float-right my-4"
+                />
                 Visit of 17 July 72
                 <br />
                 <br />
@@ -108,7 +143,7 @@ export default function FindingTab5({ content }) {
                 On September 15th 1972 Roger Anger’s office produces this drawing, which shows the respective positions of the 12 meditation rooms:
                 <br />
                 <br />
-                <div  className="flex justify-center">
+                <div className="flex justify-center">
 
                     <img
                         src="/images/ft5.6.png"
@@ -124,7 +159,7 @@ export default function FindingTab5({ content }) {
                 On the left is what the Mother’s instructions for the Matrimandir lead to, on the right is the present positioning of the Matrimadnir’s petals:
                 <br />
                 <br />
-                <div className="flex justify-around">
+                <div className="flex justify-around flex-col md:flex-row items-center">
 
                     <img
                         src="/images/ft5.7.png"
@@ -147,7 +182,7 @@ export default function FindingTab5({ content }) {
                 </div>
                 <br />
                 <br />
-                For details, please see the full article by Gilles G: On the Mother’s flag & Symbol
+                For details, please see the full article by Gilles G: <Link className="underline" to="/view-pdf?name=On-Mothers-Flag-and-Symbol&page=1">On the Mother’s flag & Symbol</Link>
             </Paragraph>
         </>
     </div >;
