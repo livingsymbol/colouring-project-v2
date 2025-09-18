@@ -1,6 +1,9 @@
+import { useLocale } from "../../context/LocaleContext";
 import RichTextRenderer from "../RichTextRenderer";
 
 export default function HomeTab2({ content }) {
+    const { locale } = useLocale();
+
     return (
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
             <div className="flex flex-col items-center gap-y-4 sm:w-1/3 w-full">
