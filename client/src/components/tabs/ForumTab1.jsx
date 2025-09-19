@@ -1,7 +1,7 @@
 import { useLocale } from "../../context/LocaleContext";
 import Paragraph from "../Paragraph";
 
-export function ForumTab1() {
+export default function ForumTab1() {
         const { locale } = useLocale();
     
     return (

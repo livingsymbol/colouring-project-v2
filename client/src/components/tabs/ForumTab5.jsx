@@ -1,9 +1,9 @@
 import { useLocale } from "../../context/LocaleContext";
 import Paragraph from "../Paragraph";
 
-export function ForumTab5() {
-        const { locale } = useLocale();
-    
+export default function ForumTab5() {
+    const { locale } = useLocale();
+
     return (
         <Paragraph>
             {locale === "ru" ? (
@@ -20,4 +20,4 @@ export function ForumTab5() {
             )}
         </Paragraph>
     );
-  }
+}

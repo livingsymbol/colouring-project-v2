@@ -1,9 +1,9 @@
 import { useLocale } from "../../context/LocaleContext";
 import Paragraph from "../Paragraph";
 
-export function ForumTab4() {
-        const { locale } = useLocale();
-    
+export default function ForumTab4() {
+    const { locale } = useLocale();
+
     return (
         <Paragraph>
             {locale === "ru"
