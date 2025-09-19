@@ -8,23 +8,39 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+import { useLocale } from "../../context/LocaleContext";
 
-const galleryTab1Content = {
-    type: "doc",
-    content: [
-        {
-            type: "paragraph",
-            content: [
-                {
-                    type: "text",
-                    text: "Get inspired by the work of others done with sincerity, aspiration, love and surrender to The Mother. Some shared powerful inner experiences that were triggered by the symbols. On the Supramental level, there is no separation — all is united in the One. Separation begins only at the Overmind level. To illustrate this, we designed small symbols on each golden petal to signify the all-encompassing nature of the Supramental, while also indicating the varying levels of consciousness (Overmind).",
-                },
-            ],
-        },
-    ],
+const contentMap = {
+    en: {
+        type: "doc",
+        content: [
+            {
+                type: "paragraph",
+                content: [
+                    {
+                        type: "text",
+                        text: "Get inspired by the work of others done with sincerity, aspiration, love and surrender to The Mother. Some shared powerful inner experiences that were triggered by the symbols. On the Supramental level, there is no separation — all is united in the One. Separation begins only at the Overmind level. To illustrate this, we designed small symbols on each golden petal to signify the all-encompassing nature of the Supramental, while also indicating the varying levels of consciousness (Overmind).",
+                    },
+                ],
+            },
+        ],
+    },
+    ru: {
+        type: "doc",
+        content: [
+            {
+                type: "paragraph",
+                content: [
+                    {
+                        type: "text",
+                        text: "Вдохновляйтесь работой других, проделанной с искренностью, устремлённостью, любовью и преданностью Матери. Некоторые поделились мощными внутренними переживаниями, вызванными символами. На супраментальном уровне нет разделения — всё едино в Едином. Разделение начинается только на уровне Надразума. Чтобы проиллюстрировать это, мы создали небольшие символы на каждом золотом лепестке, символизирующие всеобъемлющую природу Супраментального, а также указывающие на различные уровни сознания (Надразум).",
+                    },
+                ],
+            },
+        ],
+    },
 };
 
 export default function GalleryTab1() {
@@ -33,8 +49,8 @@ export default function GalleryTab1() {
     const [open, setOpen] = useState(false);
     const [idx, setIdx] = useState(0);
 
+    const { locale } = useLocale(); // en or ru
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(() => {
         (async () => {
@@ -74,7 +90,7 @@ export default function GalleryTab1() {
 
     return (
         <div className="w-full">
-            <RichTextRenderer content={galleryTab1Content} />
+            <RichTextRenderer content={contentMap[locale] || contentMap.en} />
 
             {loading ? (
                 <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
@@ -133,7 +149,6 @@ export default function GalleryTab1() {
                 </Grid>
             )}
 
-
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -142,8 +157,8 @@ export default function GalleryTab1() {
                     sx: {
                         bgcolor: "black",
                         borderRadius: 2,
-                        overflow: "hidden"
-                    }
+                        overflow: "hidden",
+                    },
                 }}
             >
                 <DialogContent
@@ -154,7 +169,7 @@ export default function GalleryTab1() {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                     }}
                 >
                     <IconButton
@@ -198,7 +213,6 @@ export default function GalleryTab1() {
                     )}
                 </DialogContent>
             </Dialog>
-
         </div>
     );
 }
