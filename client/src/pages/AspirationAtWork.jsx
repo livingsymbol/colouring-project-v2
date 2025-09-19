@@ -58,17 +58,6 @@ export default function AspirationAtWork() {
           </li>
 
           <li>
-            Individual exploration and creative practice
-            <p className="ml-4">
-              After the meditation, you are invited to interact with the Mother’s symbol
-              by choosing and applying colours that reflect your current resonance with
-              each petal’s quality. You may do this with a physical symbol or via the
-              “Aspiration at work” section of the website. This creative process becomes
-              a mirror of your evolving consciousness.
-            </p>
-          </li>
-
-          <li>
             Reflection on your colour choices
             <p className="ml-4">
               Why was a particular colour chosen? Did it change during or after

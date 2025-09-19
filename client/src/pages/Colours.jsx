@@ -8,8 +8,11 @@ import ColoursTab3 from '../components/tabs/ColoursTab3';
 import ColoursTab4 from '../components/tabs/ColoursTab4';
 import ColoursTab5 from '../components/tabs/ColoursTab5';
 import useGetContent from '../hooks/useGetContent';
+import { useLocale } from '../context/LocaleContext';
 
 export default function Colours() {
+  const { locale } = useLocale();
+
   // const slug = window.location.pathname.split('/')[1];
   // const { page, loading, error } = useGetContent(slug, 'en');
 
@@ -59,18 +62,58 @@ export default function Colours() {
     },
   ];
 
-  return (
-    <>
-      <Heading>Colours</Heading>
-      <Paragraph>
-        To explore the colour arrangements with integrity, we turned to multiple scientific fields. Each discipline brought unique insights that enriched our understanding of how colours work - not just in form and perception, but in experience and consciousness.
-        <br />
-        <br />
-        Science reveals how colour affects our brain and body, influencing our thoughts and actions. Colours have long been used in various fields, from psychology to art, to elicit specific emotional responses. The magic of colour, however, goes beyond its psychological impact. It also connects us to deeper spiritual realms, where colours transcend their physical properties and become symbols of inner states and transformative forces.
 
-      </Paragraph>
-      <br />
-      <Tabs items={tabsData} />
-    </>
+  const tabsDataRu = [
+    {
+      label: <>Физика света<br />и цвета</>,
+      content: <ColoursTab1 />
+    },
+    {
+      label: <>Физиология<br />цветового зрения</>,
+      content: <ColoursTab2 />
+    },
+    {
+      label: <>Психология<br />цвета</>,
+      content: <ColoursTab3 />
+    },
+    {
+      label: <>Теория цвета в<br />искусстве и дизайне</>,
+      content: <ColoursTab4 />
+    },
+    {
+      label: <>Цвет в<br />традиционной йоге</>,
+      content: <ColoursTab5 />
+    },
+  ];
+
+  return (
+    locale === "en" ?
+      <>
+        <Heading>Colours</Heading>
+        <Paragraph>
+          To explore the colour arrangements with integrity, we turned to multiple scientific fields. Each discipline brought unique insights that enriched our understanding of how colours work - not just in form and perception, but in experience and consciousness.
+          <br />
+          <br />
+          Science reveals how colour affects our brain and body, influencing our thoughts and actions. Colours have long been used in various fields, from psychology to art, to elicit specific emotional responses. The magic of colour, however, goes beyond its psychological impact. It also connects us to deeper spiritual realms, where colours transcend their physical properties and become symbols of inner states and transformative forces.
+
+        </Paragraph>
+        <br />
+        <Tabs items={tabsData} />
+      </> :
+      <>
+        <Heading>Цвета
+        </Heading>
+        <Paragraph>
+          Чтобы глубже исследовать феномен цвета и цветовых сочетаний, мы обратились к некоторым научным дисциплинам,где объектом анализа является цвет. Каждая из этих дисциплин открывало  уникальные стороны и свойства цвета как феномена, обогащая понимание того, как действует цвет — не только в форме и восприятии, но и в опыте и сознании.
+          В научных дисциплинах показывается, как цвет воздействует на мозг и тело, влияя на наши мысли и поступки. На протяжении веков цвета использовались в психологии, искусстве и других сферах для пробуждения определённых эмоциональных откликов.
+
+          <br />
+          <br />
+          Но подлинная магия цвета выходит за пределы психологии. Цвет соединяет нас с более глубокими духовными измерениями, где он перестаёт быть лишь физическим явлением и становится символом внутренних состояний и преобразующих сил.
+
+        </Paragraph>
+        <br />
+        <Tabs items={tabsDataRu} />
+      </>
   )
 }
