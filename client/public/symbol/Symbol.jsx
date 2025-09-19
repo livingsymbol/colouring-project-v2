@@ -339,10 +339,12 @@
 import { useState, forwardRef } from "react";
 import SymbolText from "./SymbolText";
 import Illuminations from "../../src/components/Illuminations";
+import { useLocale } from "../../src/context/LocaleContext";
 
 const Symbol = forwardRef((props, ref) => {
   const [position, setPosition] = useState(0);
-
+  const { locale } = useLocale();
+  
   const rotateClockwise = () => {
     if (position < 1) {
       setPosition((prevPosition) => prevPosition + 1);
@@ -377,14 +379,21 @@ const Symbol = forwardRef((props, ref) => {
               clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%, 0% 50%)",
             }}
           >
-            <span className="ml-1">LEFT</span>
+            <span className="ml-1">{locale === "en" ? "LEFT" : "влево"}</span>
           </div>
         </button>
 
         <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-center text-[#d5af3c]">
-          Rotate
-          <br />
-          qualities
+          {locale === "en" ? <>
+            Rotate
+            <br />
+            qualities
+          </> :
+            <>
+              Повернуть
+              <br />
+              качества
+            </>}
         </h1>
 
         <button className="relative group" onClick={rotateClockwise}>
@@ -395,7 +404,7 @@ const Symbol = forwardRef((props, ref) => {
               clipPath: "polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%)",
             }}
           >
-            <span className="mr-1">RIGHT</span>
+            <span className="mr-1">{locale === "en" ? "RIGHT" : "вправо"}</span>
           </div>
         </button>
       </div>

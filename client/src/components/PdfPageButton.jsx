@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useLocale } from "../context/LocaleContext";
 
 export default function PdfPageButton({ name, page, children }) {
+    const { locale } = useLocale();
     return (
         <div className={window.location.pathname === '/library'
             ? "w-full flex"
@@ -15,7 +17,7 @@ export default function PdfPageButton({ name, page, children }) {
                         : "mt-12 px-4 py-1 md:px-8 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
                 }
             >
-                {children || "Click here for more information"}
+                {children || (locale === "en" ? "Click here for more information" : "Нажмите здесь, чтобы узнать больше")}
             </Link>
         </div>
     );
