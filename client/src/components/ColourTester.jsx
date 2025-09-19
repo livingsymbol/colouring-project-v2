@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useLocale } from "../context/LocaleContext";
 
 const ColorTester = ({ color }) => {
   const [spaces, setSpaces] = useState(["white", "white", "white"]);
-  // eslint-disable-next-line no-unused-vars
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const { locale } = useLocale();
 
   const handleSpaceClick = (index) => {
     if (color && color !== "clear") {
@@ -23,7 +24,7 @@ const ColorTester = ({ color }) => {
   return (
     <div className="h-full w-full flex flex-col items-center gap-4">
       <div className="text-[#d5af3c] text-center flex justify-center items-center font-semibold bg-white w-full h-12 rounded-md border-2 border-[#d5af3c]">
-        Try selected colours below
+        {locale === "en" ? " Try selected colours below" : "Протестируйте вариации цвета ниже и выберите подходящий"}
       </div>
       <div
         className="w-full h-10 cursor-pointer rounded-md transition-colors duration-300 border-2 p-2 border-[#d5af3c] ease-in-out"
@@ -44,7 +45,7 @@ const ColorTester = ({ color }) => {
         onClick={handleClear}
         className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
       >
-        Reset
+        {locale === "en" ? "Reset" : "Сбросить"}
       </button>
     </div>
   );

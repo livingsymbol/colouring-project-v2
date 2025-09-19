@@ -4,6 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import RichTextRenderer from "./RichTextRenderer";
+import { useLocale } from "../context/LocaleContext";
 
 export const aspirationTabContent = {
     type: "doc",
@@ -37,8 +38,46 @@ export const aspirationTabContent = {
     ],
 };
 
+export const aspirationTabContentRu = {
+    type: "doc",
+    content: [
+        {
+            type: "paragraph",
+            content: [
+                {
+                    type: "text",
+                    text: "«Центр и четыре силы — белого цвета.",
+                },
+                { type: "hardBreak" },
+                { type: "hardBreak" },
+                {
+                    type: "text",
+                    text: "Двенадцать — все разных цветов, в трёх группах:",
+                },
+                { type: "hardBreak" },
+                {
+                    type: "text",
+                    text: "Верхняя группа — красный, переходящий в оранжевый к жёлтому. Следующая группа — жёлтый, переходящий через зелёный к синему. И третья группа — синий, переходящий через фиолетовый к красному. Если белый неудобен, центр может быть золотым(порошковым).»",
+                },
+                {
+                    type: "paragraph",
+                    attrs: { textAlign: "right" },
+                    content: [
+                        {
+                            type: "text",
+                            text: " - Шри Ауробиндо",
+                        },
+                    ],
+                },
+            ],
+            marks: [{ type: "italic" }],
+        },
+    ],
+};
+
 export default function AspirationTabTemplate({ palette, symbol }) {
     const [open, setOpen] = useState(false);
+    const { locale } = useLocale();
 
     return (
         <div className="w-full space-y-8">
@@ -49,7 +88,7 @@ export default function AspirationTabTemplate({ palette, symbol }) {
                 >
                     <span className="flex flex-col items-center justify-center">
                         <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
-                        <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
+                        <span className="text-xs font-bold text-[#404040] mt-1">{locale === "en" ? "Play video" : "Воспроизвести видео"}</span>
                     </span>
 
                     <img
@@ -58,7 +97,7 @@ export default function AspirationTabTemplate({ palette, symbol }) {
                         className="w-10 h-10 object-contain shrink-0"
                     />
                 </button>
-                <RichTextRenderer content={aspirationTabContent} />
+                <RichTextRenderer content={locale === "en" ? aspirationTabContent : aspirationTabContentRu} />
             </div>
 
             <div className="flex flex-col lg:flex-row-reverse gap-4">

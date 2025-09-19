@@ -5,123 +5,244 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Paragraph from "../Paragraph";
 import PdfPageButton from "../PdfPageButton";
+import { useLocale } from "../../context/LocaleContext";
 
 export default function FindingTab4({ content }) {
     const [open, setOpen] = useState(false);
+    const { locale } = useLocale();
 
     return (
-        <div className="w-full">
-            <Paragraph>
-                A closer distinction is needed between colour harmony and the Mother’s symbol coloured harmoniously.
-                <br />
-                <br />
-                Colour harmony may be seen through a variety of lenses.
-                In physics we look at light i.e. electromagnetic energy, and visible colour as electromagnetic waves. Colour corresponds to a specific wavelengths with red – lowest vibration, through orange, yellow, green and blue to violet – highest vibration.
-                <br />
-                <br />
-                Physiology of colour vision explores how the eye receives light and how the brain processes it. As several factors, such as lighting conditions, colour blindness etc. influence our colour perception, two people may also see colour harmony differently.
-                <br />
-                <br />
-                Psychology studies how colours influence our moods, emotions and behaviors. As colour perception differs across cultures, so will the perception of colour harmony.
-                <br />
-                <br />
-                Art and design focuses on practical use of colour in creative activities and everyday life. Art trains us to see relationships between form, line, contrast, and balance. Colour theory explains how humans perceive colour, how colours mix, match and contrast as well as what messages colours communicate. Let us not forget about the effect of colour models (RYB, RGB, CMYK) on colour mixing and harmony.
-                <br />
-                <br />
-                Traditional yoga makes us understand that all chakras have vibrational frequencies and start from the base  i.e red – lowest vibration to the top of the head i.e. violet – highest vibration.
-                <br />
-                <br />
-                Additionally, science, particularly physics, helps us understand that colour is not “in” the object but arises from how objects reflect or absorb light. When applied to the Mother’s symbol, this tells us that the colours used are not arbitrary. Their frequency and intensity may correspond to energetic qualities in consciousness - more dense and active at lower frequencies (red, orange) and more refined and subtle at higher ones (blue, violet, white).
-                <br />
-                <br />
-                As per the Mother and Sri Aurobindo’s references to the Mother’s symbol and to the Matrimandir’s the twelve petal rooms, which correspond to the twelve qualities of the Mother’s symbol, there is one symbol of the Mother coloured harmoniously. All other colour variations reflect the present state of consciousness of the individual behind the Symbol’s colouring.
-                <br />
-                <br />
-            </Paragraph>
+        locale === "en" ?
+            <div className="w-full">
+                <Paragraph>
+                    A closer distinction is needed between colour harmony and the Mother’s symbol coloured harmoniously.
+                    <br />
+                    <br />
+                    Colour harmony may be seen through a variety of lenses.
+                    In physics we look at light i.e. electromagnetic energy, and visible colour as electromagnetic waves. Colour corresponds to a specific wavelengths with red – lowest vibration, through orange, yellow, green and blue to violet – highest vibration.
+                    <br />
+                    <br />
+                    Physiology of colour vision explores how the eye receives light and how the brain processes it. As several factors, such as lighting conditions, colour blindness etc. influence our colour perception, two people may also see colour harmony differently.
+                    <br />
+                    <br />
+                    Psychology studies how colours influence our moods, emotions and behaviors. As colour perception differs across cultures, so will the perception of colour harmony.
+                    <br />
+                    <br />
+                    Art and design focuses on practical use of colour in creative activities and everyday life. Art trains us to see relationships between form, line, contrast, and balance. Colour theory explains how humans perceive colour, how colours mix, match and contrast as well as what messages colours communicate. Let us not forget about the effect of colour models (RYB, RGB, CMYK) on colour mixing and harmony.
+                    <br />
+                    <br />
+                    Traditional yoga makes us understand that all chakras have vibrational frequencies and start from the base  i.e red – lowest vibration to the top of the head i.e. violet – highest vibration.
+                    <br />
+                    <br />
+                    Additionally, science, particularly physics, helps us understand that colour is not “in” the object but arises from how objects reflect or absorb light. When applied to the Mother’s symbol, this tells us that the colours used are not arbitrary. Their frequency and intensity may correspond to energetic qualities in consciousness - more dense and active at lower frequencies (red, orange) and more refined and subtle at higher ones (blue, violet, white).
+                    <br />
+                    <br />
+                    As per the Mother and Sri Aurobindo’s references to the Mother’s symbol and to the Matrimandir’s the twelve petal rooms, which correspond to the twelve qualities of the Mother’s symbol, there is one symbol of the Mother coloured harmoniously. All other colour variations reflect the present state of consciousness of the individual behind the Symbol’s colouring.
+                    <br />
+                    <br />
+                </Paragraph>
 
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div>
-                    <Paragraph className="italic">
-                        “Centre and four powers, white. The twelve, all of different colour in three groups:
-                        <br /><br />
-                        Top group red, passing to orange towards yellow.
-                        <br />
-                        Next group, yellow passing through green towards blue.
-                        <br />
-                        And third group, blue passing through violet towards red.
-                        <br />
-                        If white is not convenient, the center may be gold (powder).”
-                    </Paragraph>
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <Paragraph className="italic">
+                            “Centre and four powers, white. The twelve, all of different colour in three groups:
+                            <br /><br />
+                            Top group red, passing to orange towards yellow.
+                            <br />
+                            Next group, yellow passing through green towards blue.
+                            <br />
+                            And third group, blue passing through violet towards red.
+                            <br />
+                            If white is not convenient, the center may be gold (powder).”
+                        </Paragraph>
 
-                    <Paragraph className="text-right italic mt-2">
-                        – Sri Aurobindo
-                    </Paragraph>
-                </div>
+                        <Paragraph className="text-right italic mt-2">
+                            – Sri Aurobindo
+                        </Paragraph>
+                    </div>
 
-                {/* Play video button */}
-                <button
-                    onClick={() => setOpen(true)}
-                    className="flex items-center cursor-pointer gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition"
-                >
-                    <span className="flex flex-col items-center justify-center">
-                        <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
-                        <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
-                    </span>
-
-                    <img
-                        src="/images/button_image.png"
-                        alt="Symbol"
-                        className="w-10 h-10 object-contain shrink-0"
-                    />
-                </button>
-            </div>
-
-            <br />
-
-            <Paragraph>
-                Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
-            </Paragraph>
-
-            <br />
-            <br />
-
-            <PdfPageButton name="living-symbol" page={32} />
-
-            {/* Video Dialog */}
-            <Dialog
-                open={open}
-                onClose={() => setOpen(false)}
-                fullWidth
-                maxWidth="md"
-                slotProps={{
-                    paper: {
-                        sx: {
-                            bgcolor: "black",
-                            borderRadius: { xs: 0, md: 2 },
-                        },
-                    },
-                }}
-            >
-                <div className="relative w-full h-0 pb-[56.25%]">
-                    {/* Close button */}
-                    <IconButton
-                        onClick={() => setOpen(false)}
-                        aria-label="close"
-                        sx={{ position: "absolute", top: 8, right: 8, color: "white", zIndex: 10 }}
+                    {/* Play video button */}
+                    <button
+                        onClick={() => setOpen(true)}
+                        className="flex items-center cursor-pointer gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition"
                     >
-                        <CloseIcon />
-                    </IconButton>
+                        <span className="flex flex-col items-center justify-center">
+                            <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
+                            <span className="text-xs font-bold text-[#404040] mt-1">Play video</span>
+                        </span>
 
-                    {/* Responsive YouTube embed */}
-                    <iframe
-                        src="https://www.youtube.com/embed/C_UgSQ-nphY?autoplay=1"
-                        title="YouTube video"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="absolute top-0 left-0 w-full h-full rounded-md"
-                    />
+                        <img
+                            src="/images/button_image.png"
+                            alt="Symbol"
+                            className="w-10 h-10 object-contain shrink-0"
+                        />
+                    </button>
                 </div>
-            </Dialog>
-        </div>
+
+                <br />
+
+                <Paragraph>
+                    Science tells us that between blue and green comes teal / turquoise. The Mother however, specifically said that Sincerity is to be light blue.
+                </Paragraph>
+
+                <br />
+                <br />
+
+                <PdfPageButton name="living-symbol" page={32} />
+
+                {/* Video Dialog */}
+                <Dialog
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                    maxWidth="md"
+                    slotProps={{
+                        paper: {
+                            sx: {
+                                bgcolor: "black",
+                                borderRadius: { xs: 0, md: 2 },
+                            },
+                        },
+                    }}
+                >
+                    <div className="relative w-full h-0 pb-[56.25%]">
+                        {/* Close button */}
+                        <IconButton
+                            onClick={() => setOpen(false)}
+                            aria-label="close"
+                            sx={{ position: "absolute", top: 8, right: 8, color: "white", zIndex: 10 }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+
+                        {/* Responsive YouTube embed */}
+                        <iframe
+                            src="https://www.youtube.com/embed/C_UgSQ-nphY?autoplay=1"
+                            title="YouTube video"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute top-0 left-0 w-full h-full rounded-md"
+                        />
+                    </div>
+                </Dialog>
+            </div> :
+            <div className="w-full">
+                <Paragraph>
+                    Для того чтобы понять что такое гармония цветовой гаммы и определить критерии перед тем ка приступить к  раскрашиванию  Символа Матери обратимся к некоторым фактам извлеченным из исследованных дисциплин.
+
+                    <br />
+                    <br />
+
+                    Цветовая гармония может рассматриваться через разные призмы:
+                    <br />
+                    <br />
+                    Физика: свет как электромагнитная энергия; цвет — электромагнитные волны (от красного с низшей вибрацией до фиолетового с высшей).Вывод:цветовая гамма должна начинаться с более низкой вибрации (красный цвет) и по нарастающей вплоть до фиолетовогою
+                    <br />
+                    <br />
+                    Физиология: исследует, как глаз воспринимает свет и мозг его обрабатывает; факторы (освещение, дальтонизм и др.) влияют на восприятие гармонии.Вывод: в разных условиях ,разые люди идентифицируют цвета по разному
+                    <br />
+                    <br />
+                    Психология: изучает, как цвета влияют на настроение, эмоции и поведение; восприятие гармонии также зависит от культурных различий.
+                    <br />
+                    <br />
+                    Искусство и дизайн: практическое применение цвета в творчестве и жизни; теория цвета объясняет восприятие, смешение, контраст и значение цветов.
+                    <br />
+                    <br />
+                    Цветовые модели: (RYB, RGB, CMYK) определяют, как цвета смешиваются и формируют гармонию.
+                    <br />
+                    <br />
+                    Традиционная йога: показывает, что чакры имеют вибрационные частоты — от красного (низшие вибрации) у основания до фиолетового (высшие) на макушке.
+                    <br />
+                    <br />
+                    Физическая наука напоминает: цвет находится не «в» объекте, а возникает через отражение или поглощение света. В применении к Символу Матери это означает, что цвета не случайны. Их частота и интенсивность могут соответствовать энергетическим качествам сознания: более плотные и активные на низших частотах (красный, оранжевый) и более утончённые на высоких (синий, фиолетовый, белый).
+                    <br />
+                    <br />
+                    Согласно указаниям Матери и Шри Ауробиндо о Символе Матери и двенадцати лепестковых комнатах Матримандира (каждая соответствует одному из двенадцати качеств Символа), существует один гармонично окрашенный Символ Матери. Все другие вариации отражают текущее состояние сознания человека, создающего это цветовое выражение.
+                    <br />
+                    <br />
+                </Paragraph>
+
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <Paragraph className="italic">
+                            «Центр и четыре силы — белого цвета.<br />
+                            Двенадцать — все разных цветов, в трёх группах:<br />
+                            Верхняя группа — красный, переходящий в оранжевый к жёлтому.<br />
+                            Следующая группа — жёлтый, переходящий через зелёный к синему.<br />
+                            И третья группа — синий, переходящий через фиолетовый к красному.<br />
+                            Если белый неудобен, центр может быть золотым (порошковым).»
+
+                        </Paragraph>
+
+                        <Paragraph className="text-right italic mt-2">
+                            – Шри Ауробиндо
+                        </Paragraph>
+                    </div>
+
+                    {/* Play video button */}
+                    <button
+                        onClick={() => setOpen(true)}
+                        className="flex items-center cursor-pointer gap-3 px-4 py-2 border-2 border-[#d5af3c] rounded-2xl shadow-xl bg-white hover:shadow-lg transition"
+                    >
+                        <span className="flex flex-col items-center justify-center">
+                            <Play size={24} className="text-gray-600 border-2 border-[#d5af3c]" />
+                            <span className="text-xs font-bold text-[#404040] mt-1">Воспроизвести
+                                видео</span>
+                        </span>
+
+                        <img
+                            src="/images/button_image.png"
+                            alt="Symbol"
+                            className="w-10 h-10 object-contain shrink-0"
+                        />
+                    </button>
+                </div>
+
+                <br />
+
+                <Paragraph>
+                    Наука говорит нам, что между синим и зелёным находится цвет морской волны / бирюзовый. Однако Мать специально указала, что Искренность должна быть светло-голубой
+                </Paragraph>
+
+                <br />
+
+                <PdfPageButton name="living-symbol" page={32} />
+
+                {/* Video Dialog */}
+                <Dialog
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                    maxWidth="md"
+                    slotProps={{
+                        paper: {
+                            sx: {
+                                bgcolor: "black",
+                                borderRadius: { xs: 0, md: 2 },
+                            },
+                        },
+                    }}
+                >
+                    <div className="relative w-full h-0 pb-[56.25%]">
+                        {/* Close button */}
+                        <IconButton
+                            onClick={() => setOpen(false)}
+                            aria-label="close"
+                            sx={{ position: "absolute", top: 8, right: 8, color: "white", zIndex: 10 }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+
+                        {/* Responsive YouTube embed */}
+                        <iframe
+                            src="https://www.youtube.com/embed/C_UgSQ-nphY?autoplay=1"
+                            title="YouTube video"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute top-0 left-0 w-full h-full rounded-md"
+                        />
+                    </div>
+                </Dialog>
+            </div>
     );
 }

@@ -6,27 +6,29 @@ import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
 import { colours2 } from "../../utils/scoring";
 import Colouring2Picker from "../Colouring2Picker";
+import { useLocale } from "../../context/LocaleContext";
 
 // Custom hook for media query
 function useMediaQuery(query) {
     const [matches, setMatches] = useState(false);
-
+    
     useEffect(() => {
         const media = window.matchMedia(query);
         const listener = () => setMatches(media.matches);
-
+        
         listener(); // initial check
         media.addEventListener("change", listener);
-
+        
         return () => media.removeEventListener("change", listener);
     }, [query]);
-
+    
     return matches;
 }
 
 export default function AspirationTab2() {
     const [color, setColor] = useState("#fff");
     const [selectedColor, setSelectedColor] = useState(null);
+    const { locale } = useLocale();
 
     const isSmall = useMediaQuery("(max-width: 640px)"); // Tailwind `sm` breakpoint = 640px
 
@@ -90,7 +92,7 @@ export default function AspirationTab2() {
                     </div>
                     <br />
                     <Paragraph className="text-center">
-                        After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring.
+                        {locale === "en" ? "After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Показать», чтобы узнать, достигнута ли гармония, или «Скачать», чтобы сохранить свою раскраску."}
                     </Paragraph>
                 </div>
             }

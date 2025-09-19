@@ -5,10 +5,12 @@ import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
 import { colours1, shuffledColours1 } from "../../utils/scoring";
+import { useLocale } from "../../context/LocaleContext";
 
 export default function AspirationTab1() {
     const [color, setColor] = useState("#fff");
     const [selectedColor, setSelectedColor] = useState(null);
+    const { locale } = useLocale();
 
     // const [devMode, setDevMode] = useState(false); // controls whether dev button is visible
     // const [useShuffled, setUseShuffled] = useState(true); // toggles colors source
@@ -90,7 +92,7 @@ export default function AspirationTab1() {
                     </div>
                     <br />
                     <Paragraph className="text-center">
-                        After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring.
+                        {locale === "en" ? "After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Показать», чтобы узнать, достигнута ли гармония, или «Скачать», чтобы сохранить свою раскраску."}
                     </Paragraph>
                 </div>
             }

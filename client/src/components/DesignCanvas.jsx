@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { gradeColours } from "../utils/scoring.js";
 import IlluminationsController from "../pages/IlluminationsController.jsx";
+import { useLocale } from "../context/LocaleContext.jsx";
 
 const style = {
   position: "absolute",
@@ -45,6 +46,8 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { locale } = useLocale();
 
   useEffect(() => {
     const inputRef = { current: "" };
@@ -231,7 +234,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
           <div>
             {!showDesc && <button
               className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
-              onClick={revealScore}>Reveal</button>}
+              onClick={revealScore}>{locale === "en" ? "Reveal" : "Показать"}</button>}
             <Modal open={open} onClose={handleClose}>
               <Box sx={style}>
                 <Typography
@@ -246,10 +249,10 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
           </div>
           <button
             className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
-            onClick={saveAsPng}>Download</button>
+            onClick={saveAsPng}>{locale === "en" ? "Download" : "Скачать"}</button>
           <button
             className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
-            onClick={resetSymbol}>Reset</button>
+            onClick={resetSymbol}>{locale === "en" ? "Reset" : "Сбросить"}</button>
         </div>
       </div>
     </div>

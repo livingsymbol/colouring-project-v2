@@ -58,7 +58,7 @@ export default function Tabs({ items }) {
                         <button
                             key={index}
                             onClick={() => handleClick(index)}
-                            className={`px-2 py-2 w-36 text-md sm:text-base font-semibold rounded-t-2xl transition-all duration-300 
+                            className={`px-2 py-2 w-44 text-md sm:text-base font-semibold rounded-t-2xl transition-all duration-300 
                                 whitespace-nowrap border-t-2 border-x-2 border-black
                                 ${index === activeIndex
                                     ? "bg-white hover:bg-[#e4e4ef] z-20"

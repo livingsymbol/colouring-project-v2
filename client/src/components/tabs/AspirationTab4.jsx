@@ -4,9 +4,11 @@ import ColouringWheelPicker from "../ColouringWheelPicker";
 import ColourTester from "../ColourTester";
 import DesignCanvas from "../DesignCanvas";
 import Paragraph from "../Paragraph";
+import { useLocale } from "../../context/LocaleContext";
 
 export default function AspirationTab4() {
     const [color, setColor] = useState("#fff");
+    const { locale } = useLocale();
 
     const handleColorSelect = (color) => {
         setColor(color);
@@ -20,7 +22,7 @@ export default function AspirationTab4() {
                     <ColourTester color={color} />
                 </div>
                 <br />
-                <Paragraph className="text-center">After colouring all 12 petals you may “Download” your colouring.</Paragraph>
+                <Paragraph className="text-center">{locale === "en" ? "After colouring all 12 petals you may “Download” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Скачать», чтобы сохранить свой вариант символа."}</Paragraph>
             </div>}
             symbol={<DesignCanvas color={color} showDesc={true} />} />
     );
