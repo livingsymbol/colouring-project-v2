@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
 import Paragraph from '../Paragraph';
+import { useLocale } from '../../context/LocaleContext';
 
 export default function ForumTab3() {
     const [posts, setPosts] = useState([]);
@@ -15,6 +16,9 @@ export default function ForumTab3() {
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
+
+    const { locale } = useLocale();
+
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -99,8 +103,11 @@ export default function ForumTab3() {
     return (
         <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">
             <Paragraph>
-                A place to exchange on The living Symbol of The Mother, colours, your aspiration...
+                {locale === "ru"
+                    ? "Место для обмена опытом о Живом Символе Матери, о цветах, о вашем стремлении…"
+                    : "A place to exchange on The living Symbol of The Mother, colours, your aspiration..."}
             </Paragraph>
+
             <br />
             <div className="flex justify-between items-center mb-8 md:mb-16 border-b-2 p-4">
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#404040]">Forum</h1>
