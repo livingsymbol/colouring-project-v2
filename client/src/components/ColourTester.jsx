@@ -43,7 +43,7 @@ const ColorTester = ({ color }) => {
       />
       <button
         onClick={handleClear}
-        className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+        className="cursor-pointer px-4 py-1 md:px-8 md:py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
       >
         {locale === "en" ? "Reset" : "Сбросить"}
       </button>

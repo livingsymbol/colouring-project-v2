@@ -233,7 +233,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
         <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
           <div>
             {!showDesc && <button
-              className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+              className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
               onClick={revealScore}>{locale === "en" ? "Reveal" : "Показать"}</button>}
             <Modal open={open} onClose={handleClose}>
               <Box sx={style}>
@@ -248,10 +248,10 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
             </Modal>
           </div>
           <button
-            className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+            className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
             onClick={saveAsPng}>{locale === "en" ? "Download" : "Скачать"}</button>
           <button
-            className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+            className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
             onClick={resetSymbol}>{locale === "en" ? "Reset" : "Сбросить"}</button>
         </div>
       </div>

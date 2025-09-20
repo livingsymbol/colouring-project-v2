@@ -14,7 +14,7 @@ export default function PdfPageButton({ name, page, children }) {
                 className={
                     window.location.pathname === '/library'
                         ? "underline hover:text-blue-500"
-                        : "mt-12 px-4 py-1 md:px-8 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3c] hover:text-white shadow-2xl"
+                        : "mt-12 px-4 py-1 md:px-8 text-md md:text-lg font-semibold text-white bg-[#d5af3c] rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
                 }
             >
                 {children || (locale === "en" ? "Click here for more information" : "Нажмите здесь, чтобы узнать больше")}
