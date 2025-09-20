@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { gradeColours } from "../utils/scoring.js";
-import IlluminationsController from "../pages/IlluminationsController.jsx";
 import { useLocale } from "../context/LocaleContext.jsx";
 
 const style = {

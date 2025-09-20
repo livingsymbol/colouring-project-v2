@@ -1,5 +1,3 @@
-/* eslint-disable react/display-name */
-// TODO: add a hover fill effect on the interactable parts of the svg
 import { forwardRef } from "react";
 const Symbol_without_desc = forwardRef((props, ref) => {
   return (
