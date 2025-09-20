@@ -85,8 +85,8 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
                 <div className="flex flex-col items-center">
                     <input
                         type="range"
-                        min="5"
-                        max="50"
+                        min="100"
+                        max="1000"
                         value={count}
                         onChange={(e) => setCount(Number(e.target.value))}
                     />

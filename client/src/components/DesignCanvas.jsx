@@ -214,7 +214,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
         <div className="overflow-hidden w-full relative">
 
           {showDesc ?
-            <Symbol ref={svgRef} className="w-full h-full" color={color} illumination={illumination} intensity={intensity} isColouring5={isColouring5} sparkleColor={sparkleColor} count={count} />
+            <Symbol ref={svgRef} className="w-full h-full" color={color} isColouring5={isColouring5} sparkleColor={sparkleColor} count={count} />
             :
             <Symbol_without_desc
               ref={svgRef}
