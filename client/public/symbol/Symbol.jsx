@@ -79,7 +79,7 @@ const Symbol = forwardRef((props, ref) => {
           width="708.661"
           height="708.661"
           viewBox="0 0 708.661 708.661"
-          className="absolute z-10 w-full h-full"
+          className="absolute z-10 w-full h-full transition-all duration-200"
           style={{ pointerEvents: "none" }}
         >
           <g id="layer_1" data-name="Vrstva 1">
@@ -88,7 +88,7 @@ const Symbol = forwardRef((props, ref) => {
                 <path
                   transform="matrix(1,0,0,-1,600.1441,212.1676)"
                   d="M0 0C78.259-135.554 31.808-308.891-103.752-387.159-239.311-465.428-412.645-418.989-490.903-283.436-569.162-147.882-522.71 25.455-387.151 103.724-251.592 181.992-78.258 135.553 0 0"
-                  fill="#dbaf46"
+                  fill="#d5af3c"
                   style={{ pointerEvents: "none" }}
                   stroke="#000000"
                   strokeWidth="1"
@@ -308,7 +308,7 @@ const Symbol = forwardRef((props, ref) => {
         </svg>
         <SymbolText
           getRotationAngle={getRotationAngle}
-          className="w-full h-full flex items-center justify-center"
+          className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out"
         />
       </div>
     </div>

@@ -18,7 +18,7 @@ const style = {
     md: 500, // 500px width on medium screens
   },
   bgcolor: "background.paper",
-  border: "5px solid #dbaf46",
+  border: "5px solid #d5af3c",
   borderRadius: "10px",
   boxShadow: 25,
   p: 2,
