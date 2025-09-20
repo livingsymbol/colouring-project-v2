@@ -137,7 +137,6 @@ export default function GalleryTab2() {
 
     return (
         <div className="w-full">
-            {/* Conditional content based on locale */}
             <RichTextRenderer
                 content={locale === "ru" ? galleryTab2ContentRu : galleryTab2ContentEn}
             />
