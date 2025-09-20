@@ -317,7 +317,7 @@ export default function FindingTab5({ content }) {
                     <br />
                     Подробности смотрите в полной статье Жиля Г:{' '}
                     <Link className="underline" to="/view-pdf?name=On-Mothers-Flag-and-Symbol&page=1">
-                        On the Mother’s flag & Symbol
+                        О Знамени и Символе Матери
                     </Link>
                 </Paragraph>
             </>
