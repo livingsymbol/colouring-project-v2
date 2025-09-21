@@ -16,7 +16,7 @@ const forumTab1Translations = {
         ),
         publish: "Publish Image",
         cancel: "Cancel",
-        selectImage: "Select Image (png, jpg, jpeg, etc.)",
+        selectImage: "Select Image (png, jpg, jpeg.)",
         post: "Post",
         posting: "Posting...",
         textareaPlaceholder: "Your comments\nYour signature / nickname",
@@ -29,15 +29,12 @@ const forumTab1Translations = {
     ru: {
         paragraph: (
             <>
-                Ваше стремление и внутреннее состояние отражаются в ваших раскрасках.
-                <br />
-                Мы приглашаем вас посетить раздел «Цвета», создать собственную раскраску и поделиться ею с нами для
-                публикации ниже.
+                Ваша устремленость и внутреннее состояние  будут отражатся в ваших собственных раскрашиваниях. Вы можете посетить раздел «Стремление в действии», создать раскрашивание, скачать его, а затем поделиться с нами для публикации на этой странице через следующую кнопку:
             </>
         ),
-        publish: "Разместить изображение",
+        publish: "Опубликовать изображение",
         cancel: "Отмена",
-        selectImage: "Выберите изображение (png, jpg, jpeg и др.)",
+        selectImage: "Выберите изображение (png, jpg, jpeg.)",
         post: "Опубликовать",
         posting: "Публикация...",
         textareaPlaceholder: "Ваши комментарии\nВаша подпись / никнейм",

@@ -6,7 +6,7 @@ export default function ForumTab2() {
     return (
         <Paragraph>
             {locale === "ru"
-                ? "В этом разделе отображаются раскраски из «Галереи», которые вы гармонизировали."
+                ? "В этом разделе будут отображаться раскрашивания из раздела «Галерея — Изображения для гармонизации», которыми вы поделились с нами."
                 : "This section will display colourings from the “Gallery  - Images to harmonize” section you have shared with us."}
         </Paragraph>
     );
