@@ -156,6 +156,131 @@ function CommentCard({ comment, onApprove, onDelete }) {
     );
 }
 
+// -------------------- Image Card --------------------
+function ImageCard({ post, onApprove, onDelete, approvalChanges, setApprovalChanges, loading }) {
+    const updateApproval = (field, value) => {
+        setApprovalChanges((prev) => ({
+            ...prev,
+            [post._id]: { ...prev[post._id], [field]: value },
+        }));
+    };
+
+    return (
+        <div className="p-5 sm:p-6 border border-gray-200 rounded-2xl shadow-md bg-white space-y-4">
+            {/* Author + timestamp */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600">
+                <span className="font-semibold text-blue-700">@{post.author.username}</span>
+                <span className="text-xs text-gray-500">
+                    {new Date(post.createdAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
+                </span>
+            </div>
+
+            {/* Approval status */}
+            <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-1">
+                    <span className="font-medium">Image:</span>
+                    <span className={post.isImageApproved ? "text-green-600" : "text-red-500"}>
+                        {post.isImageApproved ? "✅" : "❌"}
+                    </span>
+                </div>
+                <div className="flex items-center gap-1">
+                    <span className="font-medium">Comment:</span>
+                    <span className={post.isCommentApproved ? "text-green-600" : "text-red-500"}>
+                        {post.isCommentApproved ? "✅" : "❌"}
+                    </span>
+                </div>
+            </div>
+
+            {post.comment && (
+                <textarea
+                    className="w-full border rounded-lg p-2 mt-2"
+                    value={approvalChanges[post._id]?.comment ?? post.comment}
+                    onChange={(e) => updateApproval("comment", e.target.value)}
+                    placeholder="Edit comment..."
+                />
+            )}
+
+            {/* Tab selector */}
+            <div className="mt-2">
+                <label className="font-medium mr-2">Tab:</label>
+                <select
+                    className="border rounded p-1"
+                    value={approvalChanges[post._id]?.tab ?? post.tab}
+                    onChange={(e) => updateApproval("tab", e.target.value)}
+                >
+                    <option value="your-colourings">Your own colourings</option>
+                    <option value="gallery-harmonized">Gallery images harmonized</option>
+                </select>
+            </div>
+
+            {/* Image */}
+            {post.url && (
+                <div className="w-full overflow-hidden rounded-lg border border-gray-300 mt-3">
+                    <img src={post.url} alt="Post" className="max-h-[500px] w-full object-contain" />
+                </div>
+            )}
+
+            {/* Admin actions */}
+            <div className="flex gap-4 pt-2">
+                <div className="bg-green-50 border border-green-200 p-4 rounded-xl space-y-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm text-gray-800">
+                        <label className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                className="accent-green-600"
+                                checked={approvalChanges[post._id]?.approveImage ?? post.isImageApproved}
+                                disabled={post.isImageApproved}
+                                onChange={(e) => updateApproval("approveImage", e.target.checked)}
+                            />
+                            <span className={post.isImageApproved ? "line-through text-gray-500" : ""}>
+                                Approve Image
+                            </span>
+                        </label>
+
+                        <label className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                className="accent-green-600"
+                                checked={approvalChanges[post._id]?.approveComment ?? post.isCommentApproved}
+                                disabled={post.isCommentApproved}
+                                onChange={(e) => updateApproval("approveComment", e.target.checked)}
+                            />
+                            <span className={post.isCommentApproved ? "line-through text-gray-500" : ""}>
+                                Approve Comment
+                            </span>
+                        </label>
+                    </div>
+
+                    <div className="text-center">
+                        <button
+                            className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition disabled:opacity-50"
+                            onClick={() => onApprove(post._id)}
+                            disabled={
+                                loading[post._id] ||
+                                !approvalChanges[post._id] ||
+                                (approvalChanges[post._id]?.approveImage === post.isImageApproved &&
+                                    approvalChanges[post._id]?.approveComment === post.isCommentApproved &&
+                                    approvalChanges[post._id]?.tab === post.tab &&
+                                    (approvalChanges[post._id]?.comment ?? post.comment) === post.comment)
+                            }
+                        >
+                            {loading[post._id] ? "Approving..." : "Confirm Approval"}
+                        </button>
+                    </div>
+                </div>
+
+                <button
+                    className="bg-red-600 py-1.5 text-white px-8 rounded-xl hover:bg-red-700 transition text-md disabled:opacity-50"
+                    onClick={() => onDelete(post._id)}
+                    disabled={loading[post._id]}
+                >
+                    {loading[post._id] ? "Deleting..." : "Delete"}
+                </button>
+            </div>
+        </div>
+    );
+}
+
 // -------------------- Dashboard --------------------
 export default function AdminDashboard() {
     const [data, setData] = useState({
@@ -164,13 +289,15 @@ export default function AdminDashboard() {
         pendingPosts: [],
         flaggedComments: [],
         approvedComments: [],
+        approvedImages: [],
+        pendingImages: [],
+        partiallyApprovedImages: [],
     });
     const [approvalChanges, setApprovalChanges] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState({});
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
     const [isToggling, setIsToggling] = useState(false);
-    const navigate = useNavigate();
 
     // Fetch initial state
     useEffect(() => {
@@ -386,7 +513,47 @@ export default function AdminDashboard() {
                     onDelete={(id) => handleDelete("comments", id)}
                 />
             ),
+        }, {
+            label: <>Approved Images<br /> ({data.approvedImages.length})</>,
+            items: data.approvedImages,
+            render: (post) => (
+                <ImageCard
+                    post={post}
+                    onDelete={(id) => handleDelete("images", id)}
+                    loading={actionLoading}
+                    approvalChanges={approvalChanges}
+                    setApprovalChanges={setApprovalChanges}
+                />
+            ),
         },
+        {
+            label: <>Partially <br />Approved<br />Published Image({data.partiallyApprovedImages.length})</>,
+            items: data.partiallyApprovedImages,
+            render: (post) => (
+                <ImageCard
+                    post={post}
+                    onApprove={(id) => handleApprove("image", id)}
+                    onDelete={(id) => handleDelete("image", id)}
+                    loading={actionLoading}
+                    approvalChanges={approvalChanges}
+                    setApprovalChanges={setApprovalChanges}
+                />
+            ),
+        },
+        {
+            label: <>Pending <br />Published Image({data.pendingImages.length})</>,
+            items: data.pendingImages,
+            render: (post) => (
+                <ImageCard
+                    post={post}
+                    onApprove={(id) => handleApprove("image", id)}
+                    onDelete={(id) => handleDelete("image", id)}
+                    loading={actionLoading}
+                    approvalChanges={approvalChanges}
+                    setApprovalChanges={setApprovalChanges}
+                />
+            ),
+        }
     ];
 
     if (isLoading) {

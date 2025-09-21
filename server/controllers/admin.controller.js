@@ -3,6 +3,7 @@ import Comment from '../models/Comment.js';
 import sendEmail from '../utils/sendEmail.js';
 import Page from '../models/Page.js';
 import User from '../models/User.js';
+import PublishedImage from '../models/PublishedImage.js';
 
 export async function getDashboardData(req, res) {
     try {
@@ -43,25 +44,38 @@ export async function getDashboardData(req, res) {
             .populate('post', 'content')
             .sort({ createdAt: -1 });
 
-        // 6. Optional stats
-        const totalPosts = await Post.countDocuments();
-        const totalComments = await Comment.countDocuments();
+        const approvedImages = await PublishedImage.find({
+            $and: [
+                { isCommentApproved: true },
+                { isImageApproved: true },
+            ],
+        })
+
+        // 6. Fully unapproved published images (neither comment nor image approved)
+        const pendingImages = await PublishedImage.find({
+            isCommentApproved: false,
+            isImageApproved: false,
+        })
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        // 7. Partially approved published images (only one of comment/image approved)
+        const partiallyApprovedImages = await PublishedImage.find({
+            $or: [
+                { isCommentApproved: true, isImageApproved: false },
+                { isCommentApproved: false, isImageApproved: true },
+            ],
+        })
 
         res.json({
-            stats: {
-                totalPosts,
-                totalComments,
-                unapprovedPosts: pendingPosts.length,
-                partiallyApprovedPosts: partiallyApprovedPosts.length,
-                approvedPosts: approvedPosts.length,
-                flaggedComments: flaggedComments.length,
-                approvedComments: approvedComments.length,
-            },
             approvedPosts,
             pendingPosts,
             partiallyApprovedPosts,
             flaggedComments,
             approvedComments,
+            approvedImages,
+            pendingImages,
+            partiallyApprovedImages,
         });
     } catch (err) {
         res.status(500).json({ message: 'Failed to load dashboard data', error: err.message });
@@ -148,6 +162,49 @@ export const deletePost = async (req, res) => {
         res.json({ message: 'Post and associated comments deleted successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Failed to delete post', error: err.message });
+    }
+};
+
+// Approve a image
+export const approveImage = async (req, res) => {
+    const { id } = req.params;
+    const { approveImage, approveComment, tab, comment } = req.body;
+
+    try {
+        const image = await PublishedImage.findById(id).populate('author');
+        if (!image) return res.status(404).json({ message: 'Image not found' });
+
+        if (approveImage !== undefined) image.isImageApproved = approveImage;
+        if (approveComment !== undefined) image.isCommentApproved = approveComment;
+        if (tab !== undefined) image.tab = tab;
+        if (comment !== undefined) image.comment = comment;
+
+        await image.save();
+
+        if (process.env.USE_CREDENTIAL_AUTH === 'true' && image.isImageApproved && image.author?.email) {
+            await sendEmail({
+                to: image.author.email,
+                subject: 'Your image has been approved',
+                text: `Hi ${image.author.username}, your image has been approved and is now live!`,
+            });
+        }
+
+        res.json({ message: 'Image aproved', image });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to approve image part', error: err.message });
+    }
+};
+
+// Reject (delete) a image
+export const deleteImage = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await PublishedImage.findByIdAndDelete(id);
+        if (!deleted) return res.status(404).json({ message: 'Image not found' });
+
+        res.json({ message: 'Image and associated comment deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to delete image', error: err.message });
     }
 };
 
