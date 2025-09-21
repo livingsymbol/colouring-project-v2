@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { rgbToHex } from '../utils/scoring';
 
-const RGBblack = ({ size = 300, onColorSelect }) => {
+const RGBblack = ({ size = 250, onColorSelect }) => {
     const canvasRef = useRef(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [pointerPosition, setPointerPosition] = useState({ x: 0, y: 0 })

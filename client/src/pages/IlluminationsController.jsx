@@ -25,11 +25,11 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
     const t = labels[locale];
 
     return (
-        <div className="mt-8">
+        <div className="mt-8 space-y-4">
             <style jsx>{`
                 input[type="range"] {
                     -webkit-appearance: none;
-                    width: 250px;
+                    width: 100%;
                     height: 6px;
                     border-radius: 5px;
                     background: #d5af3c;
@@ -38,8 +38,8 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
                 input[type="range"]::-webkit-slider-thumb {
                     -webkit-appearance: none;
                     appearance: none;
-                    width: 16px;
-                    height: 16px;
+                    width: 20px;
+                    height: 20px;
                     border-radius: 50%;
                     background: #000;
                     cursor: pointer;
@@ -47,8 +47,8 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
                     box-shadow: 0 0 2px rgba(0,0,0,0.5);
                 }
                 input[type="range"]::-moz-range-thumb {
-                    width: 16px;
-                    height: 16px;
+                    width: 20px;
+                    height: 20px;
                     border-radius: 50%;
                     background: #d5af3c;
                     cursor: pointer;
@@ -57,11 +57,12 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
                 }
             `}</style>
 
-            <div className="mb-4 p-4 flex items-start justify-between border-2 rounded-xl border-[#d5af3c] bg-white">
-                <span className="text-xl text-[#d5af3c]">
+            {/* Illumination selector */}
+            <div className="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between border-2 rounded-xl border-[#d5af3c] bg-white gap-3">
+                <span className="text-lg sm:text-xl text-[#d5af3c] whitespace-nowrap">
                     {t.illumination}
                 </span>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center w-full max-w-sm">
                     <input
                         type="range"
                         min="0"
@@ -70,29 +71,30 @@ export default function IlluminationsController({ count, setCount, colorIndex, s
                         value={colorIndex}
                         onChange={(e) => setColorIndex(Number(e.target.value))}
                     />
-                    <div className="flex justify-between w-full">
-                        <span className="text-sm text-black">{t.silver}</span>
-                        <span className="text-sm text-black">{t.none}</span>
-                        <span className="text-sm text-black">{t.gold}</span>
+                    <div className="flex justify-between w-full text-xs sm:text-sm text-black pointer-events-none">
+                        <span>{t.silver}</span>
+                        <span>{t.none}</span>
+                        <span>{t.gold}</span>
                     </div>
                 </div>
             </div>
 
-            <div className="mb-4 p-4 flex items-start justify-between border-2 rounded-xl border-[#d5af3c] bg-white">
-                <span className="text-xl text-[#d5af3c]">
+            {/* Density selector */}
+            <div className="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between border-2 rounded-xl border-[#d5af3c] bg-white gap-3">
+                <span className="text-lg sm:text-xl text-[#d5af3c] whitespace-nowrap">
                     {t.density}
                 </span>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center w-full max-w-sm">
                     <input
                         type="range"
-                        min="100"
-                        max="1000"
+                        min="1000"
+                        max="5000"
                         value={count}
                         onChange={(e) => setCount(Number(e.target.value))}
                     />
-                    <div className="flex justify-between w-full">
-                        <span className="text-sm text-black">{t.min}</span>
-                        <span className="text-sm text-black">{t.max}</span>
+                    <div className="flex justify-between w-full text-xs sm:text-sm text-black pointer-events-none">
+                        <span>{t.min}</span>
+                        <span>{t.max}</span>
                     </div>
                 </div>
             </div>

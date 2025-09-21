@@ -9,7 +9,7 @@ import { useLocale } from "../../context/LocaleContext";
 
 export default function AspirationTab5() {
     const colorOptions = ["silver", "none", "gold"];
-    const [count, setCount] = useState(10);
+    const [count, setCount] = useState(1000);
     const [colorIndex, setColorIndex] = useState(1);
 
     const [color, setColor] = useState("#fff");

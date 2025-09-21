@@ -1,12 +1,28 @@
+import { useState, useEffect } from "react";
 import RGBwhite from "./RGBwhite";
 import RGBblack from "./RGBblack";
 import RYBwhite from "./RYBwhite";
 import RYBblack from "./RYBblack";
 import { useLocale } from "../context/LocaleContext";
 
-export default function ColouringWheelPicker({ isRYB, onColorSelect }) {
+export default function ColouringWheelPicker({ isRYB, onColorSelect, size = 300 }) {
     const { locale } = useLocale();
-    
+    const [wheelSize, setWheelSize] = useState(size);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 640) {
+                setWheelSize(250); // small screens
+            } else {
+                setWheelSize(300); // default
+            }
+        };
+
+        handleResize(); // run once on mount
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [size]);
+
     return (
         <div className="w-full space-y-6">
             {/* Heading */}
@@ -23,9 +39,9 @@ export default function ColouringWheelPicker({ isRYB, onColorSelect }) {
                     </h1>
                     <div className="w-full flex justify-center">
                         {isRYB ? (
-                            <RYBwhite onColorSelect={onColorSelect} />
+                            <RYBwhite onColorSelect={onColorSelect} size={wheelSize} />
                         ) : (
-                            <RGBwhite onColorSelect={onColorSelect} />
+                            <RGBwhite onColorSelect={onColorSelect} size={wheelSize} />
                         )}
                     </div>
                 </div>
@@ -37,9 +53,9 @@ export default function ColouringWheelPicker({ isRYB, onColorSelect }) {
                     </h1>
                     <div className="w-full flex justify-center">
                         {isRYB ? (
-                            <RYBblack onColorSelect={onColorSelect} />
+                            <RYBblack onColorSelect={onColorSelect} size={wheelSize} />
                         ) : (
-                            <RGBblack onColorSelect={onColorSelect} />
+                            <RGBblack onColorSelect={onColorSelect} size={wheelSize} />
                         )}
                     </div>
                 </div>
