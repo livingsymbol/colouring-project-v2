@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale } from "../../context/LocaleContext";
 import Paragraph from "../Paragraph";
 import { Image as ImageIcon, X, Loader2 } from "lucide-react";
@@ -21,10 +21,11 @@ const forumTab1Translations = {
         posting: "Posting...",
         textareaPlaceholder: "Your comments\nYour signature / nickname",
         toast: {
-            needContent: "You must provide content or an image.",
+            needContent: "You must provide comment or an image.",
             success: "Post submitted for review!",
             error: "Failed to create post",
         },
+        approvedSection: "Your Images",
     },
     ru: {
         paragraph: (
@@ -43,17 +44,38 @@ const forumTab1Translations = {
             success: "Публикация отправлена на проверку!",
             error: "Не удалось создать публикацию",
         },
+        approvedSection: "Ваши изображения",
     },
 };
 
 export default function ForumTab1() {
     const { locale } = useLocale();
     const t = forumTab1Translations[locale] || forumTab1Translations.en;
+    const tabName = "Your own colourings";
 
     const [showCreate, setShowCreate] = useState(false);
-    const [newPost, setNewPost] = useState({ title: "", content: "", image: null });
+    const [newPublishedImage, setNewPublishedImage] = useState({ tab: "", comment: "", image: null });
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isPosting, setIsPosting] = useState(false);
+
+    const [approvedImages, setApprovedImages] = useState([]);
+
+    // Fetch approved images on component mount
+    useEffect(() => {
+        const fetchApprovedImages = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts/image?tab=${tabName}`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                });
+                setApprovedImages(res.data);
+            } catch (err) {
+                console.error(err);
+                toast.error("Failed to fetch approved images");
+            }
+        };
+        fetchApprovedImages();
+    }, []);
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -61,7 +83,7 @@ export default function ForumTab1() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setNewPublishedImage((prev) => ({ ...prev, image: reader.result }));
             setPreviewUrl(URL.createObjectURL(file));
         };
         reader.readAsDataURL(file);
@@ -74,14 +96,14 @@ export default function ForumTab1() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setNewPublishedImage((prev) => ({ ...prev, image: reader.result }));
             setPreviewUrl(URL.createObjectURL(file));
         };
         reader.readAsDataURL(file);
     };
 
     const handlePostSubmit = async () => {
-        if (!newPost.content && !newPost.image) {
+        if (!newPublishedImage.comment && !newPublishedImage.image) {
             toast.error(t.toast.needContent);
             return;
         }
@@ -89,14 +111,14 @@ export default function ForumTab1() {
         setIsPosting(true);
         try {
             const res = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/posts`,
-                { content: newPost.content, image: newPost.image },
+                `${import.meta.env.VITE_BACKEND_URL}/posts/image`,
+                { comment: newPublishedImage.comment, image: newPublishedImage.image, tab: tabName },
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
 
             toast.success(res.data.message || t.toast.success);
             setShowCreate(false);
-            setNewPost({ content: "", image: null });
+            setNewPublishedImage({ comment: "", image: null });
             setPreviewUrl(null);
         } catch (err) {
             console.error(err);
@@ -129,7 +151,7 @@ export default function ForumTab1() {
                             <button
                                 onClick={() => {
                                     setPreviewUrl(null);
-                                    setNewPost((prev) => ({ ...prev, image: null }));
+                                    setNewPublishedImage((prev) => ({ ...prev, image: null }));
                                 }}
                                 className="absolute top-2 right-2 bg-black bg-opacity-50 p-1 rounded-full text-white"
                             >
@@ -148,8 +170,8 @@ export default function ForumTab1() {
                         className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#404040]"
                         rows={4}
                         placeholder={t.textareaPlaceholder}
-                        value={newPost.content}
-                        onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+                        value={newPublishedImage.comment}
+                        onChange={(e) => setNewPublishedImage({ ...newPublishedImage, comment: e.target.value })}
                     />
                     <button
                         onClick={handlePostSubmit}
@@ -165,6 +187,30 @@ export default function ForumTab1() {
                             t.post
                         )}
                     </button>
+                </div>
+            )}
+<br />
+<hr />
+            {/* Approved Images Grid */}
+            {approvedImages.length > 0 && (
+                <div className="mt-8">
+                    <h2 className="text-xl font-semibold text-[#d5af3c] mb-4 text-center">{t.approvedSection}</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {approvedImages.map((img) => (
+                            <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">
+                                {img.url && (
+                                    <img
+                                        src={img.url}
+                                        alt="Approved"
+                                        className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
+                                    />
+                                )}
+                                {img.comment && (
+                                    <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         </>

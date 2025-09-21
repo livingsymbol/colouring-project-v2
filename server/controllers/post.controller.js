@@ -2,90 +2,7 @@ import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import cloudinary from "../utils/cloudinary.utils.js";
 import notifyAdmins from '../utils/notifyAdmins.js';
-
-//using multer
-
-// export const createPost = async (req, res) => {
-//     try {
-//         const { title, content } = req.body;
-
-//         if (!title && !content && !req.file) {
-//             return res.status(400).json({ message: "Content or image is required." });
-//         }
-
-//         let imageUrl = null;
-
-//         if (req.file) {
-//             try {
-//                 const uploadResult = cloudinary.uploader.upload_stream(
-//                     { folder: 'colouring-project/posts/images' },
-//                     (error, result) => {
-//                         if (error) {
-//                             console.error("Cloudinary upload error:", error);
-//                             return res.status(500).json({ message: "Image upload failed" });
-//                         }
-
-//                         imageUrl = result.secure_url;
-
-//                         // Save post after upload
-//                         const newPost = new Post({
-//                             author: req.user.id,
-//                             title,
-//                             content,
-//                             imageUrl,
-//                             isApproved: false,
-//                         });
-
-//                         newPost.save().then(() => {
-//                             return res.status(201).json({
-//                                 message: 'Post submitted for review',
-//                                 post: {
-//                                     _id: newPost._id,
-//                                     title: newPost.title,
-//                                     content: newPost.content,
-//                                     imageUrl: newPost.imageUrl,
-//                                 },
-//                             });
-//                         }).catch(err => {
-//                             return res.status(500).json({ message: 'Failed to save post', error: err.message });
-//                         });
-//                     }
-//                 );
-
-//                 // Pipe file buffer to Cloudinary stream
-//                 uploadResult.end(req.file.buffer);
-//                 return;
-
-//             } catch (err) {
-//                 console.error("Cloudinary error:", err);
-//                 return res.status(500).json({ message: "Image upload failed" });
-//             }
-//         } else {
-//             // No image case
-//             const newPost = new Post({
-//                 author: req.user.id,
-//                 title,
-//                 content,
-//                 imageUrl: null,
-//                 isApproved: false,
-//             });
-
-//             await newPost.save();
-
-//             return res.status(201).json({
-//                 message: 'Post submitted for review',
-//                 post: {
-//                     _id: newPost._id,
-//                     title: newPost.title,
-//                     content: newPost.content,
-//                     imageUrl: null,
-//                 },
-//             });
-//         }
-//     } catch (err) {
-//         res.status(500).json({ message: 'Failed to create post', error: err.message });
-//     }
-// };
+import PublishedImage from '../models/PublishedImage.js';
 
 export const createPost = async (req, res) => {
     try {
@@ -132,6 +49,52 @@ export const createPost = async (req, res) => {
     }
 };
 
+export const publishImage = async (req, res) => {
+    try {
+        const { image, comment, tab } = req.body;
+
+        if (!image && !comment && !tab) {
+            return res.status(400).json({ message: "Comment or image or tab is required." });
+        }
+
+        let url = "";
+
+        if (image && image.startsWith("data:image/")) {
+            try {
+                const uploadResult = await cloudinary.uploader.upload(image, {
+                    folder: `colouring-project/user-publised-images/${tab}`,
+                });
+                url = uploadResult.secure_url;
+            } catch (uploadErr) {
+                console.error("Cloudinary Upload Error:", uploadErr);
+                return res.status(500).json({ message: "Image upload failed." });
+            }
+        }
+
+        const newPublishedImage = new PublishedImage({
+            author: req.user.id,
+            url,
+            comment,
+            tab,
+            isImageApproved: false,
+            isCommentApproved: false,
+        });
+
+        await newPublishedImage.save();
+
+        // 🔔 Notify admins
+        await notifyAdmins(
+            "New Image Pending Approval",
+            `A new image on tab <b>${newPublishedImage.tab || "Untitled"}</b> has been submitted and is awaiting approval.`
+        );
+
+        res.status(201).json({ message: 'Post submitted for review', post: { _id: newPublishedImage._id, url: newPublishedImage.url, comment: newPublishedImage.comment, tab: newPublishedImage.tab } });
+
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to create post', error: err.message });
+    }
+};
+
 export const getAllApprovedPosts = async (req, res) => {
     try {
         const posts = await Post.find({
@@ -168,6 +131,49 @@ export const getAllApprovedPosts = async (req, res) => {
         res.json(filteredPosts);
     } catch (err) {
         res.status(500).json({ message: 'Failed to fetch posts', error: err.message });
+    }
+};
+
+export const getAllPublishedImagesByUser = async (req, res) => {
+    const { tab } = req.query;
+
+    try {
+        const publishedImages = await PublishedImage.find({
+            author: req.user.id,
+            tab: tab,
+            $or: [{ isCommentApproved: true }, { isImageApproved: true }]
+        })
+            .populate('author', 'username')
+            .sort({ createdAt: -1 });
+
+        const filteredImages = publishedImages
+            .map(publishedImage => {
+                const imageData = {
+                    _id: publishedImage._id,
+                    tab: publishedImage.tab,
+                    createdAt: publishedImage.createdAt,
+                    author: publishedImage.author,
+                };
+
+                let hasApprovedData = false;
+
+                if (publishedImage.isCommentApproved) {
+                    imageData.comment = publishedImage.comment;
+                    hasApprovedData = true;
+                }
+
+                if (publishedImage.isImageApproved) {
+                    imageData.url = publishedImage.url;
+                    hasApprovedData = true;
+                }
+
+                return hasApprovedData ? imageData : null;
+            })
+            .filter(Boolean);
+
+        res.json(filteredImages);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch images', error: err.message });
     }
 };
 
