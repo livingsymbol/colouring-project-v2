@@ -29,7 +29,7 @@ export const addComment = async (req, res) => {
                 "Comment Pending Review",
                 `A new comment on post <b>${postExists.title || postExists._id}</b> has been flagged and needs review.`
             );
-            res.status(400).json({ message: 'Foul language detected, comment sent for review', comment });
+            res.status(400).json({ message: 'Submitted', comment });
         }
     } catch (err) {
         res.status(500).json({ message: 'Failed to add comment', error: err.message });

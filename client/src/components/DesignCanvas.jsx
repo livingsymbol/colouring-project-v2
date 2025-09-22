@@ -170,7 +170,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
 
   const revealScore = () => {
     const NUM = isColours1 ? 1 : 2;
-    const { message, score } = gradeColours(colourArray, NUM);
+    const { message, score } = gradeColours(colourArray, NUM, locale);
 
     // Parse localStorage safely
     let existing = [];

@@ -34,6 +34,9 @@ export default function AdminNavbar() {
                 <NavLink to="/admin/edit" className={navLinkStyle}>
                     Edit Page
                 </NavLink>
+                <NavLink to="/admin/upload" className={navLinkStyle}>
+                    Upload Gallery<br />images
+                </NavLink>
                 <button
                     onClick={() => {
                         localStorage.clear();

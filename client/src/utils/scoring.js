@@ -506,13 +506,24 @@ export const SCORE_MESSAGE_MAP = {
 };
 
 export const SCORE_MESSAGES = {
-    [SCORE_MESSAGE_MAP.DuplicateColours]: "Duplicate colours are not harmonious.",
-    [SCORE_MESSAGE_MAP.IncompletePetals]: "Please fill all petals with colours.",
-    [SCORE_MESSAGE_MAP.Below50]: "Scored below 50%, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
-    [SCORE_MESSAGE_MAP.Below70]: "% harmony achieved, try again or see “Guidance”, section 4 - Colour theory in art and design. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
-    [SCORE_MESSAGE_MAP.Above70]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see “Guidance”, section 4 - Colour theory in art and design.",
-    [SCORE_MESSAGE_MAP.EightyFive]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see “Guidance”, section 4 - Colour theory in art and design.",
-    [SCORE_MESSAGE_MAP.FullHarmony]: "Great! 100% harmony achieved. Colourings 3, 4 & 5 have been unlocked.",
+    en: {
+        [SCORE_MESSAGE_MAP.DuplicateColours]: "Duplicate colours are not harmonious.",
+        [SCORE_MESSAGE_MAP.IncompletePetals]: "Please fill all petals with colours.",
+        [SCORE_MESSAGE_MAP.Below50]: "Scored below 50%, try again or see the “Colours - Colour theory in art and design” section. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
+        [SCORE_MESSAGE_MAP.Below70]: "% harmony achieved, try again or see the “Colours - Colour theory in art and design” section. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
+        [SCORE_MESSAGE_MAP.Above70]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see the “Colours - Colour theory in art and design” section.",
+        [SCORE_MESSAGE_MAP.EightyFive]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see the “Colours - Colour theory in art and design” section.",
+        [SCORE_MESSAGE_MAP.FullHarmony]: "Great, 100% harmony achieved! Colourings 3, 4 & 5 have been unlocked.",
+    },
+    ru: {
+        [SCORE_MESSAGE_MAP.DuplicateColours]: "Дублирование одного цвета нарушает гармонию.",
+        [SCORE_MESSAGE_MAP.IncompletePetals]: "Пожалуйста раскрасьте все лепестки.",
+        [SCORE_MESSAGE_MAP.Below50]: "Ваш результат ниже 50% — попробуйте снова или ознакомьтесь с разделом «Цвета — Теория цвета в искусстве и дизайне». Для перехода к раскрашиваниям 3, 4 и 5 необходимо набрать минимум 70%.",
+        [SCORE_MESSAGE_MAP.Below70]: "% гармонии достигнут — попробуйте снова или обратитесь к разделу «Цвета — Теория цвета в искусстве и дизайне». Для перехода к раскрашиваниям 3, 4 и 5 необходимо набрать минимум 70%.",
+        [SCORE_MESSAGE_MAP.Above70]: "% гармонии достигнут — раскрашивания 3, 4 и 5 разблокированы. Вы можете продолжить, попробовать снова или обратиться к разделу «Цвета — Теория цвета в искусстве и дизайне».",
+        [SCORE_MESSAGE_MAP.EightyFive]: "% гармонии достигнут — раскрашивания 3, 4 и 5 разблокированы. Вы можете продолжить, попробовать снова или обратиться к разделу «Цвета — Теория цвета в искусстве и дизайне».",
+        [SCORE_MESSAGE_MAP.FullHarmony]: "Отлично, достигнута 100% гармония. Раскрашивания 3, 4 и 5 разблокированы.",
+    }
 };
 
 export function rgbToHex(r, g, b) {
@@ -698,8 +709,8 @@ function calculateScore(colourArray, colomnCount, num) {
 
     // Step 1: Identify counts
     const perfectCount = colomnCount[2];
-    const wrongCount = colourArray.length - perfectCount; 
-    
+    const wrongCount = colourArray.length - perfectCount;
+
     // Step 2: Check for "same wrong column" rule
     let score = 100;
     const maxWrongInSameCol = Math.max(...WRONG_COLUMNS.map(col => colomnCount[col]));
@@ -748,45 +759,43 @@ function calculateScore(colourArray, colomnCount, num) {
 }
 
 // Grading function
-export const gradeColours = (colourArray, num) => {
+export const gradeColours = (colourArray, num, locale = "en") => {
+    const MESSAGES = SCORE_MESSAGES[locale] || SCORE_MESSAGES["en"]; // fallback to en
 
     if (containsWhite(colourArray)) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals], score: 0 };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.IncompletePetals], score: 0 };
     }
 
     if (!hasNoDuplicates(colourArray)) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours], score: 0 };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.DuplicateColours], score: 0 };
     }
 
     if (!correctOrderAndNoSameRow(colourArray, num)) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
     }
 
     if (!containsPrimaryColours(colourArray, num)) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.Below50], score: 49 };
     }
 
     const colomnCount = countColoursPerColumn(colourArray, num);
-    // console.log('colomnCount: ', colomnCount)
 
     if (colomnCount[2] === 0 && (colomnCount[0] === 12 || colomnCount[1] === 12 || colomnCount[3] === 12 || colomnCount[4] === 12)) {
         return {
-            message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%'), score: 85
-        }
+            message: MESSAGES[SCORE_MESSAGE_MAP.EightyFive].replace('%', '85%'),
+            score: 85
+        };
     }
 
-    const score = calculateScore(colourArray, colomnCount, num)
-
-    // console.log('score after calculations: ', score)
+    const score = calculateScore(colourArray, colomnCount, num);
 
     if (score === 100) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.FullHarmony], score };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.FullHarmony], score };
     } else if (score >= 70) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${score}%`), score };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.Above70].replace('%', `${score}%`), score };
     } else if (score >= 50) {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${score}%`), score };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.Below70].replace('%', `${score}%`), score };
     } else {
-        return { message: SCORE_MESSAGES[SCORE_MESSAGE_MAP.Below50], score };
+        return { message: MESSAGES[SCORE_MESSAGE_MAP.Below50], score };
     }
 };
-
