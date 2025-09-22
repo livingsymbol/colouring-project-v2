@@ -4,6 +4,7 @@ import sendEmail from '../utils/sendEmail.js';
 import Page from '../models/Page.js';
 import User from '../models/User.js';
 import PublishedImage from '../models/PublishedImage.js';
+import cloudinary from '../utils/cloudinary.utils.js';
 
 export async function getDashboardData(req, res) {
     try {
@@ -353,3 +354,47 @@ export const toggleNotifications = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 }
+
+// GET all images from a folder
+export const getGalleryImages = async (req, res) => {
+    try {
+        const { folder } = req.params;
+        const result = await cloudinary.search
+            .expression(`folder=${folder}`)
+            .sort_by("public_id", "desc")
+            .max_results(30)
+            .execute();
+
+        res.json(result.resources);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error fetching images" });
+    }
+};
+
+// UPLOAD image
+export const uploadGalleryImage = async (req, res) => {
+    try {
+        const { folder } = req.body; // folder = "gallery" or "errors"
+        const file = req.files.image.tempFilePath; // using express-fileupload / multer-temp
+        const result = await cloudinary.uploader.upload(file, {
+            folder: folder,
+        });
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error uploading image" });
+    }
+};
+
+// DELETE image
+export const deleteGalleryImage = async (req, res) => {
+    try {
+        const { folder, publicId } = req.params;
+        const result = await cloudinary.uploader.destroy(`${folder}/${publicId}`);
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error deleting image" });
+    }
+};

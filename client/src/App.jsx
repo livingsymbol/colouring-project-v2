@@ -15,6 +15,7 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import Layout from './components/Layout';
 import AdminLogin from './pages/AdminLogin';
 import AdminEditor from './pages/AdminEditor';
+import AdminImageUpload from './pages/AdminImageUpload.jsx';
 import AddPage from './pages/AddPage';
 import useGuestLogin from './hooks/useGuestLogin';
 import PdfViewer from './pages/PdfViewer';
@@ -81,6 +82,14 @@ export default function App() {
             element={
               <ProtectedRoutes requiredRole="admin">
                 <AdminEditor />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="upload"
+            element={
+              <ProtectedRoutes requiredRole="admin">
+                <AdminImageUpload />
               </ProtectedRoutes>
             }
           />

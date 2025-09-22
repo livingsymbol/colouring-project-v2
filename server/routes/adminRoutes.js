@@ -2,7 +2,9 @@ import { Router } from 'express';
 const router = Router();
 import verifyToken from '../middlewares/verifyToken.js';
 import requireAdmin from '../middlewares/requireAdmin.js';
-import { getDashboardData, approveComment, deleteComment, approvePost, deletePost, approveImage, deleteImage, getTabByLabel, patchTabByLabel, toggleNotifications, getNotificationsEnabled } from '../controllers/admin.controller.js';
+import {
+    getDashboardData, approveComment, deleteComment, approvePost, deletePost, approveImage, deleteImage, getTabByLabel, patchTabByLabel, toggleNotifications, getNotificationsEnabled, getGalleryImages, uploadGalleryImage, deleteGalleryImage
+} from '../controllers/admin.controller.js';
 
 router.get('/dashboard', verifyToken, requireAdmin, getDashboardData);
 
@@ -20,5 +22,9 @@ router.patch('/page/:slug/:label', patchTabByLabel);
 
 router.get('/notifications', verifyToken, requireAdmin, getNotificationsEnabled);
 router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
+
+router.get("/upload/:folder", getGalleryImages);
+router.post("/upload", uploadGalleryImage);
+router.delete("/upload/:folder/:publicId", deleteGalleryImage);
 
 export default router;
