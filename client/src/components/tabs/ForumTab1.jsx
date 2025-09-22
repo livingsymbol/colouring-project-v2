@@ -189,29 +189,31 @@ export default function ForumTab1() {
                     </button>
                 </div>
             )}
-<br />
-<hr />
+            <br />
             {/* Approved Images Grid */}
             {approvedImages.length > 0 && (
-                <div className="mt-8">
-                    <h2 className="text-xl font-semibold text-[#d5af3c] mb-4 text-center">{t.approvedSection}</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {approvedImages.map((img) => (
-                            <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">
-                                {img.url && (
-                                    <img
-                                        src={img.url}
-                                        alt="Approved"
-                                        className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
-                                    />
-                                )}
-                                {img.comment && (
-                                    <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
-                                )}
-                            </div>
-                        ))}
+                <>
+                    <hr />
+                    <div className="mt-8">
+                        <h2 className="text-xl font-semibold text-[#d5af3c] mb-4 text-center">{t.approvedSection}</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {approvedImages.map((img) => (
+                                <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">
+                                    {img.url && (
+                                        <img
+                                            src={img.url}
+                                            alt="Approved"
+                                            className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
+                                        />
+                                    )}
+                                    {img.comment && (
+                                        <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </>
             )}
         </>
     );

@@ -372,16 +372,14 @@ export default function AdminDashboard() {
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
 
-            const updatedItem = res.data.post || res.data.comment;
+            const updatedItem = res.data.post || res.data.comment || res.data.image;
 
             setData((prev) => {
                 if (type === "posts") {
-                    // Remove the post from all buckets
                     let newApproved = prev.approvedPosts.filter((p) => p._id !== id);
                     let newPartial = prev.partiallyApprovedPosts.filter((p) => p._id !== id);
                     let newPending = prev.pendingPosts.filter((p) => p._id !== id);
 
-                    // Re-insert into the correct bucket based on latest state
                     if (updatedItem.isApproved) {
                         newApproved = [...newApproved, updatedItem];
                     } else if (updatedItem.isContentApproved || updatedItem.isImageApproved) {
@@ -406,10 +404,30 @@ export default function AdminDashboard() {
                     };
                 }
 
+                if (type === "image") {
+                    let newApproved = prev.approvedImages.filter((i) => i._id !== id);
+                    let newPartial = prev.partiallyApprovedImages.filter((i) => i._id !== id);
+                    let newPending = prev.pendingImages.filter((i) => i._id !== id);
+
+                    if (updatedItem.isImageApproved && updatedItem.isCommentApproved) {
+                        newApproved = [...newApproved, updatedItem];
+                    } else if (updatedItem.isImageApproved || updatedItem.isCommentApproved) {
+                        newPartial = [...newPartial, updatedItem];
+                    } else {
+                        newPending = [...newPending, updatedItem];
+                    }
+
+                    return {
+                        ...prev,
+                        approvedImages: newApproved,
+                        partiallyApprovedImages: newPartial,
+                        pendingImages: newPending,
+                    };
+                }
+
                 return prev;
             });
 
-            // Clear approval changes for this item
             setApprovalChanges((prev) => {
                 const copy = { ...prev };
                 delete copy[id];
@@ -442,6 +460,13 @@ export default function AdminDashboard() {
                         ...prev,
                         approvedComments: prev.approvedComments.filter((c) => c._id !== id),
                         flaggedComments: prev.flaggedComments.filter((c) => c._id !== id),
+                    };
+                } else if (type === "image") {
+                    return {
+                        ...prev,
+                        approvedImages: prev.approvedImages.filter((i) => i._id !== id),
+                        partiallyApprovedImages: prev.partiallyApprovedImages.filter((i) => i._id !== id),
+                        pendingImages: prev.pendingImages.filter((i) => i._id !== id),
                     };
                 }
                 return prev;
@@ -519,7 +544,7 @@ export default function AdminDashboard() {
             render: (post) => (
                 <ImageCard
                     post={post}
-                    onDelete={(id) => handleDelete("images", id)}
+                    onDelete={(id) => handleDelete("image", id)}
                     loading={actionLoading}
                     approvalChanges={approvalChanges}
                     setApprovalChanges={setApprovalChanges}

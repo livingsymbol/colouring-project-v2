@@ -104,14 +104,28 @@ export const approveComment = async (req, res) => {
 export const deleteComment = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleted = await Comment.findByIdAndDelete(id);
-        if (!deleted) return res.status(404).json({ message: 'Comment not found' });
 
-        // Also delete related replies
+        const comment = await Comment.findById(id);
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+
+        // If it's a reply (has a parentComment), just delete it
+        if (comment.parentComment) {
+            await Comment.findByIdAndDelete(id);
+            return res.json({ message: 'Reply deleted successfully' });
+        }
+
+        // If it's a top-level comment, delete it and all its replies
+        await Comment.findByIdAndDelete(id);
         await Comment.deleteMany({ parentComment: id });
-        res.json({ message: 'Comment and replies deleted successfully' });
+
+        res.json({ message: 'Comment and its replies deleted successfully' });
     } catch (err) {
-        res.status(500).json({ message: 'Failed to delete comment', error: err.message });
+        res.status(500).json({
+            message: 'Failed to delete comment',
+            error: err.message,
+        });
     }
 };
 

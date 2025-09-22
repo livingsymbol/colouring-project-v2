@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import dayjs from 'dayjs'; // Optional: for pretty date formatting
-import { Loader2 } from 'lucide-react';
+import dayjs from 'dayjs';
+import { Loader2, Trash2 } from 'lucide-react';
+import { jwtDecode } from 'jwt-decode'; 
 
 export default function Post() {
     const { id } = useParams();
@@ -13,8 +14,22 @@ export default function Post() {
     const [loading, setLoading] = useState(true);
     const [commentLoading, setCommentLoading] = useState(false);
     const [replyLoading, setReplyLoading] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const token = localStorage.getItem('token');
+
+    useEffect(() => {
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                if (decoded.role === 'admin') {
+                    setIsAdmin(true);
+                }
+            } catch (err) {
+                console.error("Error decoding token:", err);
+            }
+        }
+    }, [token]);
 
     useEffect(() => {
         fetchPostandComments();
@@ -33,7 +48,6 @@ export default function Post() {
         }
     };
 
-
     const handleCommentSubmit = async () => {
         setCommentLoading(true);
         try {
@@ -50,7 +64,6 @@ export default function Post() {
             setCommentLoading(false);
         }
     };
-
 
     const handleReplySubmit = async (commentId) => {
         setReplyLoading((prev) => ({ ...prev, [commentId]: true }));
@@ -69,8 +82,20 @@ export default function Post() {
         }
     };
 
+    const handleDeleteComment = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this comment/reply?")) return;
+        try {
+            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/admin/comments/${id}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
+            fetchPostandComments();
+        } catch (err) {
+            alert(err.response?.data?.message || 'Error deleting comment');
+        }
+    };
+
     return (
-        <div className="max-w-4xl mx-auto p-8 space-y-10 bg-white rounded-xl  border-2">
+        <div className="max-w-4xl mx-auto p-8 space-y-10 bg-white rounded-xl border-2">
             {loading ? (
                 <div className="flex justify-center items-center min-h-[300px]">
                     <Loader2 className="animate-spin text-[#404040]" size={36} />
@@ -111,7 +136,6 @@ export default function Post() {
                         {/* Add Comment */}
                         <div className="border-t pt-8 space-y-4">
                             <h2 className="text-2xl font-semibold text-gray-800">Leave a Comment</h2>
-
                             <div className="bg-gray-50 border border-gray-300 rounded-xl shadow-sm p-4 space-y-3">
                                 <textarea
                                     className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm resize-none min-h-[100px] bg-white"
@@ -120,12 +144,11 @@ export default function Post() {
                                     value={commentInput}
                                     onChange={(e) => setCommentInput(e.target.value)}
                                 />
-
                                 <div className="flex justify-end">
                                     <button
                                         onClick={handleCommentSubmit}
                                         disabled={commentLoading || !commentInput.trim()}
-                                            className="flex gap-x-2 bg-[#c7b73a] text-black border-2 font-bold px-4 py-2 rounded-lg shadow hover:bg-[#c7b63ada] transition-all duration-200 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="flex gap-x-2 bg-[#c7b73a] text-black border-2 font-bold px-4 py-2 rounded-lg shadow hover:bg-[#c7b63ada] transition-all duration-200 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {commentLoading ? (
                                             <>
@@ -140,7 +163,6 @@ export default function Post() {
                             </div>
                         </div>
 
-
                         {/* Comments */}
                         <div className="space-y-6 p-2 md:p-6 border-t bg-gray-100 rounded-xl">
                             <h2 className="text-2xl font-semibold mb-4 text-gray-800">Comments</h2>
@@ -150,13 +172,23 @@ export default function Post() {
                             ) : (
                                 comments.map((comment) => (
                                     <div key={comment._id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-4 shadow-sm">
-
                                         {/* Comment Header */}
-                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600">
+                                        <div className="flex justify-between text-sm text-gray-600">
                                             <span className="font-semibold text-blue-700">@{comment.author.username}</span>
-                                            <span className="text-xs text-gray-400">
-                                                {dayjs(comment.createdAt).format('MMM D, YYYY h:mm A')}
-                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-xs text-gray-400">
+                                                    {dayjs(comment.createdAt).format('MMM D, YYYY h:mm A')}
+                                                </span>
+                                                {isAdmin && (
+                                                    <button
+                                                        onClick={() => handleDeleteComment(comment._id)}
+                                                        className="p-2 rounded bg-red-200 text-red-600 hover:text-red-800"
+                                                        title="Delete comment"
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
 
                                         {/* Comment Body */}
@@ -169,9 +201,20 @@ export default function Post() {
                                                     <div key={reply._id} className="bg-gray-50 border border-gray-200 rounded-lg p-3 space-y-1">
                                                         <div className="flex justify-between text-sm text-gray-600">
                                                             <span className="font-medium text-blue-700">@{reply.author.username}</span>
-                                                            <span className="text-xs text-gray-400">
-                                                                {dayjs(reply.createdAt).format('MMM D, YYYY h:mm A')}
-                                                            </span>
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="text-xs text-gray-400">
+                                                                    {dayjs(reply.createdAt).format('MMM D, YYYY h:mm A')}
+                                                                </span>
+                                                                {isAdmin && (
+                                                                    <button
+                                                                        onClick={() => handleDeleteComment(reply._id)}
+                                                                        className="p-2 rounded bg-red-200 text-red-600 hover:text-red-800"
+                                                                        title="Delete reply"
+                                                                    >
+                                                                        <Trash2 size={14} />
+                                                                    </button>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                         <p className="text-gray-700 text-sm whitespace-pre-wrap">{reply.content}</p>
                                                     </div>
@@ -231,12 +274,9 @@ export default function Post() {
                                 ))
                             )}
                         </div>
-
                     </div>
                 )
             )}
         </div>
     );
-
 }
-

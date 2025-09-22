@@ -1106,7 +1106,7 @@ export default function GalleryTab3() {
 
                 <>
                     <h2 className="text-xl">Восприимчивость</h2>
-                    <h3>Цветок, связанный с восприимчивостью: Gladiolus x hortulanus</h3>
+                    <h3>Цветок, связанный с восприимчивостью: Gladiolus xhortulanus</h3>
                     <br />
                     <img
                         src="/images/gt3.7.png"
