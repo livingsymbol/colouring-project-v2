@@ -5,6 +5,7 @@ import requireAdmin from '../middlewares/requireAdmin.js';
 import {
     getDashboardData, approveComment, deleteComment, approvePost, deletePost, approveImage, deleteImage, getTabByLabel, patchTabByLabel, toggleNotifications, getNotificationsEnabled, getGalleryImages, uploadGalleryImage, deleteGalleryImage
 } from '../controllers/admin.controller.js';
+import { upload } from '../utils/multer.utils.js';
 
 router.get('/dashboard', verifyToken, requireAdmin, getDashboardData);
 
@@ -23,8 +24,8 @@ router.patch('/page/:slug/:label', patchTabByLabel);
 router.get('/notifications', verifyToken, requireAdmin, getNotificationsEnabled);
 router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
 
-router.get("/upload/:folder", getGalleryImages);
-router.post("/upload", uploadGalleryImage);
-router.delete("/upload/:folder/:publicId", deleteGalleryImage);
+router.get("/upload/:folder", verifyToken, requireAdmin, upload.single('image'), getGalleryImages);
+router.post("/upload", verifyToken, requireAdmin, upload.single('image'), uploadGalleryImage);
+router.delete("/upload/:folder/:publicId", verifyToken, requireAdmin, upload.single('image'), deleteGalleryImage);
 
 export default router;

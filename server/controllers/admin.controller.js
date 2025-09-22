@@ -360,30 +360,53 @@ export const getGalleryImages = async (req, res) => {
     try {
         const { folder } = req.params;
         const result = await cloudinary.search
-            .expression(`folder=${folder}`)
+            .expression(`folder=colouring-project/${folder}`)
             .sort_by("public_id", "desc")
-            .max_results(30)
             .execute();
 
-        res.json(result.resources);
+        res.json({
+            success: true,
+            resources: result.resources,
+            total: result.total_count
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Error fetching images" });
+        res.status(500).json({
+            success: false,
+            error: "Error fetching images",
+            resources: []
+        });
     }
 };
 
 // UPLOAD image
 export const uploadGalleryImage = async (req, res) => {
     try {
-        const { folder } = req.body; // folder = "gallery" or "errors"
-        const file = req.files.image.tempFilePath; // using express-fileupload / multer-temp
-        const result = await cloudinary.uploader.upload(file, {
-            folder: folder,
+        const { folder, image } = req.body; // folder = "gallery" or "errors"
+        const result = null;
+        if (image && image.startsWith("data:image/")) {
+            try {
+                const res = await cloudinary.uploader.upload(image, {
+                    folder: `colouring-project/${folder}`,
+                });
+                result = res;
+            } catch (uploadErr) {
+                console.error("Cloudinary Upload Error:", uploadErr);
+                return res.status(500).json({ message: "Image upload failed." });
+            }
+        }
+
+        res.json({
+            success: true,
+            message: "Image uploaded successfully",
+            data: result
         });
-        res.json(result);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Error uploading image" });
+        res.status(500).json({
+            success: false,
+            error: "Error uploading image"
+        });
     }
 };
 
@@ -391,10 +414,20 @@ export const uploadGalleryImage = async (req, res) => {
 export const deleteGalleryImage = async (req, res) => {
     try {
         const { folder, publicId } = req.params;
-        const result = await cloudinary.uploader.destroy(`${folder}/${publicId}`);
-        res.json(result);
+        const result = await cloudinary.uploader.destroy(
+            `colouring-project/${folder}/${publicId}`
+        );
+
+        res.json({
+            success: true,
+            message: "Image deleted successfully",
+            data: result
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Error deleting image" });
+        res.status(500).json({
+            success: false,
+            error: "Error deleting image"
+        });
     }
 };
