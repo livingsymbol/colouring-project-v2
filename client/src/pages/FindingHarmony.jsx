@@ -12,7 +12,7 @@ import useGetContent from '../hooks/useGetContent';
 import { useLocale } from '../context/LocaleContext';
 
 
-export default function FindingHarmony() {
+export default function divFindingHarmony() {
   // const slug = window.location.pathname.split('/')[1];
   // const { page, loading, error } = useGetContent(slug, 'en');
 
@@ -89,7 +89,7 @@ export default function FindingHarmony() {
 
   return (
     locale === "en" ?
-      <>
+      <div className='p-2 sm:p-4'>
         <Heading>Finding Harmony</Heading>
         <Paragraph className="text-center italic">
           “Above all, it is the will for progress and self-purification which lights the fire. The will for progress. Those who have a strong will, when they turn it towards spiritual progress and purification, automatically light the fire within themselves.”
@@ -112,9 +112,9 @@ export default function FindingHarmony() {
 
         </Paragraph>
         <Tabs items={tabsData} />
-      </>
+      </div>
       :
-      <>
+      <div className='p-2 sm:p-4'>
         <Heading>В поисках гармонии</Heading>
         <Paragraph className="text-center italic">
           «Прежде всего, это воля к прогрессу и самоочищению зажигает огонь. Воля к прогрессу. Те, кто обладают сильной волей и направляют её на духовное развитие и очищение, автоматически зажигают огонь внутри себя.»
@@ -142,6 +142,6 @@ export default function FindingHarmony() {
         </Paragraph>
         <br />
         <Tabs items={tabsDataRu} />
-      </>
+      </div>
   )
 }

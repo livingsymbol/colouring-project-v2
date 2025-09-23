@@ -11,10 +11,15 @@ export default function ColouringWheelPicker({ isRYB, onColorSelect, size = 300 
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 640) {
+            const width = window.innerWidth;
+            if (window.innerWidth < 400) {
                 setWheelSize(250); // small screens
+        }else if (window.innerWidth < 1000) {
+                setWheelSize(300); // small screens
+            } else if (window.innerWidth < 1400){
+                setWheelSize(220); 
             } else {
-                setWheelSize(300); // default
+                setWheelSize(300); // large desktops
             }
         };
 
@@ -31,9 +36,9 @@ export default function ColouringWheelPicker({ isRYB, onColorSelect, size = 300 
             </h1>
 
             {/* Wheels */}
-            <div className="flex flex-col md:flex-row gap-y-6 md:gap-y-0 md:gap-x-6">
+            <div className="flex flex-col lg:flex-row gap-y-4 justify-around">
                 {/* Tinted */}
-                <div className="w-full space-y-4">
+                <div className="p-1 w-full space-y-4">
                     <h1 className="border-2 py-3 border-[#d5af3c] rounded-lg font-bold text-[#d5af3c] text-lg text-center">
                         {locale === "en" ? "Tinted Colour" : "Светлые тона"}
                     </h1>
@@ -47,7 +52,7 @@ export default function ColouringWheelPicker({ isRYB, onColorSelect, size = 300 
                 </div>
 
                 {/* Shaded */}
-                <div className="w-full space-y-4">
+                <div className="p-1 w-full space-y-4">
                     <h1 className="border-2 py-3 border-[#d5af3c] rounded-lg font-bold text-[#d5af3c] text-lg text-center">
                         {locale === "en" ? "Shaded Colour" : "Тёмные оттенки"}
                     </h1>

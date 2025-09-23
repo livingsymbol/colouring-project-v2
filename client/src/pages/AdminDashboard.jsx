@@ -208,8 +208,8 @@ function ImageCard({ post, onApprove, onDelete, approvalChanges, setApprovalChan
                     value={approvalChanges[post._id]?.tab ?? post.tab}
                     onChange={(e) => updateApproval("tab", e.target.value)}
                 >
-                    <option value="your-colourings">Your own colourings</option>
-                    <option value="gallery-harmonized">Gallery images harmonized</option>
+                    <option value="Your own colourings">Your own colourings</option>
+                    <option value="Gallery images harmonized">Gallery images harmonized</option>
                 </select>
             </div>
 
@@ -544,6 +544,7 @@ export default function AdminDashboard() {
             render: (post) => (
                 <ImageCard
                     post={post}
+                    onApprove={(id) => handleApprove("image", id)}
                     onDelete={(id) => handleDelete("image", id)}
                     loading={actionLoading}
                     approvalChanges={approvalChanges}

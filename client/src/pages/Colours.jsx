@@ -88,7 +88,7 @@ export default function Colours() {
 
   return (
     locale === "en" ?
-      <>
+      <div className='p-2 sm:p-4'>
         <Heading>Colours</Heading>
         <Paragraph>
           To explore the colour arrangements with integrity, we turned to multiple scientific fields. Each discipline brought unique insights that enriched our understanding of how colours work - not just in form and perception, but in experience and consciousness.
@@ -99,8 +99,8 @@ export default function Colours() {
         </Paragraph>
         <br />
         <Tabs items={tabsData} />
-      </> :
-      <>
+      </div> :
+      <div className='p-2 sm:p-4'>
         <Heading>Цвета
         </Heading>
         <Paragraph>
@@ -114,6 +114,6 @@ export default function Colours() {
         </Paragraph>
         <br />
         <Tabs items={tabsDataRu} />
-      </>
+      </div>
   )
 }

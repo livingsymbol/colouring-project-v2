@@ -28,7 +28,7 @@ export default function ForumAndColouring() {
   ];
 
   return (
-    <>
+    <div className='p-2 sm:p-4'>
       <Heading>
         {locale === 'ru' ? 'Форум и ваши раскраски' : 'Forum & Your Colourings'}
       </Heading>
@@ -39,6 +39,6 @@ export default function ForumAndColouring() {
       </Paragraph>
       <br />
       <Tabs items={locale === 'ru' ? tabsDataRu : tabsDataEn} />
-    </>
+    </div>
   );
 }

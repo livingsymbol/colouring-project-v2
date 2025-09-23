@@ -24,7 +24,7 @@ router.patch('/page/:slug/:label', patchTabByLabel);
 router.get('/notifications', verifyToken, requireAdmin, getNotificationsEnabled);
 router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
 
-router.get("/upload/:folder", verifyToken, requireAdmin, upload.single('image'), getGalleryImages);
+router.get("/upload/:folder", verifyToken, requireAdmin, getGalleryImages);
 router.post("/upload", verifyToken, requireAdmin, upload.single('image'), uploadGalleryImage);
 router.delete("/upload/:folder/:publicId", verifyToken, requireAdmin, upload.single('image'), deleteGalleryImage);
 

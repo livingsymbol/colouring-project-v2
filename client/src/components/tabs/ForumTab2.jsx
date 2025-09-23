@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "../../context/LocaleContext";
 import Paragraph from "../Paragraph";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function ForumTab2() {
     const { locale } = useLocale();
-    const tabName = "Gallery Images harmonized";
+    const tabName = "Gallery images harmonized";
 
     const [approvedImages, setApprovedImages] = useState([]);
 
@@ -37,7 +39,6 @@ export default function ForumTab2() {
             <>
                 <hr />
                 <div className="mt-8">
-                    <h2 className="text-xl font-semibold text-[#d5af3c] mb-4 text-center">{t.approvedSection}</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {approvedImages.map((img) => (
                             <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">

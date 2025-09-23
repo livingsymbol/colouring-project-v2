@@ -68,7 +68,7 @@ export default function Home() {
     locale === "en" ?
       <div>
         <Heading>{page.title}</Heading>
-        <div className="sm:p-4">
+        <div className="p-2 sm:p-4">
           <Paragraph className="italic text-right">
             “Out of the sphere of Mind he had arisen,<br />
             He had left the reign of Nature’s hues and shades;<br />
@@ -130,7 +130,7 @@ export default function Home() {
       </div> :
       <div>
         <Heading> Живой Символ Матери</Heading>
-        <div className="sm:p-4">
+        <div className="p-2 sm:p-4">
           <Paragraph className="italic text-right">
             «Он вышел за пределы сфер Ума,<br />
             Покинул царство красок и оттенков Природы;<br />

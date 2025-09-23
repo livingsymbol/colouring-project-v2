@@ -34,11 +34,11 @@ export default function Gallery() {
   const t = labels[locale];
 
   return (
-    <>
+    <div className='p-2 sm:p-4'>
       <Heading>{t.heading}</Heading>
       <Paragraph>{t.paragraph}</Paragraph>
       <br />
       <Tabs items={t.tabs} />
-    </>
+    </div>
   );
 }

@@ -28,7 +28,7 @@ export default function AspirationAtWork() {
   const { locale } = useLocale();
   return (
     locale === "en" ?
-      <>
+      <div className='p-2 sm:p-4'>
         <Heading>Aspiration At Work</Heading>
         <Paragraph>
           Incorporating colour into the meditation and experience of the Mother’s symbol allows us to transform what would be a static visual into a dynamic spiritual tool. As individuals meditate, the colour of the symbol changes in resonance with their current emotional and spiritual state.
@@ -99,9 +99,9 @@ export default function AspirationAtWork() {
         </Paragraph>
         <br />
         <Tabs items={tabsData} />
-      </>
+      </div>
       :
-      <>
+      <div className='p-2 sm:p-4'>
         <Heading>Стремление в действии</Heading>
         <Paragraph>
           Включение цвета в медитацию и опыт созерцания Символа Матери позволяет превратить статическое изображение в динамический духовный инструмент. В процессе медитации цвет символа изменяется, резонируя с текущим эмоциональным и духовным состоянием человека.
@@ -166,6 +166,6 @@ export default function AspirationAtWork() {
         </Paragraph>
         <br />
         <Tabs items={tabsDataRu} />
-      </>
+      </div>
   )
 }

@@ -2110,7 +2110,7 @@ function SymbolText(props) {
         >
           <tspan y="1.0274582" x="401.87837">
 
-            О
+            о
           </tspan>
         </text>
         <text
@@ -2135,7 +2135,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-28.809067" x="422.00074">
-            Р
+            р
 
           </tspan>
         </text>
@@ -2148,7 +2148,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-43.569505" x="430.5507">
-            О
+            о
 
           </tspan>
         </text>
@@ -2161,7 +2161,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-57.588808" x="438.96565">
-            Т
+            т
 
           </tspan>
         </text>
@@ -2174,7 +2174,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-71.007167" x="445.49864">
-            У
+            a
           </tspan>
         </text>
         <text
@@ -2316,7 +2316,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-198.80493" x="-35.723405">
-            А
+            а
           </tspan>
         </text>
         <text
@@ -2328,7 +2328,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-199.56415" x="-17.69661">
-            В
+            в
           </tspan>
         </text>
         <text
@@ -2340,7 +2340,8 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-199.70584" x="-.7775421">
-            Е
+            н
+
           </tspan>
         </text>
         <text
@@ -2352,7 +2353,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-199.38454" x="14.287445">
-            Н
+            o
           </tspan>
         </text>
         <text
@@ -2375,7 +2376,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-198.27179" x="33.862733">
-            С
+            с
           </tspan>
         </text>
         <text
@@ -2387,7 +2388,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-196.953" x="47.843217">
-            Т
+            т
           </tspan>
         </text>
 
@@ -2401,7 +2402,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-195.66947" x="61.52392">
-            В
+            ь
           </tspan>
         </text>
         <text
@@ -2415,7 +2416,6 @@ function SymbolText(props) {
         >
           <tspan y="-192.75543" x="81.234928">
 
-            О
           </tspan>
         </text>
 

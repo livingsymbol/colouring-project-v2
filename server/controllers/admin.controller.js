@@ -383,7 +383,7 @@ export const getGalleryImages = async (req, res) => {
 export const uploadGalleryImage = async (req, res) => {
     try {
         const { folder, image } = req.body; // folder = "gallery" or "errors"
-        const result = null;
+        let result = null;
         if (image && image.startsWith("data:image/")) {
             try {
                 const res = await cloudinary.uploader.upload(image, {
