@@ -51,6 +51,7 @@ export async function getDashboardData(req, res) {
                 { isImageApproved: true },
             ],
         })
+            .sort({ createdAt: 1 });
 
         // 6. Fully unapproved published images (neither comment nor image approved)
         const pendingImages = await PublishedImage.find({
@@ -67,6 +68,7 @@ export async function getDashboardData(req, res) {
                 { isCommentApproved: false, isImageApproved: true },
             ],
         })
+            .sort({ createdAt: 1 });
 
         res.json({
             approvedPosts,
