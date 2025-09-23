@@ -113,3 +113,13 @@ body {
         background-position: 100px 100px;
     }
 }
+
+/* Hide scrollbar on Chrome, Safari, Edge */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar on Firefox */
+.scrollbar-hide {
+    scrollbar-width: none;
+}

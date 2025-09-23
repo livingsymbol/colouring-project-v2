@@ -41,23 +41,38 @@ export default function ForumTab2() {
                 <div className="mt-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {approvedImages.map((img) => (
-                            <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">
-                                {img.url && (
-                                    <img
-                                        src={img.url}
-                                        alt="Approved"
-                                        className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
-                                    />
-                                )}
-                                {img.comment && (
-                                    <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
-                                )}
+                            < div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block" >
+
+                                <div className="mt-1 mx-1 flex flex-col xl:flex-row sm:items-center sm:justify-between gap-y-1 text-sm text-gray-600">
+                                    <span className="bg-blue-100 border-2 text-blue-700 px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">@{img.author.username}</span>
+                                    <span className="text-sm text-gray-500">
+                                        {new Date(img.createdAt).toLocaleString(undefined, {
+                                            dateStyle: 'medium',
+                                            timeStyle: 'short',
+                                        })}
+                                    </span>
+                                </div>
+                                {
+                                    img.url && (
+                                        <img
+                                            src={img.url}
+                                            alt="Approved"
+                                            className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
+                                        />
+                                    )
+                                }
+                                {
+                                    img.comment && (
+                                        <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
+                                    )
+                                }
                             </div>
                         ))}
                     </div>
                 </div>
             </>
-        )}
+        )
+        }
     </>
     );
 }

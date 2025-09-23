@@ -139,7 +139,6 @@ export const getAllPublishedImagesByUser = async (req, res) => {
 
     try {
         const publishedImages = await PublishedImage.find({
-            author: req.user.id,
             tab: tab,
             $or: [{ isCommentApproved: true }, { isImageApproved: true }]
         })
