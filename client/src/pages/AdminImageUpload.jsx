@@ -151,7 +151,7 @@ export default function AdminImageUpload() {
                 {/* Folder Selector */}
                 <div className="bg-white rounded-lg shadow p-6">
                     <div className="flex gap-4 items-center">
-                        <span className="font-medium text-gray-700">Choose folder:</span>
+                        <span className="font-medium text-gray-700">Choose tab:</span>
                         <select
                             value={folder}
                             onChange={(e) => setFolder(e.target.value)}
