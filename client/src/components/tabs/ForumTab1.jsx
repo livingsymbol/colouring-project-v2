@@ -199,6 +199,25 @@ export default function ForumTab1() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {approvedImages.map((img) => (
                                 <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">
+                                    <div className="mt-1 mx-1 flex flex-col xl:flex-row sm:items-center sm:justify-between gap-y-1 text-sm text-gray-600">
+                                        <span className="bg-blue-100 border-2 text-blue-700 px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">
+                                            {(() => {
+                                                try {
+                                                    const user = JSON.parse(localStorage.getItem("user"));
+                                                    return user?.username === img.author.username ? "You" : `@${img.author.username}`;
+                                                } catch {
+                                                    return `@${img.author.username}`;
+                                                }
+                                            })()}
+                                        </span>
+                                        <span className="text-sm text-gray-500">
+                                            {new Date(img.createdAt).toLocaleString(undefined, {
+                                                dateStyle: "medium",
+                                                timeStyle: "short",
+                                            })}
+                                        </span>
+                                    </div>
+
                                     {img.url && (
                                         <img
                                             src={img.url}

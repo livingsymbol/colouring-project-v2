@@ -109,11 +109,11 @@ export default function ForumTab3() {
             </Paragraph>
 
             <br />
-            <div className="flex justify-between items-center mb-8 md:mb-16 border-b-2 p-4">
-                <h1 className="text-2xl sm:text-3xl font-bold text-[#404040]">Forum</h1>
+            <div className="flex justify-between items-center mb-8 md:mb-16 border-b-2 p-2">
+                <h1 className="text-xl sm:text-3xl font-bold text-[#404040]">Forum</h1>
                 <button
                     onClick={() => setShowCreate((prev) => !prev)}
-                    className="bg-[#c7b73a] text-black border-2 font-bold px-4 py-2 rounded-lg shadow hover:bg-[#c7b63ada] hover:-translate-y-1 duration-200 transition-all"
+                    className="bg-[#c7b73a] text-black border-2 font-bold p-2 rounded-lg shadow hover:bg-[#c7b63ada] hover:-translate-y-1 duration-200 transition-all"
                 >
                     {showCreate ? "Cancel" : "+ Create Post"}
                 </button>
@@ -193,7 +193,7 @@ Your signature / nickname
                 {posts.map((post) => (
                     <div
                         key={post._id}
-                        className="p-4 border-2 bg-gray-200 rounded-2xl shadow-md space-y-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-200 cursor-pointer"
+                        className="p-4 border-2 bg-gray-200 rounded-2xl shadow-md space-y-4 hover:shadow-xl transition-all duration-200 cursor-pointer"
                         onClick={() => navigate(`/forum/post/${post._id}`)}
                     >
                         {/* User Info Row */}
