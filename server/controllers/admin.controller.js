@@ -11,7 +11,7 @@ export async function getDashboardData(req, res) {
         // 1. Fully approved posts
         const approvedPosts = await Post.find({ isApproved: true })
             .populate('author', 'username')
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         // 2. Fully unapproved posts (neither content nor image approved)
         const pendingPosts = await Post.find({
@@ -20,7 +20,7 @@ export async function getDashboardData(req, res) {
             isImageApproved: false,
         })
             .populate('author', 'username')
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         // 3. Partially approved posts (only one of content/image approved)
         const partiallyApprovedPosts = await Post.find({
@@ -31,19 +31,19 @@ export async function getDashboardData(req, res) {
             ],
         })
             .populate('author', 'username')
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         // 4. Flagged comments (including replies)
         const flaggedComments = await Comment.find({ isFlagged: true })
             .populate('author', 'username')
             .populate('post', 'content')
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         // 5. Flagged comments (including replies)
         const approvedComments = await Comment.find({ isApproved: true })
             .populate('author', 'username')
             .populate('post', 'content')
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         const approvedImages = await PublishedImage.find({
             $and: [
@@ -51,7 +51,7 @@ export async function getDashboardData(req, res) {
                 { isImageApproved: true },
             ],
         })
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         // 6. Fully unapproved published images (neither comment nor image approved)
         const pendingImages = await PublishedImage.find({
@@ -59,7 +59,7 @@ export async function getDashboardData(req, res) {
             isImageApproved: false,
         })
             .populate('author', 'username')
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         // 7. Partially approved published images (only one of comment/image approved)
         const partiallyApprovedImages = await PublishedImage.find({
@@ -68,7 +68,7 @@ export async function getDashboardData(req, res) {
                 { isCommentApproved: false, isImageApproved: true },
             ],
         })
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: -1 });
 
         res.json({
             approvedPosts,
