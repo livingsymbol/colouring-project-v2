@@ -57,17 +57,21 @@ export default function ForumTab1() {
     const [newPublishedImage, setNewPublishedImage] = useState({ tab: "", comment: "", image: null });
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isPosting, setIsPosting] = useState(false);
+    const [loading, setLoading] = useState(true);
+
 
     const [approvedImages, setApprovedImages] = useState([]);
 
     // Fetch approved images on component mount
     useEffect(() => {
         const fetchApprovedImages = async () => {
+            setLoading(true)
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts/image?tab=${tabName}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
                 setApprovedImages(res.data);
+                setLoading(false)
             } catch (err) {
                 console.error(err);
                 toast.error("Failed to fetch approved images");
@@ -191,49 +195,55 @@ export default function ForumTab1() {
             )}
             <br />
             {/* Approved Images Grid */}
-            {approvedImages.length > 0 && (
-                <>
-                    <hr />
-                    <div className="mt-8">
-                        <h2 className="text-xl font-semibold text-[#d5af3c] mb-4 text-center">{t.approvedSection}</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {approvedImages.map((img) => (
-                                <div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block">
-                                    <div className="mt-1 mx-1 flex flex-col xl:flex-row sm:items-center sm:justify-between gap-y-1 text-sm text-gray-600">
-                                        <span className="bg-blue-100 border-2 text-blue-700 px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">
-                                            {(() => {
-                                                try {
-                                                    const user = JSON.parse(localStorage.getItem("user"));
-                                                    return user?.username === img.author.username ? "You" : `@${img.author.username}`;
-                                                } catch {
-                                                    return `@${img.author.username}`;
-                                                }
-                                            })()}
-                                        </span>
-                                        <span className="text-sm text-gray-500">
-                                            {new Date(img.createdAt).toLocaleString(undefined, {
-                                                dateStyle: "medium",
-                                                timeStyle: "short",
-                                            })}
-                                        </span>
-                                    </div>
+            {loading ? <Loader2 className="animate-spin" size={35} /> : (
+                approvedImages.length > 0 && (
+                    <>
+                        <hr />
+                        <div className="mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {approvedImages.map((img) => (
+                                    < div key={img._id} className="border-2 rounded-lg bg-white shadow hover:shadow-lg transition inline-block" >
 
-                                    {img.url && (
-                                        <img
-                                            src={img.url}
-                                            alt="Approved"
-                                            className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
-                                        />
-                                    )}
-                                    {img.comment && (
-                                        <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
-                                    )}
-                                </div>
-                            ))}
+                                        <div className="mt-1 mx-1 flex flex-col xl:flex-row sm:items-center sm:justify-between gap-y-1 text-sm text-gray-600">
+                                            <span className="bg-blue-100 border-2 text-blue-700 px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">
+                                                {(() => {
+                                                    try {
+                                                        const user = JSON.parse(localStorage.getItem("user"));
+                                                        return user?.username === img.author.username ? "You" : `@${img.author.username}`;
+                                                    } catch {
+                                                        return `@${img.author.username}`;
+                                                    }
+                                                })()}
+                                            </span>
+                                            <span className="text-sm text-gray-500">
+                                                {new Date(img.createdAt).toLocaleString(undefined, {
+                                                    dateStyle: "medium",
+                                                    timeStyle: "short",
+                                                })}
+                                            </span>
+                                        </div>
+
+                                        {
+                                            img.url && (
+                                                <img
+                                                    src={img.url}
+                                                    alt="Approved"
+                                                    className="w-full max-w-full h-auto object-contain rounded-md mb-2 p-2 "
+                                                />
+                                            )
+                                        }
+                                        {
+                                            img.comment && (
+                                                <p className="p-2 text-sm bg-gray-200 whitespace-pre-wrap">{img.comment}</p>
+                                            )
+                                        }
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                </>
-            )}
+                    </>)
+            )
+            }
         </>
     );
 }
