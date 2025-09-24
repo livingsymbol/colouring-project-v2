@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Loader2, X, Upload, Trash2, ImageIcon } from "lucide-react";
+import { Loader2, X, Upload, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import AdminNavbar from "../components/AdminNavbar";
 import axios from "axios";
@@ -12,8 +12,8 @@ const folderOptions = {
 export default function AdminImageUpload() {
     const [folder, setFolder] = useState("gallery");
     const [images, setImages] = useState([]);
-    const [file, setFile] = useState(null);
-    const [preview, setPreview] = useState("");
+    const [files, setFiles] = useState([]); // ✅ store array of base64 strings
+    const [previews, setPreviews] = useState([]); // ✅ store array of preview URLs
     const [uploading, setUploading] = useState(false);
     const [deleting, setDeleting] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -50,79 +50,94 @@ export default function AdminImageUpload() {
         }
     };
 
-    // ✅ This is the key function - copied from your working ForumTab3
     const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0];
-        if (!selectedFile) return;
+        const selectedFiles = Array.from(e.target.files);
+        if (!selectedFiles.length) return;
 
-        // Validate file type
-        if (!selectedFile.type.startsWith('image/')) {
-            toast("Please select an image file");
-            return;
-        }
+        const newFiles = [];
+        const newPreviews = [];
 
-        // Validate file size (5MB limit)
-        if (selectedFile.size > 5 * 1024 * 1024) {
-            toast("File size must be less than 5MB");
-            return;
-        }
+        selectedFiles.forEach((file) => {
+            if (!file.type.startsWith("image/")) {
+                toast("Only image files allowed");
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                toast("File must be < 5MB");
+                return;
+            }
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            // Store the base64 data (this is what gets sent to backend)
-            setFile(reader.result); // ✅ base64 string, not File object
-            // Create preview URL from the original file
-            setPreview(URL.createObjectURL(selectedFile));
-        };
-        reader.readAsDataURL(selectedFile); // ✅ Convert to base64
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                newFiles.push(reader.result); // base64
+                newPreviews.push(URL.createObjectURL(file));
+
+                // ✅ after all are read, update state
+                if (newFiles.length === selectedFiles.length) {
+                    setFiles((prev) => [...prev, ...newFiles]);
+                    setPreviews((prev) => [...prev, ...newPreviews]);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
     };
 
-    // ✅ Upload function using the same pattern as your working ForumTab3
     const handleUpload = async () => {
-        if (!file) {
-            toast("Please select a file first");
+        if (!files.length) {
+            toast("Please select at least one file");
             return;
         }
 
         setUploading(true);
         try {
-            // ✅ Send base64 data as JSON (same as ForumTab3)
             const res = await axios.post(
                 `${API_URL}/admin/upload`,
                 {
-                    image: file, // ✅ This is base64 string
-                    folder: folder
+                    images: files, // ✅ array of base64 images
+                    folder: folder,
                 },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json", // ✅ JSON, not multipart
+                        "Content-Type": "application/json",
                     },
                 }
             );
 
-            toast.success("Image uploaded successfully");
+            toast.success("Images uploaded successfully");
             resetForm();
-            fetchImages(); // Refresh the images list
+            setTimeout(() => {
+                fetchImages();
+            }, 1000);
         } catch (err) {
             console.error("Upload error:", err);
-            toast.error("Failed to upload image");
+            toast.error("Failed to upload images");
         } finally {
             setUploading(false);
         }
     };
 
     const handleDelete = async (publicId) => {
-        if (!confirm("Are you sure you want to delete this image?")) return;
+        setDeleting(publicId);
+        if (!confirm("Are you sure you want to delete this image?")) {
+            setDeleting(null);
+            return;
+        }
 
         setLoading(true);
         try {
-            await axios.delete(`${API_URL}/admin/upload/${folder}/${publicId}`, {
+            const res = await axios.delete(`${API_URL}/admin/upload/${folder}/${publicId.split("/")[2]}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
-            toast.success("Image deleted successfully");
-            fetchImages();
+            if (res.data.success) toast.success("Image deleted successfully");
+            else {
+                toast.error("Image deletion failed");
+                setDeleting(null);
+            }
+            setTimeout(() => {
+                fetchImages();
+                setDeleting(null);
+            }, 1000);
         } catch (err) {
             console.error("Delete error:", err);
             toast.error("Failed to delete image");
@@ -132,15 +147,15 @@ export default function AdminImageUpload() {
     };
 
     const resetForm = () => {
-        setFile(null);
-        setPreview("");
-        // Clear the file input
+        setFiles([]);
+        setPreviews([]);
         const fileInput = document.querySelector('input[type="file"]');
         if (fileInput) fileInput.value = "";
     };
 
-    const cancelUpload = () => {
-        resetForm();
+    const cancelUpload = (index) => {
+        setFiles((prev) => prev.filter((_, i) => i !== index));
+        setPreviews((prev) => prev.filter((_, i) => i !== index));
     };
 
     return (
@@ -169,13 +184,14 @@ export default function AdminImageUpload() {
 
                 {/* Upload Form */}
                 <div className="bg-white rounded-lg shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">Upload New Image</h2>
+                    <h2 className="text-xl font-semibold mb-4">Upload New Images</h2>
 
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
                             <input
                                 type="file"
                                 accept="image/*"
+                                multiple
                                 onChange={handleFileChange}
                                 className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 disabled={uploading || loading}
@@ -183,7 +199,7 @@ export default function AdminImageUpload() {
 
                             <button
                                 onClick={handleUpload}
-                                disabled={!file || uploading || loading}
+                                disabled={!files.length || uploading || loading}
                                 className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
                                 {uploading ? (
@@ -200,35 +216,27 @@ export default function AdminImageUpload() {
                             </button>
                         </div>
 
-                        {/* File info */}
-                        {file && (
-                            <div className="text-sm text-gray-600">
-                                <p>File: {file.name}</p>
-                                <p>Size: {(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                                <p>Type: {file.type}</p>
-                            </div>
-                        )}
-
-                        {/* Preview + Cancel */}
-                        {preview && (
-                            <div className="relative inline-block">
-                                <img
-                                    src={preview}
-                                    alt="Preview"
-                                    className="w-32 h-32 object-cover rounded border shadow"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={cancelUpload}
-                                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 transition-colors"
-                                >
-                                    <X size={16} />
-                                </button>
-                            </div>
-                        )}
+                        {/* Previews + Cancel */}
+                        <div className="flex gap-4 flex-wrap">
+                            {previews.map((preview, index) => (
+                                <div key={index} className="relative inline-block">
+                                    <img
+                                        src={preview}
+                                        alt="Preview"
+                                        className="w-32 h-32 object-cover rounded border shadow"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => cancelUpload(index)}
+                                        className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 transition-colors"
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-
                 {/* Images Grid */}
                 <div className="bg-white rounded-lg shadow p-6">
                     <h2 className="text-xl font-semibold mb-4">
@@ -243,11 +251,6 @@ export default function AdminImageUpload() {
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             {Array.isArray(images) && images.length > 0 ? (
                                 images.map((img) => {
-                                    const publicId = img.public_id
-                                        ? img.public_id.split("/").pop()
-                                        : null;
-                                    if (!publicId || !img.secure_url) return null;
-
                                     return (
                                         <div
                                             key={img.public_id}
@@ -259,12 +262,12 @@ export default function AdminImageUpload() {
                                                 className="w-full h-auto object-cover"
                                             />
                                             <button
-                                                onClick={() => handleDelete(publicId)}
-                                                disabled={deleting === publicId}
+                                                onClick={() => handleDelete(img.public_id)}
+                                                disabled={deleting === img.public_id}
                                                 className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-red-700 disabled:opacity-50"
                                                 title="Delete image"
                                             >
-                                                {deleting === publicId ? (
+                                                {deleting === img.public_id ? (
                                                     <Loader2 className="animate-spin" size={16} />
                                                 ) : (
                                                     <Trash2 size={16} />

@@ -381,36 +381,77 @@ export const getGalleryImages = async (req, res) => {
     }
 };
 
-// UPLOAD image
+// // UPLOAD image
+// export const uploadGalleryImage = async (req, res) => {
+//     try {
+//         const { folder, image } = req.body; // folder = "gallery" or "errors"
+//         let result = null;
+//         if (image && image.startsWith("data:image/")) {
+//             try {
+//                 const res = await cloudinary.uploader.upload(image, {
+//                     folder: `colouring-project/${folder}`,
+//                 });
+//                 result = res;
+//             } catch (uploadErr) {
+//                 console.error("Cloudinary Upload Error:", uploadErr);
+//                 return res.status(500).json({ message: "Image upload failed." });
+//             }
+//         }
+
+//         res.json({
+//             success: true,
+//             message: "Image uploaded successfully",
+//             data: result
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({
+//             success: false,
+//             error: "Error uploading image"
+//         });
+//     }
+// };
+
+// UPLOAD images
 export const uploadGalleryImage = async (req, res) => {
     try {
-        const { folder, image } = req.body; // folder = "gallery" or "errors"
-        let result = null;
-        if (image && image.startsWith("data:image/")) {
-            try {
-                const res = await cloudinary.uploader.upload(image, {
-                    folder: `colouring-project/${folder}`,
-                });
-                result = res;
-            } catch (uploadErr) {
-                console.error("Cloudinary Upload Error:", uploadErr);
-                return res.status(500).json({ message: "Image upload failed." });
+        const { folder, images } = req.body; // images is now array of base64 strings
+        if (!Array.isArray(images) || !folder) {
+            return res.status(400).json({ success: false, message: "Invalid request" });
+        }
+
+        const uploadResults = [];
+        for (const img of images) {
+            if (img && img.startsWith("data:image/")) {
+                try {
+                    const uploaded = await cloudinary.uploader.upload(img, {
+                        folder: `colouring-project/${folder}`,
+                    });
+                    uploadResults.push(uploaded);
+                } catch (uploadErr) {
+                    console.error("Cloudinary Upload Error:", uploadErr);
+                }
             }
+        }
+
+        if (!uploadResults.length) {
+            return res.status(500).json({ success: false, message: "No images uploaded" });
         }
 
         res.json({
             success: true,
-            message: "Image uploaded successfully",
-            data: result
+            message: "Images uploaded successfully",
+            data: uploadResults,
         });
     } catch (err) {
         console.error(err);
         res.status(500).json({
             success: false,
-            error: "Error uploading image"
+            error: "Error uploading images",
         });
     }
 };
+
 
 // DELETE image
 export const deleteGalleryImage = async (req, res) => {
@@ -419,12 +460,21 @@ export const deleteGalleryImage = async (req, res) => {
         const result = await cloudinary.uploader.destroy(
             `colouring-project/${folder}/${publicId}`
         );
+        if (result.result === 'ok') {
+            res.json({
+                success: true,
+                message: "Image deleted successfully",
+                data: result
+            });
+        }
+        else {
+            res.status(404).json({
+                success: false,
+                message: result,
+                data: result
+            });
 
-        res.json({
-            success: true,
-            message: "Image deleted successfully",
-            data: result
-        });
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({

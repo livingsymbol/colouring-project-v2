@@ -1528,7 +1528,7 @@ export default function GalleryTab3() {
                 <br />
 
                 <>
-                    <h2 className="text-xl">Равенство</h2>
+                    <h2 className="text-xl">Ровность</h2>
                     <h3>Цветок, связанный с равенством: Iberis sempervirens</h3>
                     <br />
                     <img
