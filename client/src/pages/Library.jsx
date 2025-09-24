@@ -20,7 +20,7 @@ const translations = {
         heading: "Библиотека",
         paragraph: "Для более подробного ознакомления перейдите по ссылкам ниже.",
         pdfs: [
-            { name: "On-the-Mothers-Symbol", label: "О Символе Матери" },
+            { name: "О символе Матери", label: "О Символе Матери" },
             { name: "On-Mothers-Flag-and-Symbol", label: "О Знамени и Символе Матери" },
             { name: "On-Sri-Aurobindos-Symbol", label: "О Символе Шри Ауробиндо" },
             { name: "Живой_символ_Матери_статья", label: "Наука и магия цвета: Живой символ Матери" },
