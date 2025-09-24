@@ -23,7 +23,7 @@ const translations = {
             { name: "On-the-Mothers-Symbol", label: "О Символе Матери" },
             { name: "On-Mothers-Flag-and-Symbol", label: "О Знамени и Символе Матери" },
             { name: "On-Sri-Aurobindos-Symbol", label: "О Символе Шри Ауробиндо" },
-            { name: "The-Science-and-Magic-of-Colour", label: "Наука и магия цвета: Живой символ Матери" },
+            { name: "Живой_символ_Матери_статья", label: "Наука и магия цвета: Живой символ Матери" },
             { name: "living-symbol", label: "Презентация «Живого символа»" },
         ],
     },
