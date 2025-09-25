@@ -2316,7 +2316,7 @@ function SymbolText(props) {
           fill="#d5af3c"
         >
           <tspan y="-198.80493" x="-35.723405">
-            A
+            O
           </tspan>
         </text>
         <text
