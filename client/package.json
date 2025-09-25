@@ -32,6 +32,7 @@
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
+    "jodit-react": "^5.2.25",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.515.0",
     "pdfjs-dist": "^3.11.174",
