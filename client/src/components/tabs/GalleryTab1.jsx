@@ -59,6 +59,7 @@ export default function GalleryTab1() {
                     `${import.meta.env.VITE_BACKEND_URL}/page/gallery`
                 );
                 setImages(res.data || []);
+                console.log('res.data.length', res.data.length)
             } catch (e) {
                 console.error("Failed to fetch images", e);
             } finally {

@@ -97,7 +97,7 @@ router.get("/gallery", async (req, res) => {
         const result = await cloudinary.search
             .expression(`folder:${folder}`)
             .sort_by("public_id", "desc")
-            .max_results(50)
+            .max_results(200)
             .execute();
 
         const images = result.resources.map((r) => r.secure_url);
