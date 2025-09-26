@@ -16,7 +16,6 @@ import Layout from './components/Layout';
 import AdminLogin from './pages/AdminLogin';
 import AdminEditor from './pages/AdminEditor';
 import AdminImageUpload from './pages/AdminImageUpload.jsx';
-import AddPage from './pages/AddPage';
 import useGuestLogin from './hooks/useGuestLogin';
 import PdfViewer from './pages/PdfViewer';
 import Test from './pages/Test.jsx';
@@ -96,16 +95,6 @@ export default function App() {
             }
           />
         </Route>
-
-        {import.meta.env.VITE_NODE_ENV === 'dev' &&
-          <Route path='/dev'>
-            <Route
-              path="add"
-              element={
-                <AddPage />
-              }
-            />
-          </Route>}
 
         <Route path="/*" element={<NotFound />} />
       </Routes>
