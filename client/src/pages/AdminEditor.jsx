@@ -161,9 +161,7 @@ export default function AdminEditor() {
                                     toolbarSticky: true,
                                     uploader: { insertImageAsBase64URI: true },
                                 }}
-                                onChange={(newContent) => {
-                                    if (tab.content !== newContent) updateTab(i, "content", newContent);
-                                }}
+                                onBlur={(newContent) => updateTab(i, "content", newContent)}
                             />
 
                             {/* Delete Tab Button */}
