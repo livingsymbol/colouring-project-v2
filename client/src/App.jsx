@@ -19,6 +19,7 @@ import AdminImageUpload from './pages/AdminImageUpload.jsx';
 import AddPage from './pages/AddPage';
 import useGuestLogin from './hooks/useGuestLogin';
 import PdfViewer from './pages/PdfViewer';
+import Test from './pages/Test.jsx';
 
 export default function App() {
 
@@ -58,6 +59,7 @@ export default function App() {
               <Route path="/forum-and-colouring" element={<ForumAndColouring />} />
               <Route path="/forum/post/:id" element={<Post />} />
               <Route path="/view-pdf" element={<PdfViewer />} />
+              <Route path="/test" element={<Test />} />
             </Route>
           </>
         }

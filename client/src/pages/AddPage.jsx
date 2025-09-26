@@ -1,142 +1,200 @@
-import { useState } from 'react';
+import { useState, useRef } from "react";
+import JoditEditor from "jodit-react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Trash } from "lucide-react";
 
-export default function AddPage() {
-    const [slug, setSlug] = useState('');
-    const [locale, setLocale] = useState('en');
-    const [title, setTitle] = useState('');
-    const [tabs, setTabs] = useState([{ label: '', content: '' }]);
-    const [isUpdateMode, setIsUpdateMode] = useState(false);
+export default function PageEditor() {
+    const [slug, setSlug] = useState("");
+    const [locale, setLocale] = useState("en");
+    const [title, setTitle] = useState("");
+    const [tabs, setTabs] = useState([{ label: "", content: "" }]);
+    const [isExisting, setIsExisting] = useState(false);
 
-    const handleTabChange = (index, field, value) => {
-        const updated = [...tabs];
-        updated[index][field] = value;
-        setTabs(updated);
+    const editorsRef = useRef([]);
+
+    const fetchPage = async () => {
+        if (!slug) return toast.error("Please enter a slug first");
+
+        try {
+            const res = await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/page/get/${slug}?locale=${locale}`
+            );
+            const page = res.data;
+            setTitle(page.title || "");
+            setTabs(page.tabs.length ? page.tabs : [{ label: "", content: "" }]);
+            setIsExisting(true);
+            toast.success("Loaded existing page");
+        } catch (err) {
+            console.error(err);
+            toast.error("Page not found, you can create a new one.");
+            setIsExisting(false);
+            setTitle("");
+            setTabs([{ label: "", content: "" }]);
+        }
     };
 
-    const addTab = () => {
-        setTabs([...tabs, { label: '', content: '' }]);
+    const addTab = () => setTabs([...tabs, { label: "", content: "" }]);
+
+    const updateTab = (index, key, value) => {
+        setTabs((prev) => {
+            const newTabs = [...prev];
+            newTabs[index] = { ...newTabs[index], [key]: value };
+            return newTabs;
+        });
+    };
+
+    const deleteTab = async (index) => {
+        const tabLabel = tabs[index].label;
+
+        // If the tab exists in DB (isExisting = true), call backend
+        if (isExisting && tabLabel) {
+            try {
+                const res = await axios.delete(
+                    `${import.meta.env.VITE_BACKEND_URL}/page/tab`,
+                    { data: { slug, locale, tabLabel } }
+                );
+                toast.success(res.data.message);
+            } catch (err) {
+                console.error(err);
+                toast.error(err.response?.data?.error || "Failed to delete tab from backend");
+                return;
+            }
+        }
+
+        // Remove tab from UI
+        setTabs((prev) => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            const processedTabs = tabs.map(sec => {
-                let parsedContent = sec.content;
-
-                if (typeof sec.content === 'string') {
-                    try {
-                        parsedContent = JSON.parse(sec.content);
-                    } catch (err) {
-                        throw new Error(`Tab "${sec.label}" has invalid JSON content.`);
-                    }
-                }
-
-                return {
-                    label: sec.label,
-                    content: parsedContent,
-                };
-            });
-
-            const endpoint = isUpdateMode
-                ? 'http://localhost:3000/api/page/update'
-                : 'http://localhost:3000/api/page/add';
-
-            const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    slug,
-                    locale,
-                    title,
-                    tabs: processedTabs,
-                }),
-            });
-
-            const data = await res.json();
-            if (res.ok) {
-                alert(isUpdateMode ? 'Page updated successfully' : 'Page created successfully');
-                setSlug('');
-                setLocale('en');
-                setTitle('');
-                setTabs([{ label: '', content: '' }]);
-            } else {
-                alert(`Error: ${data.error}`);
-            }
+            const url = isExisting
+                ? `${import.meta.env.VITE_BACKEND_URL}/page/update`
+                : `${import.meta.env.VITE_BACKEND_URL}/page/add`;
+            const res = await axios.post(url, { slug, locale, title, tabs });
+            toast.success(res.data.message);
+            setIsExisting(true);
         } catch (err) {
-            alert(err.message);
+            console.error(err);
+            toast.error(err.response?.data?.error || "Something went wrong!");
         }
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6">
-            <h1 className="text-xl font-semibold mb-4">
-                {isUpdateMode ? 'Update Page' : 'Create New Page'}
+        <div className="max-w-4xl mx-auto p-6">
+            <h1 className="text-2xl font-bold mb-4">
+                {isExisting ? "Update Page" : "Create Page"}
             </h1>
 
-            <div className="mb-4">
-                <label className="mr-2">
-                    <input
-                        type="checkbox"
-                        checked={isUpdateMode}
-                        onChange={(e) => setIsUpdateMode(e.target.checked)}
-                        className="mr-1"
-                    />
-                    Update Existing Page
-                </label>
-            </div>
-
             <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                    type="text"
-                    placeholder="Slug (e.g. 'home')"
-                    value={slug}
-                    onChange={e => setSlug(e.target.value)}
-                    className="border p-2 w-full"
-                    required
-                />
+                {/* Slug */}
+                <div>
+                    <label className="block text-sm font-semibold">Slug</label>
+                    <input
+                        type="text"
+                    />
+                    <select
+                        value={slug}
+                        onChange={(e) => setSlug(e.target.value)}
+                        className="w-full border rounded p-2"
+                        required
+                    >
+                        <option value="test">Test Page</option>
+                    </select>
+                </div>
 
-                <select
-                    value={locale}
-                    onChange={(e) => setLocale(e.target.value)}
-                    className="border p-2 w-full"
+                {/* Locale */}
+                <div>
+                    <label className="block text-sm font-semibold">Locale</label>
+                    <select
+                        value={locale}
+                        onChange={(e) => setLocale(e.target.value)}
+                        className="w-full border rounded p-2"
+                    >
+                        <option value="en">English</option>
+                        <option value="ru">Russian</option>
+                    </select>
+                </div>
+
+                {/* Load Page */}
+                <button
+                    type="button"
+                    onClick={fetchPage}
+                    className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
                 >
-                    <option value="en">English</option>
-                    <option value="ru">Russian</option>
-                </select>
-
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    className="border p-2 w-full"
-                />
-
-                <h2 className="font-medium">Tabs</h2>
-                {tabs.map((tab, idx) => (
-                    <div key={idx} className="space-y-2 border p-2">
-                        <input
-                            type="text"
-                            placeholder="Label"
-                            value={tab.label}
-                            onChange={e => handleTabChange(idx, 'label', e.target.value)}
-                            className="border p-2 w-full"
-                        />
-                        <textarea
-                            placeholder="Content (JSON text or plain text)"
-                            value={tab.content}
-                            onChange={e => handleTabChange(idx, 'content', e.target.value)}
-                            className="border p-2 w-full h-24"
-                        />
-                    </div>
-                ))}
-                <button type="button" onClick={addTab} className="bg-blue-500 text-white px-4 py-2">
-                    Add Tab
+                    Load Page
                 </button>
 
-                <button type="submit" className="bg-green-600 text-white px-4 py-2">
-                    {isUpdateMode ? 'Update' : 'Submit'}
+                {/* Title */}
+                <div>
+                    <label className="block text-sm font-semibold">Page Title</label>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="w-full border rounded p-2"
+                    />
+                </div>
+
+                {/* Tabs */}
+                <div>
+                    <h2 className="text-lg font-semibold mb-2">Tabs</h2>
+                    {tabs.map((tab, i) => (
+                        <div key={i} className="mb-6 border p-4 rounded bg-gray-50 relative">
+                            <label className="block text-sm font-semibold">Tab Label</label>
+                            <input
+                                type="text"
+                                value={tab.label}
+                                onChange={(e) => updateTab(i, "label", e.target.value)}
+                                className="w-full border rounded p-2 mb-2"
+                                required
+                            />
+
+                            <label className="block text-sm font-semibold">Tab Content</label>
+                            <JoditEditor
+                                ref={(el) => (editorsRef.current[i] = el)}
+                                value={tab.content}
+                                config={{
+                                    height: 800,
+                                    readonly: false,
+                                    toolbarAdaptive: false,
+                                    toolbarSticky: true,
+                                    uploader: { insertImageAsBase64URI: true },
+                                }}
+                                onChange={(newContent) => {
+                                    if (tab.content !== newContent) updateTab(i, "content", newContent);
+                                }}
+                            />
+
+                            {/* Delete Tab Button */}
+                            {tabs.length > 1 && (
+                                <button
+                                    type="button"
+                                    onClick={() => deleteTab(i)}
+                                    className="absolute top-2 right-2 text-red-600 hover:text-red-800 font-bold"
+                                >
+                                    <Trash size={25} className="bg-red-300 border p-1"/>
+                                </button>
+                            )}
+                        </div>
+                    ))}
+
+                    <button
+                        type="button"
+                        onClick={addTab}
+                        className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                    >
+                        + Add Tab
+                    </button>
+                </div>
+
+                {/* Save */}
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                    {isExisting ? "Update Page" : "Create Page"}
                 </button>
             </form>
         </div>

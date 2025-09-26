@@ -9,7 +9,7 @@ export default function AdminEditorJodit({ initialContent }) {
             <JoditEditor
                 value={content}
                 config={{
-                    height: 400,
+                    height: 800,
                     readonly: false,
                     toolbarAdaptive: false,
                     toolbarSticky: true,

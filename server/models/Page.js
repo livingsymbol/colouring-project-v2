@@ -1,18 +1,8 @@
 import mongoose from "mongoose";
 
-const BlockSchema = new mongoose.Schema(
-    {
-        type: { type: String, required: true }, 
-        content: { type: mongoose.Schema.Types.Mixed }, 
-        className: { type: String }, 
-    },
-    { _id: false }
-);
-
 const TabSchema = new mongoose.Schema({
     label: { type: String, required: true },
-    content: { type: mongoose.Schema.Types.Mixed }, 
-    blocks: [BlockSchema], 
+    content: { type: mongoose.Schema.Types.Mixed },
 });
 
 

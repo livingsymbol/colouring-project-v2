@@ -73,6 +73,35 @@ router.get('/get/:slug', async (req, res) => {
     }
 });
 
+// DELETE /page/tab
+router.delete('/tab', async (req, res) => {
+    try {
+        const { slug, locale, tabLabel } = req.body;
+
+        if (!slug || !locale || !tabLabel) {
+            return res.status(400).json({ error: "slug, locale, and tabLabel are required" });
+        }
+
+        const page = await Page.findOne({ slug, locale });
+        if (!page) return res.status(404).json({ error: "Page not found" });
+
+        const initialLength = page.tabs.length;
+        page.tabs = page.tabs.filter(tab => tab.label !== tabLabel);
+
+        if (page.tabs.length === initialLength) {
+            return res.status(404).json({ error: "Tab not found" });
+        }
+
+        await page.save();
+        res.status(200).json({ message: "Tab deleted successfully", page });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+
 // GET /page/titles-and-tabs
 router.get("/titles-and-tabs", async (req, res) => {
     try {
