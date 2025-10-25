@@ -3,6 +3,7 @@ import { useLocale } from '../context/LocaleContext';
 import Heading from '../components/Heading';
 import { Loader2 } from 'lucide-react';
 import Tabs from '../components/Tabs';
+import Paragraph from '../components/Paragraph';
 
 function Renderer({ content }) {
     return (
@@ -30,7 +31,7 @@ export default function Test() {
 
     if (!page || !page.tabs) {
         return <p>Page data is incomplete</p>;
-    }   
+    }
 
     const tabsData = page.tabs.map((tab) => ({
         label: tab.label,
@@ -39,9 +40,11 @@ export default function Test() {
 
     return (
         <div>
-            <Heading>{page.title || page.tabs[0].label}</Heading>
-
-            {/* Tabs */}
+            <Heading>{page.title}</Heading>
+            <div className="p-2 sm:p-4 ProseMirror">
+                {page.content}
+            </div>
+            <br />
             <Tabs items={tabsData} />
         </div>
     );

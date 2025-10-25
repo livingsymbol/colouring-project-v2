@@ -8,38 +8,40 @@ import useGetContent from '../hooks/useGetContent';
 import { Loader2 } from "lucide-react";
 
 export default function Home() {
-  const slug = window.location.pathname.split('/')[1];
-  const { page, loading, error } = useGetContent(slug, 'en');
+  // const slug = window.location.pathname.split('/')[1];
+  // const { page, loading, error } = useGetContent(slug, 'en');
   const { locale } = useLocale();
 
 
-  if (loading) return <div className="flex justify-center items-center gap-x-4">
-    <Loader2 className="animate-spin text-[#404040]" size={32} />
-    Loading...
-  </div>;
-  if (error) return <p>Error: {error}</p>;
+  // if (loading) return <div className="flex justify-center items-center gap-x-4">
+  //   <Loader2 className="animate-spin text-[#404040]" size={32} />
+  //   Loading...
+  // </div>;
+  // if (error) return <p>Error: {error}</p>;
 
-  if (!page || !page.tabs) {
-    return <p>Page data is incomplete</p>;
-  }
+  // if (!page || !page.tabs) {
+  //   return <p>Page data is incomplete</p>;
+  // }
 
   const data = {
     en: [
       {
         label: (
           <span>
-            {page.tabs[0].label}
+            {/* {page.tabs[0].label} */}
+            The Mother
           </span>
         ),
-        content: <HomeTab1 content={page.tabs[0].content} />,
+        content: <HomeTab1 />,
       },
       {
         label: (
           <span>
-            {page.tabs[1].label}
+            {/* {page.tabs[1].label} */}
+            Sri Aurobindo
           </span>
         ),
-        content: <HomeTab2 content={page.tabs[1].content} />,
+        content: <HomeTab2 />,
       },
     ],
     ru: [
@@ -67,7 +69,8 @@ export default function Home() {
   return (
     locale === "en" ?
       <div>
-        <Heading>{page.title}</Heading>
+        {/* <Heading>{page.title}</Heading> */}
+        <Heading>Living Symbol of The Mother</Heading>
         <div className="p-2 sm:p-4">
           <Paragraph className="italic text-right">
             “Out of the sphere of Mind he had arisen,<br />
@@ -127,9 +130,12 @@ export default function Home() {
           </Paragraph>
         </div>
         <Tabs items={tabsData} />
-      </div> :
+      </div>
+
+      :
+
       <div>
-        <Heading> Живой Символ Матери</Heading>
+        <Heading>Живой Символ Матери</Heading>
         <div className="p-2 sm:p-4">
           <Paragraph className="italic text-right">
             «Он вышел за пределы сфер Ума,<br />

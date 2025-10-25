@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.post('/add', async (req, res) => {
     try {
-        const { slug, locale, title, tabs } = req.body;
+        const { slug, content, locale, title, tabs } = req.body;
 
-        const page = new Page({ slug, locale, title, tabs });
+        const page = new Page({ slug, locale, title, content, tabs });
         await page.save();
 
         res.status(201).json({ message: 'Page created successfully', page });
@@ -22,7 +22,7 @@ router.post('/add', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
-        const { slug, locale, title, tabs } = req.body;
+        const { slug, content, locale, title, tabs } = req.body;
 
         if (!slug || !locale) {
             return res.status(400).json({ error: 'slug and locale are required.' });
@@ -35,6 +35,8 @@ router.post('/update', async (req, res) => {
         }
 
         if (title) page.title = title;
+
+        if (content) page.content = content;
 
         if (Array.isArray(tabs)) {
             tabs.forEach(newTab => {

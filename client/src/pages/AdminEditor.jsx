@@ -8,6 +8,7 @@ export default function AdminEditor() {
     const [slug, setSlug] = useState("test");
     const [locale, setLocale] = useState("en");
     const [title, setTitle] = useState("");
+    const [content, setContent] = useState(""); 
     const [tabs, setTabs] = useState([{ label: "", content: "" }]);
     const [isExisting, setIsExisting] = useState(false);
 
@@ -23,6 +24,7 @@ export default function AdminEditor() {
             const page = res.data;
             setTitle(page.title || "");
             setTabs(page.tabs.length ? page.tabs : [{ label: "", content: "" }]);
+            setContent(page.content || "");
             setIsExisting(true);
             toast.success("Loaded existing page");
         } catch (err) {
@@ -30,6 +32,7 @@ export default function AdminEditor() {
             toast.error("Page not found, you can create a new one.");
             setIsExisting(false);
             setTitle("");
+            setContent("");
             setTabs([{ label: "", content: "" }]);
         }
     };
@@ -72,7 +75,7 @@ export default function AdminEditor() {
             const url = isExisting
                 ? `${import.meta.env.VITE_BACKEND_URL}/page/update`
                 : `${import.meta.env.VITE_BACKEND_URL}/page/add`;
-            const res = await axios.post(url, { slug, locale, title, tabs });
+            const res = await axios.post(url, { slug, locale, content, title, tabs });
             toast.success(res.data.message);
             setIsExisting(true);
         } catch (err) {
@@ -134,6 +137,24 @@ export default function AdminEditor() {
                         onChange={(e) => setTitle(e.target.value)}
                         className="w-full border rounded p-2"
                     />
+                </div>
+
+                {/* Page Content */}
+                <div>
+                    <h2 className="text-lg font-semibold mb-2">Page Content</h2>
+                    <div className="border p-4 rounded bg-gray-50">
+                        <JoditEditor
+                            value={content}
+                            config={{
+                                height: 500,
+                                readonly: false,
+                                toolbarAdaptive: false,
+                                toolbarSticky: true,
+                                uploader: { insertImageAsBase64URI: true },
+                            }}
+                            onBlur={(newContent) => setContent(newContent)} // ✅ update state
+                        />
+                    </div>
                 </div>
 
                 {/* Tabs */}

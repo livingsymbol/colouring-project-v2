@@ -138,7 +138,7 @@ export default function Tabs({ items }) {
                 <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#fff2cc] to-white z-0 pointer-events-none" />
 
                 {/* Content */}
-                <div className="relative z-10">{items[activeIndex].content}</div>
+                <div className="relative z-10">{items[activeIndex]?.content}</div>
             </div>
         </div>
     );

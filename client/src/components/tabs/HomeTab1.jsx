@@ -22,7 +22,47 @@ export default function HomeTab1({ content }) {
                 </a>
             </div>
             <div className="sm:w-2/3 w-full">
-                {locale === "en" ? <RichTextRenderer content={content} /> :
+                {locale === "en" ?
+                    // <RichTextRenderer content={content} />
+                    <>
+                        <Paragraph className="italic">
+                            “Earthly life is the place for progress. It is here on earth, that progress is possible, during the period of earthly existence. And it is the psychic which carries the progress over from one life to another, by organizing its own evolution and development itself.”
+                            <br />
+                            <p className="text-right">
+
+                                — The Mother
+                            </p>
+                        </Paragraph>
+                        <br />
+                        The Mother on the Symbol:
+                        <Paragraph className="italic">
+
+                            “The twelve attributes:<br />
+                            Sincerity – Humility – Gratitude – Perseverance<br />
+                            Aspiration – Receptivity – Progress – Courage<br />
+                            Goodness – Generosity – Equality – Peace<br />
+                            The first eight concern attitude towards the Divine, and the last four towards humanity.”
+                        </Paragraph>
+                        <br />
+                        Mother, in your symbol the twelve petals signify the twelve inner planes, don’t they?<br />
+                        <Paragraph className="italic">
+
+                            “It signifies anything one wants, you see. Twelve: that’s the number of Aditi, of Mahashakti. So it applies to everything; all Her action has twelve Aspects. There are also Her twelve Virtues, Her twelve Powers, Her twelve Aspects, and then Her twelve Planes of manifestation and many other things that are twelve; and the symbol, the number twelve is in itself a symbol. It is the symbol of manifestation, double perfection, in essence and in manifestation, in the creation.”
+                        </Paragraph>
+                        <br />
+                        What are the twelve aspects, Sweet Mother?<br />
+                        <Paragraph className="italic">
+
+                            “Ah, my child, I have described this somewhere, but I don’t remember now. For it is always a choice, you see; according to what one wants to say, one can choose these twelve Aspects or twelve others, or give them different names. The same Aspect can be named in different ways. This does not have the fixity of a mental theory. (Silence)
+                            According to the angle from which one sees the creation, one day I may describe twelve Aspects to you; and then another day, because I have shifted my centre of observation, I may describe twelve others, and they will be equally true.”
+                        </Paragraph>
+                        <br /><br /><br />
+                        <Paragraph className="text-center">
+                            ~ Om namo Bhagavate ~
+                        </Paragraph>
+                    </>
+
+                    :
                     <>
                         <Paragraph className="italic">
                             «Земная жизнь — это место для прогресса. Именно здесь, на земле, прогресс возможен, в течение периода земного существования. И именно психическое существо несёт прогресс из одной жизни в другую, организуя собственную эволюцию и развитие.»
