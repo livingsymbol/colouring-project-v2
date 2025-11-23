@@ -3,7 +3,6 @@ import { useLocale } from '../context/LocaleContext';
 import Heading from '../components/Heading';
 import { Loader2 } from 'lucide-react';
 import Tabs from '../components/Tabs';
-import Paragraph from '../components/Paragraph';
 
 function Renderer({ content }) {
     return (
@@ -41,9 +40,10 @@ export default function Test() {
     return (
         <div>
             <Heading>{page.title}</Heading>
-            <div className="p-2 sm:p-4 ProseMirror">
-                {page.content}
+            <div className="p-2 sm:p-4">
+                {page.content && <Renderer content={page.content} />}
             </div>
+
             <br />
             <Tabs items={tabsData} />
         </div>
