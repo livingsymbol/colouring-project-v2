@@ -1,29 +1,68 @@
-import { useState, useRef } from "react";
+import { useMemo, useState, useRef } from "react";
 import JoditEditor from "jodit-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Trash } from "lucide-react";
+import { v4 as uuid } from "uuid";
 
 export default function AdminEditor() {
-    const [slug, setSlug] = useState("test");
+    const [slug, setSlug] = useState("home-test");
     const [locale, setLocale] = useState("en");
     const [title, setTitle] = useState("");
-    const [content, setContent] = useState(""); 
-    const [tabs, setTabs] = useState([{ label: "", content: "" }]);
+    const [content, setContent] = useState("");
+    const [tabs, setTabs] = useState([{ id: uuid(), label: "", content: "" }]);
     const [isExisting, setIsExisting] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
 
-    const editorsRef = useRef([]);
+    const editorsRef = useRef({});
+
+    const editorConfig = useMemo(() => ({
+        height: 400,
+        readonly: false,
+        toolbarAdaptive: false,
+        toolbarSticky: true,
+        uploader: { insertImageAsBase64URI: true },
+        // paste options - adjust as needed:
+        defaultActionOnPaste: "insert_as_html", // alternatives: "clean", "insert_only_text"
+        pastePlain: false, // if true, paste as plain text
+        cleanHTML: true,
+        // These keep pasted images/files allowed:
+        allowIframe: true,
+        // any other Jodit config you want
+    }), []);
+
+    // const fetchPage = async () => {
+    //     if (!slug) return toast.error("Please enter a slug first");
+
+    //     try {
+    //         const res = await axios.get(
+    //             `${import.meta.env.VITE_BACKEND_URL}/page/get/${slug}?locale=${locale}`
+    //         );
+    //         const page = res.data;
+    //         setTitle(page.title || "");
+    //         setTabs(page.tabs.length ? page.tabs : [{ label: "", content: "" }]);
+    //         setContent(page.content || "");
+    //         setIsExisting(true);
+    //         toast.success("Loaded existing page");
+    //     } catch (err) {
+    //         console.error(err);
+    //         toast.error("Page not found, you can create a new one.");
+    //         setIsExisting(false);
+    //         setTitle("");
+    //         setContent("");
+    //         setTabs([{ label: "", content: "" }]);
+    //     }
+    // };
 
     const fetchPage = async () => {
         if (!slug) return toast.error("Please enter a slug first");
-
+        setLoading(true);
         try {
-            const res = await axios.get(
-                `${import.meta.env.VITE_BACKEND_URL}/page/get/${slug}?locale=${locale}`
-            );
-            const page = res.data;
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/page/get/${slug}?locale=${locale}`);
+            const page = res.data || {};
             setTitle(page.title || "");
-            setTabs(page.tabs.length ? page.tabs : [{ label: "", content: "" }]);
+            setTabs(Array.isArray(page.tabs) && page.tabs.length ? page.tabs : [{ id: uuid(), label: "", content: "" }]);
             setContent(page.content || "");
             setIsExisting(true);
             toast.success("Loaded existing page");
@@ -33,24 +72,23 @@ export default function AdminEditor() {
             setIsExisting(false);
             setTitle("");
             setContent("");
-            setTabs([{ label: "", content: "" }]);
+            setTabs([{ id: uuid(), label: "", content: "" }]);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const addTab = () => setTabs([...tabs, { label: "", content: "" }]);
-
-    const updateTab = (index, key, value) => {
-        setTabs((prev) => {
-            const newTabs = [...prev];
-            newTabs[index] = { ...newTabs[index], [key]: value };
-            return newTabs;
-        });
+    const updateTab = (id, key, value) => {
+        setTabs(prev => prev.map(t => (t.id === id ? { ...t, [key]: value } : t)));
     };
 
-    const deleteTab = async (index) => {
-        const tabLabel = tabs[index].label;
+    const addTab = () => setTabs(prev => [...prev, { id: uuid(), label: "", content: "" }]);
 
-        // If the tab exists in DB (isExisting = true), call backend
+    const deleteTab = async (index) => {
+        const tab = tabs.find(t => t.id === id);
+        if (!tab) return;
+        if (!confirm(`Delete tab "${tab.label || "Untitled"}"?`)) return;
+
         if (isExisting && tabLabel) {
             try {
                 const res = await axios.delete(
@@ -65,22 +103,22 @@ export default function AdminEditor() {
             }
         }
 
-        // Remove tab from UI
-        setTabs((prev) => prev.filter((_, i) => i !== index));
+        setTabs(prev => prev.filter(t => t.id !== id));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSaving(true);
         try {
-            const url = isExisting
-                ? `${import.meta.env.VITE_BACKEND_URL}/page/update`
-                : `${import.meta.env.VITE_BACKEND_URL}/page/add`;
-            const res = await axios.post(url, { slug, locale, content, title, tabs });
-            toast.success(res.data.message);
+            if (isExisting) await axios.put(`${import.meta.env.VITE_BACKEND_URL}/page/update`, { slug, locale, content, title, tabs });
+            else await axios.post(`${import.meta.env.VITE_BACKEND_URL}/page/add`, { slug, locale, content, title, tabs });
+            toast.success("Saved");
             setIsExisting(true);
         } catch (err) {
             console.error(err);
             toast.error(err.response?.data?.error || "Something went wrong!");
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -94,15 +132,18 @@ export default function AdminEditor() {
                 {/* Slug */}
                 <div>
                     <label className="block text-sm font-semibold">Slug</label>
-                    <input
-                        type="text"
-                    />
                     <select
                         value={slug}
                         onChange={(e) => setSlug(e.target.value)}
                         className="w-full border rounded p-2"
                     >
-                        <option value="test">Test Page</option>
+                        <option value="home-test">Home</option>
+                        <option value="colours-test">Colours</option>
+                        <option value="finding-harmony-test">Finding Harmony</option>
+                        <option value="aspiration-at-work-test">Aspiration at Work</option>
+                        <option value="gallery-test">Gallery</option>
+                        <option value="library-test">Library</option>
+                        <option value="forum-and-colouring-test">Forum and Colouring</option>
                     </select>
                 </div>
 
@@ -120,12 +161,11 @@ export default function AdminEditor() {
                 </div>
 
                 {/* Load Page */}
-                <button
-                    type="button"
-                    onClick={fetchPage}
-                    className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                <button type="button" onClick={fetchPage} disabled={loading}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+
                 >
-                    Load Page
+                    {loading ? "Loading..." : "Load Page"}
                 </button>
 
                 {/* Title */}
@@ -145,14 +185,15 @@ export default function AdminEditor() {
                     <div className="border p-4 rounded bg-gray-50">
                         <JoditEditor
                             value={content}
-                            config={{
-                                height: 500,
-                                readonly: false,
-                                toolbarAdaptive: false,
-                                toolbarSticky: true,
-                                uploader: { insertImageAsBase64URI: true },
+                            config={editorConfig}
+                            onChange={(newContent) => {
+                                // onChange fires as user types/pastes — don't re-render the editor value
+                                setContent(newContent);
                             }}
-                            onBlur={(newContent) => setContent(newContent)} // ✅ update state
+                            onBlur={(newContent) => {
+                                // optional: use blur to do final save/validation
+                                setContent(newContent);
+                            }}
                         />
                     </div>
                 </div>
@@ -161,35 +202,25 @@ export default function AdminEditor() {
                 <div>
                     <h2 className="text-lg font-semibold mb-2">Tabs</h2>
                     {tabs.map((tab, i) => (
-                        <div key={i} className="mb-6 border p-4 rounded bg-gray-50 relative">
+                        <div key={tab.id} className="mb-6 border p-4 rounded bg-gray-50 relative">
                             <label className="block text-sm font-semibold">Tab Label</label>
-                            <input
-                                type="text"
-                                value={tab.label}
-                                onChange={(e) => updateTab(i, "label", e.target.value)}
-                                className="w-full border rounded p-2 mb-2"
-                                required
+                            <input value={tab.label} onChange={e => updateTab(tab.id, "label", e.target.value)} 
+                                className="w-full border rounded p-2"
                             />
 
                             <label className="block text-sm font-semibold">Tab Content</label>
                             <JoditEditor
-                                ref={(el) => (editorsRef.current[i] = el)}
+                                ref={(el) => (editorsRef.current[tab.id] = el)}
                                 value={tab.content}
-                                config={{
-                                    height: 800,
-                                    readonly: false,
-                                    toolbarAdaptive: false,
-                                    toolbarSticky: true,
-                                    uploader: { insertImageAsBase64URI: true },
-                                }}
-                                onBlur={(newContent) => updateTab(i, "content", newContent)}
+                                config={editorConfig}
+                                onChange={(newContent) => updateTab(tab.id, "content", newContent)}
+                                onBlur={(newContent) => updateTab(tab.id, "content", newContent)}
                             />
 
-                            {/* Delete Tab Button */}
                             {tabs.length > 1 && (
                                 <button
                                     type="button"
-                                    onClick={() => deleteTab(i)}
+                                    onClick={() => deleteTab(tab.id)}
                                     className="absolute top-2 right-2 text-red-600 hover:text-red-800 font-bold"
                                 >
                                     <Trash size={25} className="bg-red-300 border p-1" />
@@ -198,21 +229,22 @@ export default function AdminEditor() {
                         </div>
                     ))}
 
-                    <button
-                        type="button"
-                        onClick={addTab}
-                        className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                    >
-                        + Add Tab
-                    </button>
                 </div>
 
                 {/* Save */}
                 <button
                     type="submit"
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mr-4"
                 >
-                    {isExisting ? "Update Page" : "Create Page"}
+                    {saving ? "Saving..." : "Save"}
+                </button>
+
+                <button
+                    type="button"
+                    onClick={addTab}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >
+                    + Add Tab
                 </button>
             </form>
         </div>

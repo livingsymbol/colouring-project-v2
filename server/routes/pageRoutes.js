@@ -20,7 +20,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.post('/update', async (req, res) => {
+router.put('/update', async (req, res) => {
     try {
         const { slug, content, locale, title, tabs } = req.body;
 
@@ -64,7 +64,7 @@ router.get('/get/:slug', async (req, res) => {
         const { locale = 'en' } = req.query;
 
         const page = await Page.findOne({ slug, locale });
-
+        console.log(slug, locale)
         if (!page) {
             return res.status(404).json({ error: 'Page not found' });
         }

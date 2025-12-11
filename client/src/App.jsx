@@ -58,7 +58,8 @@ export default function App() {
               <Route path="/forum-and-colouring" element={<ForumAndColouring />} />
               <Route path="/forum/post/:id" element={<Post />} />
               <Route path="/view-pdf" element={<PdfViewer />} />
-              <Route path="/test" element={<Test />} />
+
+              <Route path="/:slug" element={<Test />} />
             </Route>
           </>
         }
