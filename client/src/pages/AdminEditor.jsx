@@ -32,29 +32,6 @@ export default function AdminEditor() {
         // any other Jodit config you want
     }), []);
 
-    // const fetchPage = async () => {
-    //     if (!slug) return toast.error("Please enter a slug first");
-
-    //     try {
-    //         const res = await axios.get(
-    //             `${import.meta.env.VITE_BACKEND_URL}/page/get/${slug}?locale=${locale}`
-    //         );
-    //         const page = res.data;
-    //         setTitle(page.title || "");
-    //         setTabs(page.tabs.length ? page.tabs : [{ label: "", content: "" }]);
-    //         setContent(page.content || "");
-    //         setIsExisting(true);
-    //         toast.success("Loaded existing page");
-    //     } catch (err) {
-    //         console.error(err);
-    //         toast.error("Page not found, you can create a new one.");
-    //         setIsExisting(false);
-    //         setTitle("");
-    //         setContent("");
-    //         setTabs([{ label: "", content: "" }]);
-    //     }
-    // };
-
     const fetchPage = async () => {
         if (!slug) return toast.error("Please enter a slug first");
         setLoading(true);
@@ -62,7 +39,16 @@ export default function AdminEditor() {
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/page/get/${slug}?locale=${locale}`);
             const page = res.data || {};
             setTitle(page.title || "");
-            setTabs(Array.isArray(page.tabs) && page.tabs.length ? page.tabs : [{ id: uuid(), label: "", content: "" }]);
+            setTabs(
+                Array.isArray(page.tabs) && page.tabs.length
+                    ? page.tabs.map(t => ({
+                        id: uuid(),        // FE-only identity
+                        label: t.label,
+                        content: t.content
+                    }))
+                    : [{ id: uuid(), label: "", content: "" }]
+            );
+
             setContent(page.content || "");
             setIsExisting(true);
             toast.success("Loaded existing page");
@@ -84,12 +70,19 @@ export default function AdminEditor() {
 
     const addTab = () => setTabs(prev => [...prev, { id: uuid(), label: "", content: "" }]);
 
-    const deleteTab = async (index) => {
-        const tab = tabs.find(t => t.id === id);
+    const deleteTab = async (tabId) => {
+        const tab = tabs.find(t => t.id === tabId);
         if (!tab) return;
-        if (!confirm(`Delete tab "${tab.label || "Untitled"}"?`)) return;
 
-        if (isExisting && tabLabel) {
+        const tabLabel = tab.label?.trim();
+        if (!tabLabel) {
+            toast.error("Tab label is required to delete a tab");
+            return;
+        }
+
+        if (!confirm(`Delete tab "${tabLabel}"?`)) return;
+
+        if (isExisting) {
             try {
                 const res = await axios.delete(
                     `${import.meta.env.VITE_BACKEND_URL}/page/tab`,
@@ -98,17 +91,25 @@ export default function AdminEditor() {
                 toast.success(res.data.message);
             } catch (err) {
                 console.error(err);
-                toast.error(err.response?.data?.error || "Failed to delete tab from backend");
+                toast.error(err.response?.data?.error || "Failed to delete tab");
                 return;
             }
         }
 
-        setTabs(prev => prev.filter(t => t.id !== id));
+        setTabs(prev => prev.filter(t => t.id !== tabId));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSaving(true);
+        
+        const hasInvalidTabs = tabs.some(t => !t.label?.trim());
+        if (hasInvalidTabs) {
+            toast.error("All tabs must have a label");
+            setSaving(false);
+            return;
+        }
+
         try {
             if (isExisting) await axios.put(`${import.meta.env.VITE_BACKEND_URL}/page/update`, { slug, locale, content, title, tabs });
             else await axios.post(`${import.meta.env.VITE_BACKEND_URL}/page/add`, { slug, locale, content, title, tabs });
@@ -204,7 +205,7 @@ export default function AdminEditor() {
                     {tabs.map((tab, i) => (
                         <div key={tab.id} className="mb-6 border p-4 rounded bg-gray-50 relative">
                             <label className="block text-sm font-semibold">Tab Label</label>
-                            <input value={tab.label} onChange={e => updateTab(tab.id, "label", e.target.value)} 
+                            <input value={tab.label} onChange={e => updateTab(tab.id, "label", e.target.value)}
                                 className="w-full border rounded p-2"
                             />
 

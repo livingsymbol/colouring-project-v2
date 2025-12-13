@@ -20,6 +20,44 @@ router.post('/add', async (req, res) => {
     }
 });
 
+// router.put('/update', async (req, res) => {
+//     try {
+//         const { slug, content, locale, title, tabs } = req.body;
+
+//         if (!slug || !locale) {
+//             return res.status(400).json({ error: 'slug and locale are required.' });
+//         }
+
+//         const page = await Page.findOne({ slug, locale });
+
+//         if (!page) {
+//             return res.status(404).json({ error: 'Page not found.' });
+//         }
+
+//         if (title) page.title = title;
+
+//         if (content) page.content = content;
+
+//         if (Array.isArray(tabs)) {
+//             tabs.forEach(newTab => {
+//                 const index = page.tabs.findIndex(sec => sec.label === newTab.label);
+
+//                 if (index !== -1) {
+//                     page.tabs[index].content = newTab.content;
+//                 } else {
+//                     page.tabs.push(newTab);
+//                 }
+//             });
+//         }
+
+//         await page.save();
+//         res.status(200).json({ message: 'Page updated successfully', page });
+
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
 router.put('/update', async (req, res) => {
     try {
         const { slug, content, locale, title, tabs } = req.body;
@@ -29,25 +67,18 @@ router.put('/update', async (req, res) => {
         }
 
         const page = await Page.findOne({ slug, locale });
-
         if (!page) {
             return res.status(404).json({ error: 'Page not found.' });
         }
 
-        if (title) page.title = title;
-
-        if (content) page.content = content;
+        page.title = title ?? page.title;
+        page.content = content ?? page.content;
 
         if (Array.isArray(tabs)) {
-            tabs.forEach(newTab => {
-                const index = page.tabs.findIndex(sec => sec.label === newTab.label);
-
-                if (index !== -1) {
-                    page.tabs[index].content = newTab.content;
-                } else {
-                    page.tabs.push(newTab);
-                }
-            });
+            page.tabs = tabs.map(t => ({
+                label: t.label,
+                content: t.content
+            }));
         }
 
         await page.save();
@@ -57,6 +88,7 @@ router.put('/update', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 router.get('/get/:slug', async (req, res) => {
     try {
