@@ -19,9 +19,10 @@ import AdminImageUpload from './pages/AdminImageUpload.jsx';
 import useGuestLogin from './hooks/useGuestLogin';
 import PdfViewer from './pages/PdfViewer';
 import Test from './pages/Test.jsx';
+import usePageTracking from './hooks/usePageTracking.js';
 
 export default function App() {
-
+  usePageTracking();
   useGuestLogin();
 
   return (
