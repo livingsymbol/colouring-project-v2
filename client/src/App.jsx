@@ -22,6 +22,7 @@ import Test from './pages/Test.jsx';
 import usePageTracking from './hooks/usePageTracking.js';
 
 export default function App() {
+  if (import.meta.env.VITE_NODE_ENV !== 'dev')
   usePageTracking();
   useGuestLogin();
 
