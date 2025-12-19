@@ -43,7 +43,7 @@ const contentMap = {
     },
 };
 
-export default function GalleryTab1() {
+export function GalleryTab1Old() {
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
@@ -59,7 +59,6 @@ export default function GalleryTab1() {
                     `${import.meta.env.VITE_BACKEND_URL}/page/gallery`
                 );
                 setImages(res.data || []);
-                console.log('res.data.length', res.data.length)
             } catch (e) {
                 console.error("Failed to fetch images", e);
             } finally {
@@ -92,6 +91,176 @@ export default function GalleryTab1() {
     return (
         <div className="w-full">
             <RichTextRenderer content={contentMap[locale] || contentMap.en} />
+
+            {loading ? (
+                <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <Grid
+                    container
+                    spacing={2}
+                    sx={{ mt: 4 }}
+                    columns={{ xs: 2, sm: 3, md: 4, lg: 5 }}
+                >
+                    {images.map((url, i) => (
+                        <Grid key={i} size={1}>
+                            <Box
+                                onClick={() => handleOpen(i)}
+                                sx={{
+                                    position: "relative",
+                                    pt: "100%", // square cell
+                                    borderRadius: 2,
+                                    overflow: "hidden",
+                                    boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                <img
+                                    src={url}
+                                    alt={`Gallery item ${i + 1}`}
+                                    loading="lazy"
+                                    style={{
+                                        position: "absolute",
+                                        inset: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        transition: "transform 0.3s ease",
+                                    }}
+                                    onMouseOver={(e) =>
+                                        (e.currentTarget.style.transform = "scale(1.05)")
+                                    }
+                                    onMouseOut={(e) =>
+                                        (e.currentTarget.style.transform = "scale(1)")
+                                    }
+                                />
+                            </Box>
+                            {/* Number below image */}
+                            <Typography
+                                variant="body2"
+                                align="center"
+                                sx={{ mt: 1, fontWeight: "bold" }}
+                            >
+                                {i + 1}
+                            </Typography>
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                maxWidth="xl"
+                PaperProps={{
+                    sx: {
+                        bgcolor: "black",
+                        borderRadius: 2,
+                        overflow: "hidden",
+                    },
+                }}
+            >
+                <DialogContent
+                    sx={{
+                        p: 0,
+                        bgcolor: "black",
+                        position: "relative",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <IconButton
+                        onClick={handleClose}
+                        sx={{
+                            position: "absolute",
+                            right: 8,
+                            top: 8,
+                            color: "white",
+                            zIndex: 10,
+                        }}
+                        aria-label="Close"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+
+                    {images[idx] && (
+                        <>
+                            <img
+                                src={images[idx]}
+                                alt={`Selected ${idx + 1}`}
+                                style={{
+                                    maxWidth: "90vw",
+                                    maxHeight: "80vh",
+                                    objectFit: "contain",
+                                }}
+                            />
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    color: "white",
+                                    mt: 1,
+                                    mb: 2,
+                                    fontWeight: "bold",
+                                    textAlign: "center",
+                                }}
+                            >
+                                {idx + 1} / {images.length}
+                            </Typography>
+                        </>
+                    )}
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}
+
+export default function GalleryTab1() {
+    const [images, setImages] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [idx, setIdx] = useState(0);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BACKEND_URL}/page/gallery`
+                );
+                setImages(res.data || []);
+            } catch (e) {
+                console.error("Failed to fetch images", e);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, []);
+
+    const handleOpen = useCallback((i) => {
+        setIdx(i);
+        setOpen(true);
+    }, []);
+
+    const handleClose = useCallback(() => setOpen(false), []);
+
+    // Keyboard nav (←/→) while dialog open
+    useEffect(() => {
+        if (!open) return;
+        const onKey = (e) => {
+            if (!images.length) return;
+            if (e.key === "ArrowRight") setIdx((p) => (p + 1) % images.length);
+            if (e.key === "ArrowLeft")
+                setIdx((p) => (p - 1 + images.length) % images.length);
+            if (e.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [open, images.length]);
+
+    return (
+        <div className="w-full">
 
             {loading ? (
                 <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>

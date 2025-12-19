@@ -1,9 +1,9 @@
 import Heading from '../components/Heading';
 import Paragraph from '../components/Paragraph';
 import Tabs from '../components/Tabs';
-import ForumTab1 from '../components/tabs/ForumTab1';
-import ForumTab2 from '../components/tabs/ForumTab2';
-import ForumTab3 from '../components/tabs/ForumTab3';
+import {ForumTab1} from '../components/tabs/ForumTab1';
+import {ForumTab2} from '../components/tabs/ForumTab2';
+import {ForumTab3} from '../components/tabs/ForumTab3';
 import ForumTab4 from '../components/tabs/ForumTab4';
 import ForumTab5 from '../components/tabs/ForumTab5';
 import { useLocale } from '../context/LocaleContext';

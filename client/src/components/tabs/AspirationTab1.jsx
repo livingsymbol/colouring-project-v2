@@ -12,9 +12,6 @@ export default function AspirationTab1() {
     const [selectedColor, setSelectedColor] = useState(null);
     const { locale } = useLocale();
 
-    // const [devMode, setDevMode] = useState(false); // controls whether dev button is visible
-    // const [useShuffled, setUseShuffled] = useState(true); // toggles colors source
-
     // Key tracking for showing dev button
     useEffect(() => {
         let buffer = "";
@@ -64,23 +61,11 @@ export default function AspirationTab1() {
     // Step 3: Concatenate the two arrays
     const finalFlattened = flattenedTop.concat(flattenedBottom);
 
-    // Decide colors based on toggle
-    // const colorsToShow = useShuffled ? finalFlattened : shuffledColours1;
-
     return (
         <AspirationTabTemplate
             palette={
                 <div className="h-full flex flex-col justify-around">
                     <div className="flex flex-col gap-y-6 w-full justify-center items-center border-2 border-[#d5af3c] p-4 rounded-3xl shadow-2xl">
-                        {/* {devMode && (
-                            <button
-                                onClick={() => setUseShuffled((prev) => !prev)}
-                                className="mb-4 px-4 py-2 bg-gray-800 text-white rounded-lg shadow hover:bg-gray-700"
-                            >
-                                Toggle Colours ({useShuffled ? "Shuffled" : "Original"})
-                            </button>
-                        )} */}
-
                         <SwatchesColourPicker
                             colors={finalFlattened}
                             onColorSelect={handleColorSelect}

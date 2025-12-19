@@ -10,7 +10,7 @@ export default function AdminEditor() {
     const [locale, setLocale] = useState("en");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [tabs, setTabs] = useState([{ id: uuid(), label: "", content: "" }]);
+    const [tabs, setTabs] = useState([{ id: uuid(), label: "", content: "", hasCustomTabContent: false }]);
     const [isExisting, setIsExisting] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -23,13 +23,18 @@ export default function AdminEditor() {
         toolbarAdaptive: false,
         toolbarSticky: true,
         uploader: { insertImageAsBase64URI: true },
-        // paste options - adjust as needed:
         defaultActionOnPaste: "insert_as_html", // alternatives: "clean", "insert_only_text"
         pastePlain: false, // if true, paste as plain text
-        cleanHTML: true,
+        cleanHTML: {
+            removeStyles: {
+                'background': true,
+                'background-color': true
+            }
+        },
         // These keep pasted images/files allowed:
         allowIframe: true,
         // any other Jodit config you want
+
     }), []);
 
     const fetchPage = async () => {
@@ -44,7 +49,8 @@ export default function AdminEditor() {
                     ? page.tabs.map(t => ({
                         id: uuid(),        // FE-only identity
                         label: t.label,
-                        content: t.content
+                        content: t.content,
+                        hasCustomTabContent: Boolean(t.hasCustomTabContent)
                     }))
                     : [{ id: uuid(), label: "", content: "" }]
             );
@@ -68,7 +74,11 @@ export default function AdminEditor() {
         setTabs(prev => prev.map(t => (t.id === id ? { ...t, [key]: value } : t)));
     };
 
-    const addTab = () => setTabs(prev => [...prev, { id: uuid(), label: "", content: "" }]);
+    const addTab = () =>
+        setTabs(prev => [
+            ...prev,
+            { id: uuid(), label: "", content: "", hasCustomTabContent: false }
+        ]);
 
     const deleteTab = async (tabId) => {
         const tab = tabs.find(t => t.id === tabId);
@@ -102,7 +112,7 @@ export default function AdminEditor() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSaving(true);
-        
+
         const hasInvalidTabs = tabs.some(t => !t.label?.trim());
         if (hasInvalidTabs) {
             toast.error("All tabs must have a label");
@@ -204,12 +214,30 @@ export default function AdminEditor() {
                     <h2 className="text-lg font-semibold mb-2">Tabs</h2>
                     {tabs.map((tab, i) => (
                         <div key={tab.id} className="mb-6 border p-4 rounded bg-gray-50 relative">
-                            <label className="block text-sm font-semibold">Tab Label</label>
+                            <label className="block text-sm font-semibold">Tab {i + 1} Label</label>
                             <input value={tab.label} onChange={e => updateTab(tab.id, "label", e.target.value)}
                                 className="w-full border rounded p-2"
                             />
 
-                            <label className="block text-sm font-semibold">Tab Content</label>
+                            <div className="my-3 flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    id={`custom-${tab.id}`}
+                                    checked={tab.hasCustomTabContent}
+                                    onChange={(e) =>
+                                        updateTab(tab.id, "hasCustomTabContent", e.target.checked)
+                                    }
+                                    className="h-4 w-4"
+                                />
+                                <label
+                                    htmlFor={`custom-${tab.id}`}
+                                    className="text-sm font-medium"
+                                >
+                                    This tab uses custom content
+                                </label>
+                            </div>
+
+                            <label className="block text-sm font-semibold">Tab {i + 1} Content</label>
                             <JoditEditor
                                 ref={(el) => (editorsRef.current[tab.id] = el)}
                                 value={tab.content}
@@ -217,7 +245,6 @@ export default function AdminEditor() {
                                 onChange={(newContent) => updateTab(tab.id, "content", newContent)}
                                 onBlur={(newContent) => updateTab(tab.id, "content", newContent)}
                             />
-
                             {tabs.length > 1 && (
                                 <button
                                     type="button"

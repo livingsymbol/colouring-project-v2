@@ -20,44 +20,6 @@ router.post('/add', async (req, res) => {
     }
 });
 
-// router.put('/update', async (req, res) => {
-//     try {
-//         const { slug, content, locale, title, tabs } = req.body;
-
-//         if (!slug || !locale) {
-//             return res.status(400).json({ error: 'slug and locale are required.' });
-//         }
-
-//         const page = await Page.findOne({ slug, locale });
-
-//         if (!page) {
-//             return res.status(404).json({ error: 'Page not found.' });
-//         }
-
-//         if (title) page.title = title;
-
-//         if (content) page.content = content;
-
-//         if (Array.isArray(tabs)) {
-//             tabs.forEach(newTab => {
-//                 const index = page.tabs.findIndex(sec => sec.label === newTab.label);
-
-//                 if (index !== -1) {
-//                     page.tabs[index].content = newTab.content;
-//                 } else {
-//                     page.tabs.push(newTab);
-//                 }
-//             });
-//         }
-
-//         await page.save();
-//         res.status(200).json({ message: 'Page updated successfully', page });
-
-//     } catch (error) {
-//         res.status(500).json({ error: error.message });
-//     }
-// });
-
 router.put('/update', async (req, res) => {
     try {
         const { slug, content, locale, title, tabs } = req.body;
@@ -74,11 +36,28 @@ router.put('/update', async (req, res) => {
         page.title = title ?? page.title;
         page.content = content ?? page.content;
 
+        const tabNameMaker = (slug, index) => {
+            return slug
+                .replace(/-test$/, "")
+                .toLowerCase()
+                .replace(/(?:^\w|-\w)/g, m => m.toUpperCase())
+                .replace(/-/g, "")
+                + "Tab" + (index + 1);
+        }
+
         if (Array.isArray(tabs)) {
-            page.tabs = tabs.map(t => ({
-                label: t.label,
-                content: t.content
-            }));
+            page.tabs = tabs.map((t, index) => {
+                const hasCustom = Boolean(t.hasCustomTabContent);
+
+                return {
+                    label: t.label,
+                    content: t.content,
+                    hasCustomTabContent: hasCustom,
+                    customTabKey: hasCustom
+                        ? tabNameMaker(page.slug, index)
+                        : null
+                };
+            });
         }
 
         await page.save();
