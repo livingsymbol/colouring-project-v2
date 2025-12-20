@@ -1,35 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLocale } from "../context/LocaleContext";
 
-const items = {
-    en: [
-        { name: <>Home</>, path: "/home" },
-        { name: <>Colours</>, path: "/colours" },
-        { name: <>Finding<br />Harmony</>, path: "/finding-harmony" },
-        { name: <>Aspiration<br />at Work</>, path: "/aspiration-at-work" },
-        { name: <>Gallery</>, path: "/gallery" },
-        { name: <>Library</>, path: "/library" },
-        { name: <>Forum & your<br />Colourings</>, path: "/forum-and-colouring" },
-    ],
+// const items = {
+//     en: [
+//         { name: <>Home</>, path: "/home" },
+//         { name: <>Colours</>, path: "/colours" },
+//         { name: <>Finding<br />Harmony</>, path: "/finding-harmony" },
+//         { name: <>Aspiration<br />at Work</>, path: "/aspiration-at-work" },
+//         { name: <>Gallery</>, path: "/gallery" },
+//         { name: <>Library</>, path: "/library" },
+//         { name: <>Forum & your<br />Colourings</>, path: "/forum-and-colouring" },
+//     ],
 
-    ru: [
-        { name: <>Главная</>, path: "/home" },
-        { name: <>Цветa</>, path: "/colours" },
-        { name: <>В&nbsp;поисках<br />гармонии</>, path: "/finding-harmony" },
-        { name: <>Стремление<br />в&nbsp;действии</>, path: "/aspiration-at-work" },
-        { name: <>Галерея</>, path: "/gallery" },
-        { name: <>Библиотека</>, path: "/library" },
-        { name: <>Форум и<br />цветовые работы</>, path: "/forum-and-colouring" },
-    ],
-};
+//     ru: [
+//         { name: <>Главная</>, path: "/home" },
+//         { name: <>Цветa</>, path: "/colours" },
+//         { name: <>В&nbsp;поисках<br />гармонии</>, path: "/finding-harmony" },
+//         { name: <>Стремление<br />в&nbsp;действии</>, path: "/aspiration-at-work" },
+//         { name: <>Галерея</>, path: "/gallery" },
+//         { name: <>Библиотека</>, path: "/library" },
+//         { name: <>Форум и<br />цветовые работы</>, path: "/forum-and-colouring" },
+//     ],
+// };
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const { locale, switchLocale } = useLocale();
 
-    const navItems = items[locale];
+    const [navItems, setNavItems] = useState({ en: [], ru: [] });
+
+    useEffect(() => {
+        const fetchNavItems = async () => {
+            try {
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BACKEND_URL}/page/slugs-and-titles`
+                );
+
+                const en = [];
+                const ru = [];
+
+                res.data.forEach(({ slug, title }) => {
+                    const match = title.match(/^(.*?)\s*\((.*?)\)$/);
+
+                    const enTitle = match ? match[1] : title;
+                    const ruTitle = match ? match[2] : title;
+
+                    const path = slug;
+
+                    en.push({
+                        name: enTitle,
+                        path,
+                    });
+
+                    ru.push({
+                        name: ruTitle,
+                        path,
+                    });
+                });
+
+                setNavItems({ en, ru });
+            } catch (err) {
+                console.error("Failed to load navigation", err);
+            }
+        };
+
+        fetchNavItems();
+    }, []);
+
+    const currentNavItems = navItems[locale] || [];
 
     return (
         <>
@@ -37,7 +78,7 @@ export default function Navbar() {
                 <div className="mx-auto px-2 md:px-4">
                     <div className="flex justify-between h-20 items-center">
                         {/* Left icons */}
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-4 shrink-0">
                             <img
                                 className="h-12 lg:h-16 w-12 lg:w-16 cursor-pointer"
                                 onClick={() => navigate("/")}
@@ -51,14 +92,21 @@ export default function Navbar() {
                         </div>
 
                         {/* Desktop menu */}
-                        <div className="hidden md:flex md:space-x-4 lg:space-x-8 xl:space-x-12">
-                            {navItems.map(({ name, path }) => (
+                        <div className="hidden md:flex md:space-x-4 lg:space-x-8">
+                            {currentNavItems.map(({ name, path }) => (
                                 <NavLink
                                     key={path}
                                     to={path}
                                     className={({ isActive }) =>
-                                        `text-md lg:text-lg xl:text-2xl text-center hover:text-[#d2c460] font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] ${isActive ? "text-[#d2c460]" : "text-white"
-                                        }`
+                                        `
+                                        text-center 
+                                        px-1
+                                        text-xs sm:text-sm md:text-sm lg:text-base xl:text-xl
+                                        font-semibold
+                                        hover:text-[#d2c460]
+                                        drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]
+                                        ${isActive ? "text-[#d2c460]" : "text-white"}
+                                        `
                                     }
                                 >
                                     {name}
@@ -67,7 +115,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Language buttons (Desktop) */}
-                        <div className="hidden md:flex items-center space-x-2">
+                        <div className="hidden md:flex items-center space-x-2 shrink-0">
                             <button
                                 onClick={() => switchLocale("en")}
                                 className={`px-2 py-1 font-semibold ${locale === "en" ? "text-[#d2c460]" : "text-white"
@@ -137,7 +185,7 @@ export default function Navbar() {
                         id="mobile-menu"
                         className="md:hidden absolute top-20 left-0 w-full bg-[#404040] z-20 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-md"
                     >
-                        {navItems.map(({ name, path }) => (
+                        {currentNavItems.map(({ name, path }) => (
                             <NavLink
                                 key={path}
                                 to={path}

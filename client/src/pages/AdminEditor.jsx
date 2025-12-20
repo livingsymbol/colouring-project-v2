@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -6,11 +6,12 @@ import { Trash } from "lucide-react";
 import { v4 as uuid } from "uuid";
 
 export default function AdminEditor() {
-    const [slug, setSlug] = useState("home-test");
+    const [slug, setSlug] = useState("new");
     const [locale, setLocale] = useState("en");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [tabs, setTabs] = useState([{ id: uuid(), label: "", content: "", hasCustomTabContent: false }]);
+    const [options, setOptions] = useState([]);
     const [isExisting, setIsExisting] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -18,7 +19,7 @@ export default function AdminEditor() {
     const editorsRef = useRef({});
 
     const editorConfig = useMemo(() => ({
-        height: 400,
+        height: 500,
         readonly: false,
         toolbarAdaptive: false,
         toolbarSticky: true,
@@ -31,11 +32,24 @@ export default function AdminEditor() {
                 'background-color': true
             }
         },
-        // These keep pasted images/files allowed:
         allowIframe: true,
-        // any other Jodit config you want
-
     }), []);
+
+    const fetchOptions = async () => {
+        try {
+            const res = await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/page/slugs-and-titles`
+            );
+            setOptions(res.data);
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to load page list");
+        }
+    };
+
+    useEffect(() => {
+        fetchOptions();
+    }, []);
 
     const fetchPage = async () => {
         if (!slug) return toast.error("Please enter a slug first");
@@ -67,6 +81,32 @@ export default function AdminEditor() {
             setTabs([{ id: uuid(), label: "", content: "" }]);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const deletePage = async () => {
+        if (!slug || slug === "new") {
+            toast.error("No page selected to delete");
+            return;
+        }
+
+        if (!confirm(`Are you sure you want to delete "${slug}"?`)) return;
+
+        try {
+            const res = await axios.delete(
+                `${import.meta.env.VITE_BACKEND_URL}/page/${slug}`
+            );
+
+            toast.success(res.data.count + " pages deleted successfully");
+
+            setSlug("new");
+            setTitle("");
+            setContent("");
+            setTabs([{ id: uuid(), label: "", content: "" }]);
+            setIsExisting(false);
+        } catch (err) {
+            console.error(err);
+            toast.error(err.response?.data?.error || "Failed to delete page");
         }
     };
 
@@ -134,7 +174,7 @@ export default function AdminEditor() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="w-full mx-auto p-6">
             <h1 className="text-2xl font-bold mb-4">
                 {isExisting ? "Update Page" : "Create Page"}
             </h1>
@@ -142,20 +182,32 @@ export default function AdminEditor() {
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Slug */}
                 <div>
-                    <label className="block text-sm font-semibold">Slug</label>
-                    <select
-                        value={slug}
-                        onChange={(e) => setSlug(e.target.value)}
-                        className="w-full border rounded p-2"
-                    >
-                        <option value="home-test">Home</option>
-                        <option value="colours-test">Colours</option>
-                        <option value="finding-harmony-test">Finding Harmony</option>
-                        <option value="aspiration-at-work-test">Aspiration at Work</option>
-                        <option value="gallery-test">Gallery</option>
-                        <option value="library-test">Library</option>
-                        <option value="forum-and-colouring-test">Forum and Colouring</option>
-                    </select>
+                    <label className="block text-sm font-semibold mb-1">Page</label>
+
+                    <div className="flex items-center gap-2">
+                        <select
+                            value={slug}
+                            onChange={(e) => setSlug(e.target.value)}
+                            className="flex-1 border rounded p-2"
+                        >
+                            {options.map(opt => (
+                                <option key={opt.slug} value={opt.slug}>
+                                    {opt.title}
+                                </option>
+                            ))}
+                            <option value="new">Add new page...</option>
+                        </select>
+
+                        <button
+                            type="button"
+                            onClick={fetchOptions}
+                            disabled={loading}
+                            className="border px-3 py-2 rounded hover:bg-gray-100 disabled:opacity-50"
+                            title="Reload pages"
+                        >
+                            ⟳
+                        </button>
+                    </div>
                 </div>
 
                 {/* Locale */}
@@ -274,6 +326,20 @@ export default function AdminEditor() {
                 >
                     + Add Tab
                 </button>
+
+                {isExisting && (
+                    <div className="flex justify-end mt-6">
+                        <button
+                            type="button"
+                            onClick={deletePage}
+                            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 flex items-center gap-2"
+                        >
+                            <Trash size={18} />
+                            Delete Page
+                        </button>
+                    </div>
+                )}
+
             </form>
         </div>
     );
