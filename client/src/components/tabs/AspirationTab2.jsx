@@ -37,9 +37,6 @@ export default function AspirationTab2() {
         setSelectedColor(color);
     };
 
-    const numRows = colours2.length;
-    const numCols = colours2[0].length;
-
     // Split into N equal row-wise parts
     function splitArray(array, parts) {
         const chunkSize = Math.floor(array.length / parts);
@@ -63,13 +60,13 @@ export default function AspirationTab2() {
     }
 
     // Decide parts based on screen size
-    const parts = splitArray(colours2, isSmall ? 4 : 3);
+    const parts = splitArray(colours2, isSmall ? 6 : 3);
     const flattenedParts = parts.map(flattenColumnWise);
     const finalFlattened = flattenedParts.flat();
 
     // Grid settings
     const gridSize = isSmall
-        ? { rows: 20, cols: 12 }
+        ? { rows: 30, cols: 8 }
         : { rows: 15, cols: 16 };
 
     const swatchSize = isSmall ? 23 : 30;
