@@ -133,7 +133,7 @@ export default function Tabs({ items }) {
             </div>
 
             {/* Content Box */}
-            <div className="z-10 relative w-full bg-white text-[#404040] rounded-3xl -mt-[1.5px] p-6 shadow-lg overflow-hidden border-2 border-black">
+            <div className="z-10 relative w-full bg-white text-[#404040] rounded-3xl -mt-[2px] p-6 shadow-lg overflow-hidden border-2 border-black">
                 {/* Gradient Layer */}
                 <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#fff2cc] to-white z-0 pointer-events-none" />
 
