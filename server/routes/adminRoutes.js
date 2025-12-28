@@ -3,9 +3,9 @@ const router = Router();
 import verifyToken from '../middlewares/verifyToken.js';
 import requireAdmin from '../middlewares/requireAdmin.js';
 import {
-    getDashboardData, approveComment, deleteComment, approvePost, deletePost, approveImage, deleteImage, getTabByLabel, patchTabByLabel, toggleNotifications, getNotificationsEnabled, getGalleryImages, uploadGalleryImage, deleteGalleryImage
+    getDashboardData, approveComment, deleteComment, approvePost, deletePost, approveImage, deleteImage, getTabByLabel, patchTabByLabel, toggleNotifications, getNotificationsEnabled, getGalleryImages, uploadGalleryImage, deleteGalleryImage, uploadPDF, uploadWebsiteImage
 } from '../controllers/admin.controller.js';
-import { upload } from '../utils/multer.utils.js';
+import { upload, uploadPDFmiddleware } from '../utils/multer.utils.js';
 
 router.get('/dashboard', verifyToken, requireAdmin, getDashboardData);
 
@@ -26,6 +26,10 @@ router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
 
 router.get("/upload/:folder", verifyToken, requireAdmin, getGalleryImages);
 router.post("/upload", verifyToken, requireAdmin, upload.single('image'), uploadGalleryImage);
-router.delete("/upload/:folder/:publicId", verifyToken, requireAdmin, upload.single('image'), deleteGalleryImage);
+
+router.post("/upload/image", upload.single('image'), uploadWebsiteImage);
+router.post("/upload/pdf", uploadPDFmiddleware.single('pdf'), uploadPDF);
+
+router.delete("/upload/:folder/:publicId", verifyToken, requireAdmin, deleteGalleryImage);
 
 export default router;

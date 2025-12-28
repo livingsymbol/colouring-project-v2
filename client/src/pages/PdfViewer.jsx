@@ -7,15 +7,21 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 const PdfViewer = () => {
     const location = useLocation();
     const query = new URLSearchParams(location.search);
-    const name = query.get("name");
+    // const name = query.get("name");
     const page = parseInt(query.get("page"), 10);
 
-    const url = `/pdfs/${name}.pdf`;
+    // const url = `/pdfs/${name}.pdf`;
+
+    const fileUrl = query.get("url");
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         defaultScale: 1.5,
     });
-
+    
+    if (!fileUrl) {
+        return <div>No PDF URL provided</div>;
+    }
+    
     return (
         <div className="min-h-screen w-full justify-center">
             <div className="w-full h-screen">
@@ -23,7 +29,7 @@ const PdfViewer = () => {
                     workerUrl={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`}
                 >
                     <Viewer
-                        fileUrl={url}
+                        fileUrl={decodeURIComponent(fileUrl)}
                         plugins={[defaultLayoutPluginInstance]}
                         initialPage={page ? page - 1 : 0}
                     />

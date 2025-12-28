@@ -23,16 +23,87 @@ export default function AdminEditor() {
         readonly: false,
         toolbarAdaptive: false,
         toolbarSticky: true,
-        uploader: { insertImageAsBase64URI: true },
-        defaultActionOnPaste: "insert_as_html", // alternatives: "clean", "insert_only_text"
-        pastePlain: false, // if true, paste as plain text
+
+        defaultActionOnPaste: "insert_as_html",
+        pastePlain: false,
+
         cleanHTML: {
             removeStyles: {
-                'background': true,
-                'background-color': true
+                background: true,
+                "background-color": true
             }
         },
+
         allowIframe: true,
+
+        uploader: {
+            insertImageAsBase64URI: true,
+            // filesVariableName: () => "file",
+            // url: (file) => {
+            //     if (file.type === "application/pdf") {
+            //         `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`
+            //     } else {
+            //         `${import.meta.env.VITE_BACKEND_URL}/admin/upload/image`
+            //     }
+            // },
+
+            filesVariableName: () => "pdf",
+            url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`,
+
+            method: "POST",
+            format: "json",
+            withCredentials: false,
+
+
+            prepareData: (formData) => {
+                return formData;
+            },
+
+            isSuccess: (resp) => {
+                return !!resp?.url;
+            },
+
+            process: (resp) => {
+                return {
+                    files: [resp.url],
+                    baseurl: "",
+                    fileName: resp.fileName,
+                    error: null,
+                    msg: "Uploaded successfully",
+                };
+            },
+
+            defaultHandlerSuccess: function (data) {
+                const editor = this;
+
+                data.files.forEach((url) => {
+                    if (url.endsWith(".pdf")) {
+                        const fileName =
+                            data.fileName || url.split("/").pop();
+
+                        editor.selection.insertHTML(
+                            `<a href="${`/view-pdf?url=${encodeURIComponent(url)}`}" target="_blank" 
+                            rel="noopener noreferrer" 
+                            style="text-decoration: underline; 
+                            font-size: 18px;
+                            color: inherit; cursor: pointer;"
+                            onmouseover="this.style.color='#3b82f6'"
+                            onmouseout="this.style.color='inherit'">
+                            ${fileName}
+                            </a>`
+                        );
+                    } else {
+                        editor.selection.insertImage(url);
+                    }
+                });
+            },
+
+            error: function (e) {
+                console.error("Upload failed", e);
+            },
+
+            allowedExtensions: ["jpg", "jpeg", "png", "webp", "gif", "pdf"],
+        },
     }), []);
 
     const fetchOptions = async () => {

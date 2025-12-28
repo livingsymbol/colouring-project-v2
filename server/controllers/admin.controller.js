@@ -452,3 +452,69 @@ export const deleteGalleryImage = async (req, res) => {
         });
     }
 };
+
+//PDFs uploaded via editor
+export const uploadPDF = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        const originalName = req.file.originalname
+            .replace(/\.pdf$/i, "")        // remove extension
+            .replace(/[^a-zA-Z0-9-_]/g, "_") // sanitize
+            .toLowerCase();
+
+        const uploadResult = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "image",
+                    folder: "colouring-project/library-pdfs",
+                    use_filename: true,
+                    unique_filename: true,
+                    public_id: originalName,
+                    format: 'pdf'
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            ).end(req.file.buffer);
+        });
+        console.log('uploadResult', uploadResult)
+        res.json({
+            publicId: uploadResult.public_id,
+            url: uploadResult.secure_url,
+            fileName: uploadResult.display_name
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "PDF upload failed" });
+    }
+}
+
+//images uploaded via editor
+export const uploadWebsiteImage = async (req, res) => {
+    try {
+        const uploadResult = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "image",
+                    folder: "colouring-project/website-images",
+                },
+                (error, result) => {
+                    if (error) reject(error);
+                    resolve(result);
+                }
+            ).end(req.file.buffer);
+        });
+        console.log('uploadResult', uploadResult)
+        res.json({
+            url: uploadResult.secure_url,
+            originalName: req.file.originalname,
+        });
+    } catch (e) {
+        res.status(500).json({ message: e.message });
+    }
+}
