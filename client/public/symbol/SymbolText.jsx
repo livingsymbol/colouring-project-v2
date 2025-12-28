@@ -9,6 +9,7 @@ function SymbolText(props) {
         xmlns="http://www.w3.org/2000/svg"
         width="708.661"
         height="708.661"
+        ref={props.ref}
         viewBox="0 0 708.661 708.661"
         style={{
           transform: `rotate(${props.getRotationAngle()}deg)`,
@@ -1445,6 +1446,8 @@ function SymbolText(props) {
         {...props}
         xmlns="http://www.w3.org/2000/svg"
         width="708.661"
+        ref={props.ref}
+
         height="708.661"
         viewBox="0 0 708.661 708.661"
         style={{

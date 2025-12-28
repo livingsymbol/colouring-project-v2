@@ -18,6 +18,134 @@ export default function AdminEditor() {
 
     const editorsRef = useRef({});
 
+    // const editorConfig = useMemo(() => ({
+    //     height: 500,
+    //     readonly: false,
+    //     toolbarAdaptive: false,
+    //     toolbarSticky: true,
+
+    //     defaultActionOnPaste: "insert_as_html",
+    //     pastePlain: false,
+
+    //     cleanHTML: {
+    //         removeStyles: {
+    //             background: true,
+    //             "background-color": true
+    //         }
+    //     },
+
+    //     allowIframe: true,
+
+    //     uploader: {
+    //         insertImageAsBase64URI: true,
+    //         filesVariableName: () => "pdf",
+    //         url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`,
+
+    //         method: "POST",
+    //         format: "json",
+    //         withCredentials: false,
+
+
+    //         prepareData: (formData) => {
+    //             return formData;
+    //         },
+
+    //         isSuccess: (resp) => {
+    //             return !!resp?.url;
+    //         },
+
+    //         process: (resp) => {
+    //             return {
+    //                 files: [resp.url],
+    //                 baseurl: "",
+    //                 fileName: resp.fileName,
+    //                 error: null,
+    //                 msg: "Uploaded successfully",
+    //             };
+    //         },
+
+    //         defaultHandlerSuccess: function (data) {
+    //             const editor = this;
+
+    //             data.files.forEach((url) => {
+    //                 if (url.endsWith(".pdf")) {
+    //                     const fileName =
+    //                         data.fileName || url.split("/").pop();
+
+    //                     editor.selection.insertHTML(
+    //                         `<a href="${`/view-pdf?url=${encodeURIComponent(url)}`}" target="_blank" 
+    //                         rel="noopener noreferrer" 
+    //                         style="text-decoration: underline; 
+    //                         font-size: 18px;
+    //                         color: inherit; cursor: pointer;"
+    //                         onmouseover="this.style.color='#3b82f6'"
+    //                         onmouseout="this.style.color='inherit'">
+    //                         ${fileName}
+    //                         </a>`
+    //                     );
+    //                 } else {
+    //                     editor.selection.insertImage(url);
+    //                 }
+    //             });
+    //         },
+
+    //         error: function (e) {
+    //             console.error("Upload failed", e);
+    //         },
+
+    //         allowedExtensions: ["jpg", "jpeg", "png", "webp", "gif", "pdf"],
+    //     },
+    // }), []);
+
+    const imageUploader = {
+        insertImageAsBase64URI: true,
+        url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/image`,
+        method: "POST",
+        format: "json",
+        filesVariableName: () => "image",
+
+        isSuccess: (resp) => !!resp?.url,
+
+        process: (resp) => ({
+            files: [resp.url],
+            fileName: resp.originalName,
+        }),
+
+        defaultHandlerSuccess: function (data) {
+            data.files.forEach((url) => {
+                this.selection.insertImage(url);
+            });
+        },
+    };
+    const pdfUploader = {
+        insertImageAsBase64URI: false,
+        url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`,
+        method: "POST",
+        format: "json",
+        filesVariableName: () => "pdf",
+
+        isSuccess: (resp) => !!resp?.url,
+
+        process: (resp) => ({
+            files: [resp.url],
+            fileName: resp.fileName,
+        }),
+
+        defaultHandlerSuccess: function (data) {
+            const url = data.files[0];
+            const fileName = data.fileName || url.split("/").pop();
+
+            this.selection.insertHTML(`
+                <a href="/view-pdf?url=${encodeURIComponent(url)}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   style="text-decoration: underline; font-size: 18px;">
+                    ${fileName}
+                </a>
+            `);
+        },
+    };
+
     const editorConfig = useMemo(() => ({
         height: 500,
         readonly: false,
@@ -27,84 +155,26 @@ export default function AdminEditor() {
         defaultActionOnPaste: "insert_as_html",
         pastePlain: false,
 
-        cleanHTML: {
-            removeStyles: {
-                background: true,
-                "background-color": true
-            }
-        },
-
         allowIframe: true,
 
         uploader: {
-            insertImageAsBase64URI: true,
-            // filesVariableName: () => "file",
-            // url: (file) => {
-            //     if (file.type === "application/pdf") {
-            //         `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`
-            //     } else {
-            //         `${import.meta.env.VITE_BACKEND_URL}/admin/upload/image`
-            //     }
-            // },
+            ...pdfUploader,
 
-            filesVariableName: () => "pdf",
-            url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`,
+            prepareData: function (formData) {
+                const file = formData.get("image") || formData.get("pdf");
+                if (!file) return formData;
 
-            method: "POST",
-            format: "json",
-            withCredentials: false,
+                console.log('file.type', file.type)
+                this.options.uploader =
+                    file.type === "application/pdf" ? pdfUploader : imageUploader;
 
-
-            prepareData: (formData) => {
                 return formData;
-            },
-
-            isSuccess: (resp) => {
-                return !!resp?.url;
-            },
-
-            process: (resp) => {
-                return {
-                    files: [resp.url],
-                    baseurl: "",
-                    fileName: resp.fileName,
-                    error: null,
-                    msg: "Uploaded successfully",
-                };
-            },
-
-            defaultHandlerSuccess: function (data) {
-                const editor = this;
-
-                data.files.forEach((url) => {
-                    if (url.endsWith(".pdf")) {
-                        const fileName =
-                            data.fileName || url.split("/").pop();
-
-                        editor.selection.insertHTML(
-                            `<a href="${`/view-pdf?url=${encodeURIComponent(url)}`}" target="_blank" 
-                            rel="noopener noreferrer" 
-                            style="text-decoration: underline; 
-                            font-size: 18px;
-                            color: inherit; cursor: pointer;"
-                            onmouseover="this.style.color='#3b82f6'"
-                            onmouseout="this.style.color='inherit'">
-                            ${fileName}
-                            </a>`
-                        );
-                    } else {
-                        editor.selection.insertImage(url);
-                    }
-                });
-            },
-
-            error: function (e) {
-                console.error("Upload failed", e);
             },
 
             allowedExtensions: ["jpg", "jpeg", "png", "webp", "gif", "pdf"],
         },
     }), []);
+
 
     const fetchOptions = async () => {
         try {

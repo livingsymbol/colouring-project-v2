@@ -372,11 +372,12 @@ const Symbol = forwardRef((props, ref) => {
 
           {showSparkles && <Sparkles />}
         </svg>
-
         <SymbolText
           getRotationAngle={getRotationAngle}
+          ref={props.symbolTextRef}
           className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out"
         />
+
       </div>
     </div>
   );

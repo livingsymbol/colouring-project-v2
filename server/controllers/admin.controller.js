@@ -481,7 +481,6 @@ export const uploadPDF = async (req, res) => {
                 }
             ).end(req.file.buffer);
         });
-        console.log('uploadResult', uploadResult)
         res.json({
             publicId: uploadResult.public_id,
             url: uploadResult.secure_url,

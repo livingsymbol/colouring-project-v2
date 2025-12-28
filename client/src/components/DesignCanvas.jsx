@@ -31,6 +31,8 @@ const style = {
 const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5 = false, sparkleColor, count }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
+  const symbolTextRef = useRef(null);
+
   const [colourArray, setColourArray] = useState(() => {
     const savedColors = localStorage.getItem("colourArray");
     return savedColors ? JSON.parse(savedColors) : Array(12).fill("#fff");
@@ -142,17 +144,102 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
     };
   }, [color, colourArray]);
 
+  // const saveAsPng = () => {
+  //   const svgElement = svgRef.current;
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   const serializer = new XMLSerializer();
+  //   const svgString = serializer.serializeToString(svgElement);
+  //   const svgBlob = new Blob([svgString], {
+  //     type: "image/svg+xml;charset=utf-8",
+  //   });
+  //   const url = URL.createObjectURL(svgBlob);
+  //   const img = new Image();
+
+  //   img.onload = () => {
+  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     ctx.drawImage(img, 0, 0);
+  //     URL.revokeObjectURL(url);
+
+  //     const link = document.createElement("a");
+  //     link.href = canvas.toDataURL("image/png");
+  //     link.download = "colouring.png";
+  //     link.click();
+  //   };
+
+  //   img.src = url;
+  // };
+
+  // const saveAsPng = () => {
+  //   const baseSvg = svgRef.current;
+  //   const textSvg = symbolTextRef.current;
+
+  //   const clone = baseSvg.cloneNode(true);
+
+  //   // Import SymbolText children into main SVG
+  //   Array.from(textSvg.childNodes).forEach((node) => {
+  //     clone.appendChild(node.cloneNode(true));
+  //   });
+
+  //   const serializer = new XMLSerializer();
+  //   const svgString = serializer.serializeToString(clone);
+
+  //   const blob = new Blob([svgString], {
+  //     type: "image/svg+xml;charset=utf-8",
+  //   });
+
+  //   const url = URL.createObjectURL(blob);
+  //   const img = new Image();
+
+  //   const canvas = canvasRef.current;
+  //   canvas.width = 708;
+  //   canvas.height = 708;
+
+  //   img.onload = () => {
+  //     canvas.getContext("2d").drawImage(img, 0, 0);
+  //     URL.revokeObjectURL(url);
+
+  //     const link = document.createElement("a");
+  //     link.download = "colouring.png";
+  //     link.href = canvas.toDataURL("image/png");
+  //     link.click();
+  //   };
+
+  //   img.src = url;
+  // };
+
   const saveAsPng = () => {
-    const svgElement = svgRef.current;
+    const baseSvg = svgRef.current;
+    const textSvg = symbolTextRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+
+    let svgToSerialize;
+
+    if (showDesc && textSvg) {
+      const clone = baseSvg.cloneNode(true);
+
+      Array.from(textSvg.childNodes).forEach((node) => {
+        clone.appendChild(node.cloneNode(true));
+      });
+
+      svgToSerialize = clone;
+    } else {
+      svgToSerialize = baseSvg;
+    }
+
     const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
+    const svgString = serializer.serializeToString(svgToSerialize);
+
     const svgBlob = new Blob([svgString], {
       type: "image/svg+xml;charset=utf-8",
     });
+
     const url = URL.createObjectURL(svgBlob);
     const img = new Image();
+
+    canvas.width = 708;
+    canvas.height = 708;
 
     img.onload = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -160,13 +247,14 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
       URL.revokeObjectURL(url);
 
       const link = document.createElement("a");
-      link.href = canvas.toDataURL("image/png");
       link.download = "colouring.png";
+      link.href = canvas.toDataURL("image/png");
       link.click();
     };
 
     img.src = url;
   };
+
 
   const revealScore = () => {
     const NUM = isColours1 ? 1 : 2;
@@ -214,7 +302,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
         <div className="overflow-hidden w-full relative">
 
           {showDesc ?
-            <Symbol ref={svgRef} className="w-full h-full" color={color} isColouring5={isColouring5} sparkleColor={sparkleColor} count={count} />
+            <Symbol ref={svgRef} symbolTextRef={symbolTextRef} className="w-full h-full" color={color} isColouring5={isColouring5} sparkleColor={sparkleColor} count={count} />
             :
             <Symbol_without_desc
               ref={svgRef}
