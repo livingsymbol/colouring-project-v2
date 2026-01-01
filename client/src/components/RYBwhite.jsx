@@ -70,7 +70,7 @@ export default function ColorWheel({ onColorSelect, size  }) {
                     width: wheelSize,
                     height: wheelSize,
                     borderRadius: "50%",
-                    cursor: "pointer",
+                    cursor: "crosshair",
                     display: "block",
                 }}
             />

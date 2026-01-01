@@ -74,7 +74,7 @@ const SwatchesColourPicker = ({
               backgroundColor: color,
               width: `${responsiveSize.swatchSize}px`,
               height: `${responsiveSize.swatchSize}px`,
-              cursor: "pointer",
+              cursor: "crosshair",
               boxSizing: "border-box",
               border:
                 color === selectedColor

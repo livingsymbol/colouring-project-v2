@@ -12,6 +12,7 @@ import AdminImageUpload from './pages/AdminImageUpload.jsx';
 import useGuestLogin from './hooks/useGuestLogin';
 import PdfViewer from './pages/PdfViewer';
 import Test from './pages/Test.jsx';
+import GlobalVideoPlayer from './components/GlobalVideoPlayer.jsx';
 // import usePageTracking from './hooks/usePageTracking.js';
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
   return (
     <>
       <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
+      
       <Routes>
 
         <Route path="/" element={<Navigate to="/home" replace />} />
@@ -80,6 +82,8 @@ export default function App() {
 
         <Route path="/*" element={<NotFound />} />
       </Routes>
+
+      <GlobalVideoPlayer />
     </>
   );
 }
