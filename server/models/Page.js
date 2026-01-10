@@ -13,7 +13,8 @@ const PageSchema = new mongoose.Schema(
         slug: { type: String, required: true },
         locale: { type: String, required: true },
         title: { type: String },
-        content: { type: String },  //new field
+        content: { type: String },  
+        order: { type: Number },  
         tabs: [TabSchema],
     },
     { timestamps: true }

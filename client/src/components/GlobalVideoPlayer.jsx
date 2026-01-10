@@ -24,7 +24,6 @@ export default function GlobalVideoPlayer() {
             onClose={() => setVideoUrl(null)}
             maxWidth="md"
             fullWidth
-            maxWidth="md"
             slotProps={{
                 paper: {
                     sx: {

@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Trash } from "lucide-react";
 import { v4 as uuid } from "uuid";
+import PageReorderModal from "../components/PageReorderModal";
 
 export default function AdminEditor() {
     const [slug, setSlug] = useState("new");
@@ -15,6 +16,7 @@ export default function AdminEditor() {
     const [isExisting, setIsExisting] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [reorderOpen, setReorderOpen] = useState(false);
 
     const editorsRef = useRef({});
 
@@ -319,6 +321,19 @@ export default function AdminEditor() {
             <h1 className="text-2xl font-bold mb-4">
                 {isExisting ? "Update Page" : "Create Page"}
             </h1>
+
+            <button
+                type="button"
+                onClick={() => setReorderOpen(true)}
+                className="bg-purple-600 text-white px-4 py-2 mb-8 rounded hover:bg-purple-700"
+            >
+                Rearrange Pages
+            </button>
+
+            <PageReorderModal
+                open={reorderOpen}
+                onClose={() => setReorderOpen(false)}
+            />
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Slug */}

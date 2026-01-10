@@ -179,7 +179,7 @@ router.get("/slugs-and-titles", async (req, res) => {
         const pages = await Page.find(
             {},
             { slug: 1, title: 1, locale: 1, _id: 0 }
-        );
+        ).sort({ order: 1 });
 
         const map = new Map();
 
@@ -248,5 +248,73 @@ router.get("/errors", async (req, res) => {
         res.status(500).json({ error: "Failed to fetch images" });
     }
 });
+
+router.get("/list-with-order", async (req, res) => {
+    const pages = await Page.find().sort({ order: 1 });
+
+    // 1. Group by slug
+    const groups = {};
+    pages.forEach((p) => {
+        if (!groups[p.slug]) groups[p.slug] = [];
+        groups[p.slug].push(p);
+    });
+
+    // 2. Convert into one UI entry per slug
+    const groupedList = Object.keys(groups).map((slug) => {
+        const group = groups[slug];
+
+        // All locales should share the same order.
+        // If inconsistent, take the lowest (or highest). Lowest is safer.
+        const sharedOrder = Math.min(...group.map((g) => g.order || 999999));
+
+        // We also return titles so admin UI shows the proper name.
+        // Prefer English title, else first available.
+        const title =
+            group.find((g) => g.locale === "en")?.title ||
+            group[0].title ||
+            slug;
+
+        return {
+            slug,
+            title,
+            order: sharedOrder,
+            locales: group.map((g) => g.locale), // optional
+        };
+    });
+
+    // 3. Sort by unified order
+    groupedList.sort((a, b) => a.order - b.order);
+
+    res.json(groupedList);
+});
+
+
+router.put("/reorder", async (req, res) => {
+    const { pages } = req.body;
+    if (!Array.isArray(pages)) {
+        return res.status(400).json({ error: "Invalid format" });
+    }
+
+    const bulkOps = [];
+
+    pages.forEach((p) => {
+        bulkOps.push({
+            updateMany: {
+                filter: { slug: p.slug },
+                update: { $set: { order: p.order } },
+            }
+        });
+    });
+
+    try {
+        await Page.bulkWrite(bulkOps);
+        res.json({ message: "Order updated successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to update order" });
+    }
+});
+
+  
 
 export default router;
