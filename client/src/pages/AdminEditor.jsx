@@ -318,17 +318,19 @@ export default function AdminEditor() {
 
     return (
         <div className="w-full mx-auto p-6">
-            <h1 className="text-2xl font-bold mb-4">
-                {isExisting ? "Update Page" : "Create Page"}
-            </h1>
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-bold">
+                    {isExisting ? "Update Page" : "Create Page"}
+                </h1>
 
-            <button
-                type="button"
-                onClick={() => setReorderOpen(true)}
-                className="bg-purple-600 text-white px-4 py-2 mb-8 rounded hover:bg-purple-700"
-            >
-                Rearrange Pages
-            </button>
+                <button
+                    type="button"
+                    onClick={() => setReorderOpen(true)}
+                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                >
+                    Rearrange Pages
+                </button>
+            </div>
 
             <PageReorderModal
                 open={reorderOpen}
