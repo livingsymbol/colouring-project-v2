@@ -22,4 +22,19 @@ const PageSchema = new mongoose.Schema(
 
 PageSchema.index({ slug: 1, locale: 1 }, { unique: true });
 
+PageSchema.pre("save", async function (next) {
+    if (this.order != null) return next(); // don't override if already set
+
+    try {
+        const lastPage = await this.constructor.findOne({}, { order: 1 })
+            .sort({ order: -1 })
+            .lean();
+
+        this.order = lastPage ? lastPage.order + 1 : 1;
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
 export default mongoose.model("Page", PageSchema);
