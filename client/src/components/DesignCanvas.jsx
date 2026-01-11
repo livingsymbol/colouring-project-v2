@@ -272,7 +272,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
           </div>
           <button
             className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
-            onClick={saveAsPng}>{locale === "en" ? "Download" : "Скачать"}</button>
+            onClick={saveAsPng}>{locale === "en" ? "Save" : "Скачать"}</button>
           <button
             className="cursor-pointer w-32 py-2 text-md md:text-lg font-semibold text-white bg-[#d5af3c]  rounded-lg duration-100 hover:bg-[#d5af3cc8] hover:text-white shadow-2xl"
             onClick={resetSymbol}>{locale === "en" ? "Reset" : "Сбросить"}</button>

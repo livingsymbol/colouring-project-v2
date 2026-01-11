@@ -23,7 +23,7 @@ export default function AspirationTab3() {
                     <ColourTester color={color} />
                 </div>
                 <br />
-                <Paragraph className="text-center">{locale === "en" ? "After colouring all 12 petals you may “Download” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Скачать», чтобы сохранить свой вариант символа."}</Paragraph>
+                <Paragraph className="text-center">{locale === "en" ? "After colouring all 12 petals you may “Save” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Скачать», чтобы сохранить свой вариант символа."}</Paragraph>
             </div>}
             symbol={<DesignCanvas color={color} showDesc={true} />} />
     );

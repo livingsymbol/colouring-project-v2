@@ -77,7 +77,7 @@ export default function AspirationTab1() {
                     </div>
                     <br />
                     <Paragraph className="text-center">
-                        {locale === "en" ? "After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Показать», чтобы узнать, достигнута ли гармония, или «Скачать», чтобы сохранить свою раскраску."}
+                        {locale === "en" ? "After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Save” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Показать», чтобы узнать, достигнута ли гармония, или «Скачать», чтобы сохранить свою раскраску."}
                     </Paragraph>
                 </div>
             }

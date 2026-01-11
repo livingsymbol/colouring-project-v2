@@ -11,17 +11,17 @@ import { useLocale } from "../../context/LocaleContext";
 // Custom hook for media query
 function useMediaQuery(query) {
     const [matches, setMatches] = useState(false);
-    
+
     useEffect(() => {
         const media = window.matchMedia(query);
         const listener = () => setMatches(media.matches);
-        
+
         listener(); // initial check
         media.addEventListener("change", listener);
-        
+
         return () => media.removeEventListener("change", listener);
     }, [query]);
-    
+
     return matches;
 }
 
@@ -89,7 +89,7 @@ export default function AspirationTab2() {
                     </div>
                     <br />
                     <Paragraph className="text-center">
-                        {locale === "en" ? "After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Download” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Показать», чтобы узнать, достигнута ли гармония, или «Скачать», чтобы сохранить свою раскраску."}
+                        {locale === "en" ? "After colouring all 12 petals you may press “Reveal” to learn about harmony achieved or “Save” your colouring." : "После того как вы раскрасите все 12 лепестков, вы можете нажать «Показать», чтобы узнать, достигнута ли гармония, или «Скачать», чтобы сохранить свою раскраску."}
                     </Paragraph>
                 </div>
             }
