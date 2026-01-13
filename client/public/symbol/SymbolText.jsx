@@ -11,8 +11,10 @@ function SymbolText(props) {
         height="708.661"
         ref={props.ref}
         viewBox="0 0 708.661 708.661"
+        transform={`rotate(${props.getRotationAngle()} 354.3305 354.3305)`}
         style={{
           transform: `rotate(${props.getRotationAngle()}deg)`,
+          transformOrigin: 'center center',
         }}
       >
         <text
@@ -1450,8 +1452,10 @@ function SymbolText(props) {
 
         height="708.661"
         viewBox="0 0 708.661 708.661"
+        transform={`rotate(${props.getRotationAngle()} 354.3305 354.3305)`}
         style={{
           transform: `rotate(${props.getRotationAngle()}deg)`,
+          transformOrigin: 'center center',
         }}
       >
         <text

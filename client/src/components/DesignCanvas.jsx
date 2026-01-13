@@ -42,9 +42,6 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
 
   const [input, setInput] = useState(""); // State to store the user's input
 
-  const [illumination, setIllumination] = useState(0.5); // 0-1
-  const [intensity, setIntensity] = useState(0); // 0-1
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -144,6 +141,53 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
     };
   }, [color, colourArray]);
 
+  // const saveAsPng = () => {
+  //   const baseSvg = svgRef.current;
+  //   const textSvg = symbolTextRef.current;
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+
+  //   let svgToSerialize;
+
+  //   if (showDesc && textSvg) {
+  //     const clone = baseSvg.cloneNode(true);
+
+  //     Array.from(textSvg.childNodes).forEach((node) => {
+  //       clone.appendChild(node.cloneNode(true));
+  //     });
+
+  //     svgToSerialize = clone;
+  //   } else {
+  //     svgToSerialize = baseSvg;
+  //   }
+
+  //   const serializer = new XMLSerializer();
+  //   const svgString = serializer.serializeToString(svgToSerialize);
+
+  //   const svgBlob = new Blob([svgString], {
+  //     type: "image/svg+xml;charset=utf-8",
+  //   });
+
+  //   const url = URL.createObjectURL(svgBlob);
+  //   const img = new Image();
+
+  //   canvas.width = 708;
+  //   canvas.height = 708;
+
+  //   img.onload = () => {
+  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     ctx.drawImage(img, 0, 0);
+  //     URL.revokeObjectURL(url);
+
+  //     const link = document.createElement("a");
+  //     link.download = "colouring.png";
+  //     link.href = canvas.toDataURL("image/png");
+  //     link.click();
+  //   };
+
+  //   img.src = url;
+  // };
+
   const saveAsPng = () => {
     const baseSvg = svgRef.current;
     const textSvg = symbolTextRef.current;
@@ -155,8 +199,19 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
     if (showDesc && textSvg) {
       const clone = baseSvg.cloneNode(true);
 
+      // Clone text nodes and preserve their transform attribute
       Array.from(textSvg.childNodes).forEach((node) => {
-        clone.appendChild(node.cloneNode(true));
+        const clonedNode = node.cloneNode(true);
+        // If the node has a transform attribute from the SVG, preserve it
+        if (textSvg.hasAttribute('transform')) {
+          // Create a group to wrap the text with the rotation
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.setAttribute('transform', textSvg.getAttribute('transform'));
+          g.appendChild(clonedNode);
+          clone.appendChild(g);
+        } else {
+          clone.appendChild(clonedNode);
+        }
       });
 
       svgToSerialize = clone;
@@ -190,7 +245,6 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
 
     img.src = url;
   };
-
 
   const revealScore = () => {
     const NUM = isColours1 ? 1 : 2;
