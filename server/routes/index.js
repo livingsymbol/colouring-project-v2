@@ -12,5 +12,6 @@ router.use('/posts', postRoutes)
 router.use('/comments', commentRoutes)
 router.use('/admin', adminRoutes);
 router.use('/page', pageRoutes);
+router.get('/health', (_, res) => res.sendStatus(200))
 
 export default router;

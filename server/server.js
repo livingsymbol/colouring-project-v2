@@ -16,7 +16,6 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 
 app.use('/api', indexRouter)
-app.get('/health', (_, res) => res.sendStatus(200))
 app.use(clientErrorHandler)
 app.use(errorHandler)
 
