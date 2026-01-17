@@ -43,7 +43,7 @@ export function ForumTab3() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setNewPost((prev) => ({ ...prev, imageUrl: reader.result }));
             setPreviewUrl(URL.createObjectURL(file));
         };
         reader.readAsDataURL(file);
@@ -57,7 +57,7 @@ export function ForumTab3() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setNewPost((prev) => ({ ...prev, imageUrl: reader.result }));
             setPreviewUrl(URL.createObjectURL(file));
         };
         reader.readAsDataURL(file);
@@ -87,7 +87,7 @@ export function ForumTab3() {
 
             toast.success(res.data.message || "Post submitted for review!");
             setShowCreate(false);
-            setNewPost({ title: '', content: '', image: null });
+            setNewPost({ title: '', content: '', imageUrl: null });
             setPreviewUrl(null);
 
             const updated = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`);
@@ -284,7 +284,7 @@ export default function ForumAndColouringTab3() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setNewPost((prev) => ({ ...prev, imageUrl: reader.result }));
             setPreviewUrl(URL.createObjectURL(file));
         };
         reader.readAsDataURL(file);
@@ -298,7 +298,7 @@ export default function ForumAndColouringTab3() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setNewPost((prev) => ({ ...prev, image: reader.result }));
+            setNewPost((prev) => ({ ...prev, imageUrl: reader.result }));
             setPreviewUrl(URL.createObjectURL(file));
         };
         reader.readAsDataURL(file);

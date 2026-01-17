@@ -14,9 +14,9 @@ app.use(cors())
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-app.get('/health', (_, res) => res.sendStatus(200))
 
 app.use('/api', indexRouter)
+app.get('/health', (_, res) => res.sendStatus(200))
 app.use(clientErrorHandler)
 app.use(errorHandler)
 
