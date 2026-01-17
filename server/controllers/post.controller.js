@@ -36,14 +36,15 @@ export const createPost = async (req, res) => {
 
         await newPost.save();
 
-        // 🔔 Notify admins
-        await notifyAdmins(
-            "New Post Pending Approval",
-            `A new post titled <b>${newPost.title || "Untitled"}</b> has been submitted and is awaiting approval.`
-        );
-
         res.status(201).json({ message: 'Post submitted for review', post: { _id: newPost._id, title: newPost.title, content: newPost.content, imageUrl: newPost.imageUrl } });
 
+        // 🔔 Notify admins
+        notifyAdmins(
+            "New Post Pending Approval",
+            `A new post titled <b>${newPost.title || "Untitled"}</b> has been submitted and is awaiting approval.`
+        ).catch(err => {
+            console.error("Admin notification failed:", err);
+        });
     } catch (err) {
         res.status(500).json({ message: 'Failed to create post', error: err.message });
     }
@@ -82,13 +83,15 @@ export const publishImage = async (req, res) => {
 
         await newPublishedImage.save();
 
+        res.status(201).json({ message: 'Post submitted for review', post: { _id: newPublishedImage._id, url: newPublishedImage.url, comment: newPublishedImage.comment, tab: newPublishedImage.tab } });
+
         // 🔔 Notify admins
-        await notifyAdmins(
+        notifyAdmins(
             "New Image Pending Approval",
             `A new image on tab <b>${newPublishedImage.tab || "Untitled"}</b> has been submitted and is awaiting approval.`
-        );
-
-        res.status(201).json({ message: 'Post submitted for review', post: { _id: newPublishedImage._id, url: newPublishedImage.url, comment: newPublishedImage.comment, tab: newPublishedImage.tab } });
+        ).catch(err => {
+            console.error("Admin notification failed:", err);
+        });
 
     } catch (err) {
         res.status(500).json({ message: 'Failed to create post', error: err.message });
