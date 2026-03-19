@@ -145,7 +145,7 @@ const Symbol = forwardRef((props, ref) => {
             <path transform="matrix(1,0,0,-1,336.6333,81.462589)" d="M0 0C-36.636-2.552-71.313-12.291-102.541-27.765-108.539-30.737-110.777-37.996-107.469-43.6L-41.712-157.069C-25.959-149.171-6.028-143.462 12.669-142.627L12.287-11.209C12.329-4.678 6.704 .467 0 0" />
           </clipPath>
 
-          {/* Your golden outline symbol (kept as-is) */}
+          {/* golden outline symbol (kept as-is) */}
           <g id="layer_1" data-name="Vrstva 1">
             <g id="layer_1" data-name="Vrstva 1">
               <g >
@@ -153,9 +153,19 @@ const Symbol = forwardRef((props, ref) => {
                   transform="matrix(1,0,0,-1,600.1441,212.1676)"
                   d="M0 0C78.259-135.554 31.808-308.891-103.752-387.159-239.311-465.428-412.645-418.989-490.903-283.436-569.162-147.882-522.71 25.455-387.151 103.724-251.592 181.992-78.258 135.553 0 0"
                   fill="#d5af3c"
-                  style={{ pointerEvents: "none" }}
                   stroke="#000000"
                   strokeWidth="1"
+                  style={
+                    props.isColouring6
+                      ? {
+                        cursor: "pointer",
+                        transition: "fill 0.3s ease",
+                        pointerEvents: "all",
+                      }
+                      : {
+                        pointerEvents: "none",
+                      }
+                  }
                 />
                 <path
                   transform="matrix(1,0,0,-1,275.7271,284.04023)"

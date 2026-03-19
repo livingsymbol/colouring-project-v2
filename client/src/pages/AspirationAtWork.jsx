@@ -8,6 +8,7 @@ import AspirationTab3 from '../components/tabs/AspirationTab3';
 import AspirationTab4 from '../components/tabs/AspirationTab4';
 import AspirationTab5 from '../components/tabs/AspirationTab5';
 import { useLocale } from '../context/LocaleContext';
+import AspirationTab6 from '../components/tabs/AspirationTab6';
 
 const tabsData = [
   { label: "Colouring 1", content: <AspirationTab1 /> },
@@ -15,6 +16,7 @@ const tabsData = [
   { label: "Colouring 3", content: <AspirationTab3 /> },
   { label: "Colouring 4", content: <AspirationTab4 /> },
   { label: "Colouring 5", content: <AspirationTab5 /> },
+  { label: "Colouring 6", content: <AspirationTab6 /> },
 ];
 const tabsDataRu = [
   { label: "Раскраскa 1", content: <AspirationTab1 /> },
@@ -22,6 +24,7 @@ const tabsDataRu = [
   { label: "Раскраскa 3", content: <AspirationTab3 /> },
   { label: "Раскраскa 4", content: <AspirationTab4 /> },
   { label: "Раскраскa 5", content: <AspirationTab5 /> },
+  { label: "Раскраскa 6", content: <AspirationTab6 /> },
 ];
 
 export default function AspirationAtWork() {
@@ -94,7 +97,7 @@ export default function AspirationAtWork() {
           <br />
           <br />
 
-          “Colourings 1 - 5” below allow you to experiment with colouring, while “Finding harmony” section provides you with additional guidance on the colouring.
+          “Colourings 1 - 6” below allow you to experiment with colouring, while “Finding harmony” section provides you with additional guidance on the colouring.
 
         </Paragraph>
         <br />
@@ -161,7 +164,7 @@ export default function AspirationAtWork() {
           Этот процесс — интуитивный.
           <br />
           <br />
-          «Раскраски 1–5» ниже дают возможность экспериментировать с цветами,
+          «Раскраски 1–6» ниже дают возможность экспериментировать с цветами,
           а раздел «Нахождение гармонии» предлагает дополнительные указания для окрашивания.
         </Paragraph>
         <br />
