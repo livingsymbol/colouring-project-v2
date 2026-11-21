@@ -19,7 +19,7 @@ router.patch('/image/:id', verifyToken, requireAdmin, approveImage);
 router.delete('/image/:id', verifyToken, requireAdmin, deleteImage);
 
 router.get('/page/:slug/:label', getTabByLabel);
-router.patch('/page/:slug/:label', patchTabByLabel);
+router.patch('/page/:slug/:label', verifyToken, requireAdmin, patchTabByLabel);
 
 router.get('/notifications', verifyToken, requireAdmin, getNotificationsEnabled);
 router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
@@ -27,8 +27,8 @@ router.patch('/notifications', verifyToken, requireAdmin, toggleNotifications);
 router.get("/upload/:folder", verifyToken, requireAdmin, getGalleryImages);
 router.post("/upload", verifyToken, requireAdmin, upload.single('image'), uploadGalleryImage);
 
-router.post("/upload/image", upload.single('image'), uploadWebsiteImage);
-router.post("/upload/pdf", uploadPDFmiddleware.single('pdf'), uploadPDF);
+router.post("/upload/image", verifyToken, requireAdmin, upload.single('image'), uploadWebsiteImage);
+router.post("/upload/pdf", verifyToken, requireAdmin, uploadPDFmiddleware.single('pdf'), uploadPDF);
 
 router.delete("/upload/:folder/:publicId", verifyToken, requireAdmin, deleteGalleryImage);
 

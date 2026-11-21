@@ -1,10 +1,12 @@
 import express from 'express';
 import Page from '../models/Page.js';
 import cloudinary from '../utils/cloudinary.utils.js';
+import verifyToken from '../middlewares/verifyToken.js';
+import requireAdmin from '../middlewares/requireAdmin.js';
 
 const router = express.Router();
 
-router.post("/add", async (req, res) => {
+router.post("/add", verifyToken, requireAdmin, async (req, res) => {
     try {
         const { slug: incomingSlug, locale, title, content, tabs } = req.body;
 
@@ -63,7 +65,7 @@ router.post("/add", async (req, res) => {
     }
 });
 
-router.put('/update', async (req, res) => {
+router.put('/update', verifyToken, requireAdmin, async (req, res) => {
     try {
         const { slug, content, locale, title, tabs } = req.body;
 
@@ -111,7 +113,7 @@ router.put('/update', async (req, res) => {
     }   
 });
 
-router.delete("/:slug", async (req, res) => {
+router.delete("/:slug", verifyToken, requireAdmin, async (req, res) => {
     try {
         const deletedPages = await Page.deleteMany({ slug: req.params.slug });
 
@@ -147,7 +149,7 @@ router.get('/get/:slug', async (req, res) => {
 });
 
 // DELETE /page/tab
-router.delete('/tab', async (req, res) => {
+router.delete('/tab', verifyToken, requireAdmin, async (req, res) => {
     try {
         const { slug, locale, tabLabel } = req.body;
 
@@ -289,7 +291,7 @@ router.get("/list-with-order", async (req, res) => {
 });
 
 
-router.put("/reorder", async (req, res) => {
+router.put("/reorder", verifyToken, requireAdmin, async (req, res) => {
     const { pages } = req.body;
     if (!Array.isArray(pages)) {
         return res.status(400).json({ error: "Invalid format" });

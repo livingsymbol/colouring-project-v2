@@ -9,6 +9,7 @@ import {
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { authHeaders } from "../utils/authHeaders";
 
 export default function PageReorderModal({ open, onClose }) {
     const [pages, setPages] = useState([]);
@@ -50,7 +51,8 @@ export default function PageReorderModal({ open, onClose }) {
         try {
             await axios.put(
                 `${import.meta.env.VITE_BACKEND_URL}/page/reorder`,
-                { pages }
+                { pages },
+                { headers: authHeaders() }
             );
             toast.success("Page order updated");
             onClose();

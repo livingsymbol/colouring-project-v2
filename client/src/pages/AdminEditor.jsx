@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Trash } from "lucide-react";
 import { v4 as uuid } from "uuid";
 import PageReorderModal from "../components/PageReorderModal";
+import { authHeaders } from "../utils/authHeaders";
 
 export default function AdminEditor() {
     const [slug, setSlug] = useState("new");
@@ -102,6 +103,7 @@ export default function AdminEditor() {
     const imageUploader = {
         insertImageAsBase64URI: true,
         url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/image`,
+        headers: authHeaders(),
         method: "POST",
         format: "json",
         filesVariableName: () => "image",
@@ -122,6 +124,7 @@ export default function AdminEditor() {
     const pdfUploader = {
         insertImageAsBase64URI: false,
         url: `${import.meta.env.VITE_BACKEND_URL}/admin/upload/pdf`,
+        headers: authHeaders(),
         method: "POST",
         format: "json",
         filesVariableName: () => "pdf",
@@ -237,7 +240,8 @@ export default function AdminEditor() {
 
         try {
             const res = await axios.delete(
-                `${import.meta.env.VITE_BACKEND_URL}/page/${slug}`
+                `${import.meta.env.VITE_BACKEND_URL}/page/${slug}`,
+                { headers: authHeaders() }
             );
 
             toast.success(res.data.count + " pages deleted successfully");
@@ -279,7 +283,7 @@ export default function AdminEditor() {
             try {
                 const res = await axios.delete(
                     `${import.meta.env.VITE_BACKEND_URL}/page/tab`,
-                    { data: { slug, locale, tabLabel } }
+                    { data: { slug, locale, tabLabel }, headers: authHeaders() }
                 );
                 toast.success(res.data.message);
             } catch (err) {
@@ -304,8 +308,8 @@ export default function AdminEditor() {
         }
 
         try {
-            if (isExisting) await axios.put(`${import.meta.env.VITE_BACKEND_URL}/page/update`, { slug, locale, content, title, tabs });
-            else await axios.post(`${import.meta.env.VITE_BACKEND_URL}/page/add`, { slug, locale, content, title, tabs });
+            if (isExisting) await axios.put(`${import.meta.env.VITE_BACKEND_URL}/page/update`, { slug, locale, content, title, tabs }, { headers: authHeaders() });
+            else await axios.post(`${import.meta.env.VITE_BACKEND_URL}/page/add`, { slug, locale, content, title, tabs }, { headers: authHeaders() });
             toast.success("Saved");
             setIsExisting(true);
         } catch (err) {
