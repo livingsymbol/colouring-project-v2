@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { gradeColours } from "../utils/scoring.js";
 import { useLocale } from "../context/LocaleContext.jsx";
-import SymbolWithMiniSymbols from "../../public/symbol/Symbolwithminisymbols.jsx";
+import SymbolWithMiniSymbols from "../../public/symbol/SymbolWithMiniSymbols.jsx";
 
 const style = {
   position: "absolute",
