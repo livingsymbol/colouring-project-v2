@@ -92,7 +92,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Desktop menu */}
-                        <div className="hidden md:flex md:space-x-4 lg:space-x-8">
+                        <div className="hidden lg:flex lg:space-x-3 xl:space-x-6">
                             {currentNavItems.map(({ name, path }) => (
                                 <NavLink
                                     key={path}
@@ -115,7 +115,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Language buttons (Desktop) */}
-                        <div className="hidden md:flex items-center space-x-2 shrink-0">
+                        <div className="hidden lg:flex items-center space-x-2 shrink-0">
                             <button
                                 onClick={() => switchLocale("en")}
                                 className={`px-2 py-1 font-semibold ${locale === "en" ? "text-[#d2c460]" : "text-white"
@@ -134,7 +134,7 @@ export default function Navbar() {
                         </div>
 
                         {/* Mobile menu button */}
-                        <div className="md:hidden">
+                        <div className="lg:hidden">
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
                                 type="button"
@@ -183,7 +183,7 @@ export default function Navbar() {
                 {isOpen && (
                     <div
                         id="mobile-menu"
-                        className="md:hidden absolute top-20 left-0 w-full bg-[#404040] z-20 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-md"
+                        className="lg:hidden absolute top-20 left-0 w-full bg-[#404040] z-20 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-md"
                     >
                         {currentNavItems.map(({ name, path }) => (
                             <NavLink

@@ -509,20 +509,20 @@ export const SCORE_MESSAGES = {
     en: {
         [SCORE_MESSAGE_MAP.DuplicateColours]: "Duplicate colours are not harmonious.",
         [SCORE_MESSAGE_MAP.IncompletePetals]: "Please fill all petals with colours.",
-        [SCORE_MESSAGE_MAP.Below50]: "Scored below 50%, try again or see the “Colours - Colour theory in art and design” section. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
-        [SCORE_MESSAGE_MAP.Below70]: "% harmony achieved, try again or see the “Colours - Colour theory in art and design” section. To proceed to colourings 3, 4 & 5, a minimum of 70% needs to be achieved.",
-        [SCORE_MESSAGE_MAP.Above70]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see the “Colours - Colour theory in art and design” section.",
-        [SCORE_MESSAGE_MAP.EightyFive]: "% harmony achieved, colourings 3, 4 & 5 have been unlocked. You can proceed, try again or see the “Colours - Colour theory in art and design” section.",
-        [SCORE_MESSAGE_MAP.FullHarmony]: "Great, 100% harmony achieved! Colourings 3, 4 & 5 have been unlocked.",
+        [SCORE_MESSAGE_MAP.Below50]: "Scored below 50%, try again or see the “Colours - Colour theory in art and design” section. To proceed to colourings 3, 4, 5 & 6, a minimum of 70% needs to be achieved.",
+        [SCORE_MESSAGE_MAP.Below70]: "% harmony achieved, try again or see the “Colours - Colour theory in art and design” section. To proceed to colourings 3, 4, 5 & 6, a minimum of 70% needs to be achieved.",
+        [SCORE_MESSAGE_MAP.Above70]: "% harmony achieved, colourings 3, 4, 5 & 6 have been unlocked. You can proceed, try again or see the “Colours - Colour theory in art and design” section.",
+        [SCORE_MESSAGE_MAP.EightyFive]: "% harmony achieved, colourings 3, 4, 5 & 6 have been unlocked. You can proceed, try again or see the “Colours - Colour theory in art and design” section.",
+        [SCORE_MESSAGE_MAP.FullHarmony]: "Great, 100% harmony achieved! Colourings 3, 4, 5 & 6 have been unlocked.",
     },
     ru: {
         [SCORE_MESSAGE_MAP.DuplicateColours]: "Дублирование одного цвета нарушает гармонию.",
         [SCORE_MESSAGE_MAP.IncompletePetals]: "Пожалуйста раскрасьте все лепестки.",
-        [SCORE_MESSAGE_MAP.Below50]: "Ваш результат ниже 50% — попробуйте снова или ознакомьтесь с разделом «Цвета — Теория цвета в искусстве и дизайне». Для перехода к раскрашиваниям 3, 4 и 5 необходимо набрать минимум 70%.",
-        [SCORE_MESSAGE_MAP.Below70]: "% гармонии достигнут — попробуйте снова или обратитесь к разделу «Цвета — Теория цвета в искусстве и дизайне». Для перехода к раскрашиваниям 3, 4 и 5 необходимо набрать минимум 70%.",
-        [SCORE_MESSAGE_MAP.Above70]: "% гармонии достигнут — раскрашивания 3, 4 и 5 разблокированы. Вы можете продолжить, попробовать снова или обратиться к разделу «Цвета — Теория цвета в искусстве и дизайне».",
-        [SCORE_MESSAGE_MAP.EightyFive]: "% гармонии достигнут — раскрашивания 3, 4 и 5 разблокированы. Вы можете продолжить, попробовать снова или обратиться к разделу «Цвета — Теория цвета в искусстве и дизайне».",
-        [SCORE_MESSAGE_MAP.FullHarmony]: "Отлично, достигнута 100% гармония. Раскрашивания 3, 4 и 5 разблокированы.",
+        [SCORE_MESSAGE_MAP.Below50]: "Ваш результат ниже 50% — попробуйте снова или ознакомьтесь с разделом «Цвета — Теория цвета в искусстве и дизайне». Для перехода к раскрашиваниям 3, 4, 5 и 6 необходимо набрать минимум 70%.",
+        [SCORE_MESSAGE_MAP.Below70]: "% гармонии достигнут — попробуйте снова или обратитесь к разделу «Цвета — Теория цвета в искусстве и дизайне». Для перехода к раскрашиваниям 3, 4, 5 и 6 необходимо набрать минимум 70%.",
+        [SCORE_MESSAGE_MAP.Above70]: "% гармонии достигнут — раскрашивания 3, 4, 5 и 6 разблокированы. Вы можете продолжить, попробовать снова или обратиться к разделу «Цвета — Теория цвета в искусстве и дизайне».",
+        [SCORE_MESSAGE_MAP.EightyFive]: "% гармонии достигнут — раскрашивания 3, 4, 5 и 6 разблокированы. Вы можете продолжить, попробовать снова или обратиться к разделу «Цвета — Теория цвета в искусстве и дизайне».",
+        [SCORE_MESSAGE_MAP.FullHarmony]: "Отлично, достигнута 100% гармония. Раскрашивания 3, 4, 5 и 6 разблокированы.",
     }
 };
 

@@ -20,7 +20,7 @@ export const aspirationTabContent = {
                 { type: "hardBreak" },
                 {
                     type: "text",
-                    text: "Top group red, passing to orange towards yellow. Next group, yellow passing through green towards blue. And third group, blue passing through violet towards red. If white is not convenient, the center may be gold(powder).”",
+                    text: "Top group red, passing to orange towards yellow. Next group, yellow passing through green towards blue. And third group, blue passing through violet towards red. If white is not convenient, the center may be gold (powder).”",
                 },
                 {
                     type: "paragraph",
