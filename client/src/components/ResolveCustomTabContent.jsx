@@ -3,6 +3,7 @@ import AspirationAtWorkTab2 from '../components/tabs/AspirationTab2';
 import AspirationAtWorkTab3 from '../components/tabs/AspirationTab3';
 import AspirationAtWorkTab4 from '../components/tabs/AspirationTab4';
 import AspirationAtWorkTab5 from '../components/tabs/AspirationTab5';
+import AspirationAtWorkTab6 from '../components/tabs/AspirationTab6';
 import GalleryTab1 from '../components/tabs/GalleryTab1';
 import GalleryTab2 from '../components/tabs/GalleryTab2';
 import ForumAndColouringTab1 from '../components/tabs/ForumTab1';
@@ -15,6 +16,7 @@ const CUSTOM_TAB_COMPONENTS = {
     AspirationAtWorkTab3,
     AspirationAtWorkTab4,
     AspirationAtWorkTab5,
+    AspirationAtWorkTab6,
     GalleryTab1,
     GalleryTab2,
     ForumAndColouringTab1,

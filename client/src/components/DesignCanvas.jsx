@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { gradeColours } from "../utils/scoring.js";
 import { useLocale } from "../context/LocaleContext.jsx";
+import SymbolWithMiniSymbols from "../../public/symbol/Symbolwithminisymbols.jsx";
 
 const style = {
   position: "absolute",
@@ -28,7 +29,7 @@ const style = {
   textAlign: "center",
 };
 
-const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5 = false, sparkleColor, count }) => {
+const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5 = false, isColouring6 = false, sparkleColor, count }) => {
   const svgRef = useRef(null);
   const canvasRef = useRef(null);
   const symbolTextRef = useRef(null);
@@ -292,7 +293,7 @@ const DesignCanvas = ({ color, showDesc = false, isColours1 = true, isColouring5
         <div className="overflow-hidden w-full relative">
 
           {showDesc ?
-            <Symbol ref={svgRef} symbolTextRef={symbolTextRef} className="w-full h-full" color={color} isColouring5={isColouring5} sparkleColor={sparkleColor} count={count} />
+            <Symbol ref={svgRef} symbolTextRef={symbolTextRef} className="w-full h-full" color={color} isColouring5={isColouring5} isColouring6={isColouring6} sparkleColor={sparkleColor} count={count} />
             :
             <Symbol_without_desc
               ref={svgRef}
